@@ -4,7 +4,7 @@
 typedef struct Node
 {
     Entry key;
-    struct Node *l, *r;
+    struct Node *left, *right;
 } * Node;
 
 /** 
@@ -20,12 +20,12 @@ Node emptyBst() { return NULL; }
  *  @param b binary search tree right node.
  *  @return new binary search tree node.
 */
-Node createBst(Entry item, Node a, Node b)
+Node createBst(Entry item, Node lft, Node rght)
 {
     Node t = (Node)malloc(sizeof(struct Node));
     t->key = item;
-    t->l = a;
-    t->r = b;
+    t->left = lft;
+    t->right = rght;
     return t;
 }
 
@@ -34,28 +34,28 @@ Node createBst(Entry item, Node a, Node b)
  *  @param a binary search tree node.
  *  @return whether the node is empty.
 */
-bool isEmptyBst(Node a) { return a == NULL; }
+bool isEmptyBst(Node root) { return root == NULL; }
 
 /**
  *  given binary search tree node key.
  *  @param a binary search tree node.
  *  @return binary search tree node key.
 */
-Entry key(Node a) { return a->key; }
+Entry key(Node root) { return root->key; }
 
 /**
  *  given binary search tree node left leaf.
  *  @param a binary search tree node.
  *  @return binary search tree node left leaf.
 */
-Node left(Node a) { return a->l; }
+Node left(Node root) { return root->left; }
 
 /**
  *  given binary search tree node right leaf.
  *  @param a binary search tree node.
  *  @return binary search tree node right leaf.
 */
-Node right(Node a) { return a->r; }
+Node right(Node root) { return root->right; }
 
 // returns a binary search tree node weight
 /**
@@ -63,24 +63,24 @@ Node right(Node a) { return a->r; }
  *  @param a binary search tree node.
  *  @return binary search tree node weight.
 */
-int weight(Node a)
+int weight(Node root)
 {
-    if (isEmptyBst(a))
+    if (isEmptyBst(root))
         return 0;
-    return weight(left(a)) + weight(right(a)) + 1;
+    return weight(left(root)) + weight(right(root)) + 1;
 }
 
 /**
  *  prints given binary search tree node in preorder.
  *  @param a binary search tree node.
 */
-void printPreOrder(Node a)
+void printPreOrder(Node root)
 {
-    if (!isEmptyBst(a))
+    if (!isEmptyBst(root))
     {
-        printEntry(key(a));
-        printPreOrder(right(a));
-        printPreOrder(left(a));
+        printEntry(key(root));
+        printPreOrder(right(root));
+        printPreOrder(left(root));
     }
 }
 
@@ -88,13 +88,13 @@ void printPreOrder(Node a)
  *  prints given binary search tree node in inorder.
  *  @param a binary search tree node.
 */
-void printInOrder(Node a)
+void printInOrder(Node root)
 {
-    if (!isEmptyBst(a))
+    if (!isEmptyBst(root))
     {
-        printInOrder(left(a));
-        printEntry(key(a));
-        printInOrder(right(a));
+        printInOrder(left(root));
+        printEntry(key(root));
+        printInOrder(right(root));
     }
 }
 
@@ -102,13 +102,13 @@ void printInOrder(Node a)
  *  prints given binary search tree node in postorder.
  *  @param a binary search tree node.
 */
-void printPostOrder(Node a)
+void printPostOrder(Node root)
 {
-    if (!isEmptyBst(a))
+    if (!isEmptyBst(root))
     {
-        printPostOrder(left(a));
-        printPostOrder(right(a));
-        printEntry(key(a));
+        printPostOrder(left(root));
+        printPostOrder(right(root));
+        printEntry(key(root));
     }
 }
 
@@ -118,13 +118,13 @@ void printPostOrder(Node a)
  *  @param a binary search tree node.
  *  @return new binary search tree node.
 */
-Node insertNode(Entry item, Node a)
+Node insertNode(Entry item, Node root)
 {
-    if (isEmptyBst(a))
+    if (isEmptyBst(root))
         return createBst(item, emptyBst(), emptyBst());
-    if (isEntryLower(key(a), item))
-        return createBst(key(a), insertNode(item, left(a)), right(a));
-    if (isEntryGreater(key(a), item))
-        return createBst(key(a), left(a), insertNode(item, right(a)));
+    if (isEntryLower(key(root), item))
+        return createBst(key(root), insertNode(item, left(root)), right(root));
+    if (isEntryGreater(key(root), item))
+        return createBst(key(root), left(root), insertNode(item, right(root)));
     return NULL;
 }
