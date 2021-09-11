@@ -63,7 +63,7 @@ int main (int argc, char* argv[])
 
 //DEFINICIÓN DE FUNCIONES 
 void insercion(int *A, int n){
-	for(int i=0; i<sizeof(A)-1; i++){
+	for(int i=0; i<n-1; i++){
 		int j=i;
 		int temp = A[i];
 		while(j>0 && temp<A[j-1]){
