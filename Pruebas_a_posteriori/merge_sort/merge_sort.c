@@ -1,72 +1,86 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int i, j, k, n, p, q, r;
+int n;
 
-void mergeSort(int* A, int p, int r);
-void merge(int* A, int p, int q, int r);
+void mergeSort(int arr[], int l, int r);
+void merge(int arr[], int l, int m, int r);
 
 int main (int argc, char* argv[]){
     n=atoi(argv[1]);
-    int *A = (int*)malloc(n * sizeof(int));
-    int *C = (int*)malloc(n * sizeof(int));
+    int* arr = (int*)malloc(n * sizeof(int));
     for(int i = 0; i < n; i++)
-        	scanf("%d", &A[i]);
+        	scanf("%d", &arr[i]);
     
-    printf("Sin ordenar:");
+    printf("Sin ordenar: ");
     for(int i = 0; i < n; i++)
         {
-            printf("%d ", A[i]);
+            printf("%d ", arr[i]);
         }
 
-    mergeSort(A, 0, n-1);
+    mergeSort(arr, 0, n-1);
 
-    printf("\nOrdenados:");
+    printf("\nOrdenados: ");
     for(int i = 0; i < n; i++)
         {
-            printf("%d ", A[i]);
+            printf("%d ", arr[i]);
         }
-    
+    return 0;
 }
 
-void mergeSort(int* A, int p, int r)
+void mergeSort(int arr[], int l, int r)
 {
-    if(p < r)
+    if(l<r)
     {
-        q = ((p+r)/2);
-        mergeSort(A, p, q);
-        mergeSort(A, q+1, r);
-        merge(A, p, q, r);
+        int m=l+(r-l)/2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m+1, r);
+        merge(arr, l, m, r);
     }
 }
 
 
-void merge(int* A, int p, int q, int r)
+void merge(int arr[], int l, int m, int r)
 {
-    int* C;
-    int l=r-p+1;
-    i=p;
-    j=q+1;
-    for (size_t k = 0; k >=1; k++)
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 = r - m;
+
+    int L[n1], R[n2];
+
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j];
+
+    i = 0;
+    j = 0;
+    k = l;
+
+    while (i<n1 && j<n2)
     {
-        if (i<=q && j<=r)
+        if (L[i]<=R[j])
         {
-            if (A[i]<A[j])
-            {
-                C[k]=A[i];
-                i++;
-            }
-        else if (i<=q)
-        {
-            C[k]=A[i];
-        i++;
+            arr[k]=L[i];
+            i++;
         }
         else
         {
-            C[k]=A[j];
+            arr[k]=R[j];
             j++;
         }
-        }
-    A[p-r] = C[k];
+        k++;
+    }
+    while (i<n1)
+    {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+    while (j<n2)
+    {
+        arr[k] = R[j];
+        j++;
+        k++;
     }
 }
