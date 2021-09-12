@@ -1,14 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//Declaración de variables
 int n;
 
+//Declaracion de funciones
 void mergeSort(int arr[], int l, int r);
 void merge(int arr[], int l, int m, int r);
 
 int main (int argc, char* argv[]){
     n=atoi(argv[1]);
     int* arr = (int*)malloc(n * sizeof(int));
+    //Recibir los numeros por comando
     for(int i = 0; i < n; i++)
         	scanf("%d", &arr[i]);
     
@@ -18,6 +21,7 @@ int main (int argc, char* argv[]){
             printf("%d ", arr[i]);
         }
 
+    //Ordenamiento
     mergeSort(arr, 0, n-1);
 
     printf("\nOrdenados: ");
