@@ -2,7 +2,7 @@
  *  binary search tree tree sort test program.
  *  @author @huerta2502
  *  compile: gcc tree_sort_test.c ../tiempo.c -o tree_sort_test
- *  execute: ./tree_sort_test n < ../numeros10millones.txt
+ *  execute: ./tree_sort_test n < ../../../numeros10millones.txt
 */
 
 #include <stdlib.h>
