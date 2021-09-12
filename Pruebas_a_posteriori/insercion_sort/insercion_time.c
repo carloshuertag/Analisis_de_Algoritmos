@@ -57,15 +57,7 @@ int main (int argc, char* argv[]){
 	printf("user (Tiempo de procesamiento en CPU) %.10e s\n",  utime1 - utime0);
 	printf("sys (Tiempo en acciónes de E/S)  %.10e s\n",  stime1 - stime0);
 	printf("CPU/Wall   %.10f %% \n",100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
-	printf("\n");	
-	printf("Arreglo No Ordendo: [ ");
-	for (int i=0; i < n-1; i++){
-		if(i == n-2)
-			printf("%d ", arreglo[i]);
-		else
-			printf("%d, ", arreglo[i]);
-	}
-	printf("]\n");
+	printf("\n");
 	exit (0); //Termino del programa
 }
 
