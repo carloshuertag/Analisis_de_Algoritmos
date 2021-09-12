@@ -1,12 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
 
+int i, j, n, p, r;
 
-void quickSort(A, p, r);
-void pivote(A, p ,r);
-void intercambiar(A, i, j);
+void quickSort(int* A, int p, int r);
+int pivote(int* A, int p, int r);
+void intercambiar(int* A, int i, int j);
 
+int main (int argc, char* argv[]){
+    n=atoi(argv[1]);
+    int *A = (int*)malloc(n * sizeof(int));
+    int *C = (int*)malloc(n * sizeof(int));
+    for(int i = 0; i < n; i++)
+        	scanf("%d", &A[i]);
+    
+    printf("Sin ordenar:");
+    for(int i = 0; i < n; i++)
+        {
+            printf("%d ", A[i]);
+        }
 
+    quickSort(A, 0, n-1);
 
-void quickSort(A, p, r)
+    printf("\nOrdenados:");
+    for(int i = 0; i < n; i++)
+        {
+            printf("%d ", A[i]);
+        }
+}
+
+void quickSort(int* A, int p, int r)
 {
     if (p<r)
     {
@@ -16,9 +39,9 @@ void quickSort(A, p, r)
     }
 }
 
-void pivote(A, p ,r)
+int pivote(int* A, int p, int r)
 {
-    piv=A[p];
+    int piv=A[p];
     i=p+1;
     j=r;
     while (A[i]<piv && i<r)
@@ -28,20 +51,22 @@ void pivote(A, p ,r)
         {
             j--;
         }
-        if (i<=j)
+        if (i<j)
         {
             intercambiar(A, i, j);
         }
         else
         {
             intercambiar(A, p, j);
+            
         }
     }
+    return (j);
 }
 
-void intercambiar(A, i, j)
+void intercambiar(int* A, int i, int j)
 {
-    temp=A[j];
+    int temp=A[j];
     A[j]=A[i];
     A[i]=temp;
 }
