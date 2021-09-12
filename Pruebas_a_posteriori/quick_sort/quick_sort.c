@@ -28,7 +28,7 @@ void pivote(A, p ,r)
         {
             j--;
         }
-        if (i<=j)
+        if (i<j)
         {
             intercambiar(A, i, j);
         }
