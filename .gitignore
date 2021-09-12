@@ -53,3 +53,6 @@ dkms.conf
 
 # Text files
 *.txt
+
+# macOS directory file
+.DS_Store
