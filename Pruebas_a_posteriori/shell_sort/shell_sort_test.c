@@ -2,7 +2,7 @@
  *  shell sort test program.
  *  @author @huerta2502
  *  compile: gcc shell_sort_test.c ../tiempo.c -o shell_sort_test
- *  execute: ./shell_sort_test n < ../numeros10millones.txt
+ *  execute: ./shell_sort_test n < ../../../numeros10millones.txt
 */
 
 #include <stdlib.h>
