@@ -6,5 +6,5 @@ for i in  100 1000 5000 10000 50000 100000 200000 400000 500000 600000 800000 10
 do
     echo "Insercion con n -> $i"
     echo .::tiempo con n = $i >> insercion_test.txt
-    ./seleccion $i < ../numeros10millones.txt >> insercion_test.txt
+    ./seleccion $i < ../../../numeros10millones.txt >> insercion_test.txt
 done

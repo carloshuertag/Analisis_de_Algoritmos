@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "tiempo.h"
+#include "../tiempo.h"
 
 //*****************************************************************
 //DEFINICION DE CONSTANTES DEL PROGRAMA
@@ -76,7 +76,7 @@ int BurbujaOptimizada1(int** A, int n) {
     uswtime(&utime1, &stime1, &wtime1);
     //Cálculo del tiempo de ejecución del programa
 	printf("\n");
-	printf("real (Tiempo total)  %.10f s\n",  wtime1 - wtime0);
+    printf("\nn=%d\nreal (Tiempo total)  %.10f s\n", n, wtime1 - wtime0);
 	printf("user (Tiempo de procesamiento en CPU) %.10f s\n",  utime1 - utime0);
 	printf("sys (Tiempo en acciónes de E/S)  %.10f s\n",  stime1 - stime0);
 	printf("CPU/Wall   %.10f %% \n",100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));

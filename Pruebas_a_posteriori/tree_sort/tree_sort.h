@@ -16,14 +16,14 @@ void storeSorted(Node root, Entry *arr, int *i)
 }
 
 /**
- *  sort given array of given size using a
- *  binary search tree.
- *  @param arr array to sort
- *  @param n array length
+ *  Ordena el arreglo de tamaño n con el algoritmo de árbol
+ *  utilizando un árbol binario de búsqueda.
+ *  @param arr el arreglo a ordenar.
+ *  @param n el tamaño del arreglo.
 */
 void treeSort(int *arr, int n)
 {
-    Node root = insertNode(arr[0], emptyBst());
+    Node root = insertNode(arr[0], NULL);
     int i = 0;
     for (i = 1; i < n; i++)
         root = insertNode(arr[i], root);

@@ -7,12 +7,6 @@ typedef struct Node
     struct Node *left, *right;
 } * Node;
 
-/** 
- *  empty binary search tree node.
- *  @return a null pointer to binary search tree node.
-*/
-Node emptyBst() { return NULL; }
-
 /**
  *  creates a new binary search tree node with given nodes and a given entry.
  *  @param item binary search tree node entry.
@@ -28,20 +22,6 @@ Node createBst(Entry item, Node lft, Node rght)
     t->right = rght;
     return t;
 }
-
-/**
- *  given binary search tree node is empty.
- *  @param a binary search tree node.
- *  @return whether the node is empty.
-*/
-bool isEmptyBst(Node root) { return root == NULL; }
-
-/**
- *  given binary search tree node key.
- *  @param a binary search tree node.
- *  @return binary search tree node key.
-*/
-Entry key(Node root) { return root->key; }
 
 /**
  *  given binary search tree node left leaf.
@@ -65,7 +45,7 @@ Node right(Node root) { return root->right; }
 */
 int weight(Node root)
 {
-    if (isEmptyBst(root))
+    if (root == NULL)
         return 0;
     return weight(left(root)) + weight(right(root)) + 1;
 }
@@ -76,9 +56,9 @@ int weight(Node root)
 */
 void printPreOrder(Node root)
 {
-    if (!isEmptyBst(root))
+    if (root != NULL)
     {
-        printEntry(key(root));
+        printEntry(root->key);
         printPreOrder(right(root));
         printPreOrder(left(root));
     }
@@ -90,10 +70,10 @@ void printPreOrder(Node root)
 */
 void printInOrder(Node root)
 {
-    if (!isEmptyBst(root))
+    if (root != NULL)
     {
         printInOrder(left(root));
-        printEntry(key(root));
+        printEntry(root->key);
         printInOrder(right(root));
     }
 }
@@ -104,11 +84,11 @@ void printInOrder(Node root)
 */
 void printPostOrder(Node root)
 {
-    if (!isEmptyBst(root))
+    if (root != NULL)
     {
         printPostOrder(left(root));
         printPostOrder(right(root));
-        printEntry(key(root));
+        printEntry(root->key);
     }
 }
 
@@ -120,11 +100,11 @@ void printPostOrder(Node root)
 */
 Node insertNode(Entry item, Node root)
 {
-    if (isEmptyBst(root))
-        return createBst(item, emptyBst(), emptyBst());
-    if (isEntryLower(key(root), item))
-        return createBst(key(root), insertNode(item, left(root)), right(root));
-    if (isEntryGreater(key(root), item))
-        return createBst(key(root), left(root), insertNode(item, right(root)));
+    if (root == NULL)
+        return createBst(item, NULL, NULL);
+    if (isEntryLower(root->key, item))
+        return createBst(root->key, insertNode(item, left(root)), right(root));
+    if (isEntryGreater(root->key, item))
+        return createBst(root->key, left(root), insertNode(item, right(root)));
     return NULL;
 }
