@@ -73,7 +73,14 @@ void merge(int arr[], int l, int m, int r)
     int n1 = m - l + 1;
     int n2 = r - m;
 
-    int L[n1], R[n2];
+    int *L, *R;
+    L = (int *)malloc(n1 * sizeof(int)); // asigna la memoria para el arreglo L
+    R = (int *)malloc(n2 * sizeof(int)); // asigna la memoria para el arreglo R
+    if (L == NULL || R == NULL)
+    {
+        perror("Memory not allocated.\n");
+        exit(1);
+    }
 
     for (i = 0; i < n1; i++)
         L[i] = arr[l + i];
