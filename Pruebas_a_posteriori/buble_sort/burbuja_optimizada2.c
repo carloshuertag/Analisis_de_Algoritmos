@@ -13,11 +13,6 @@
 //*****************************************************************
 //DECLARACIÓN DE FUNCIONES
 //*****************************************************************
-/**
- * Ordena un arreglo usando burbuja optimizada 2 y mide su rendimientp
- * @param A Apuntador a un arreglo de enteros. Arreglo a ordenar.
- * @param n tamaño del arreglo
- */
 int BurbujaOptimizada2(int** A, int n);
 
 int main(int argc, char* argv[]) {
@@ -58,6 +53,11 @@ int main(int argc, char* argv[]) {
 //************************************************************************
 //DEFINICIÓN DE FUNCIONES 
 //************************************************************************
+/**
+ * Ordena un arreglo usando burbuja optimizada 2 y mide su rendimientp
+ * @param A Apuntador a un arreglo de enteros. Arreglo a ordenar.
+ * @param n tamaño del arreglo
+ */
 int BurbujaOptimizada2(int** A, int n) {
     if(A == NULL || *A == NULL) return ERR;
 

@@ -55,6 +55,11 @@ int main(int argc, char* argv[]) {
 //************************************************************************
 //DEFINICIÓN DE FUNCIONES 
 //************************************************************************
+/**
+ * Ordena un arreglo usando burbuja optimizada 1 y mide su rendimiento
+ * @param A Apuntador a un arreglo de enteros. Arreglo a ordenar.
+ * @param n tamaño del arreglo
+ */
 int BurbujaOptimizada1(int** A, int n) {
     if(A == NULL || *A == NULL) return ERR;
 

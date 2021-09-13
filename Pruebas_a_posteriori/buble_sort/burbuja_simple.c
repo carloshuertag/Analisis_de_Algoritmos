@@ -11,11 +11,6 @@
 //*****************************************************************
 //DECLARACIÓN DE FUNCIONES
 //*****************************************************************
-/**
- * Ordena un arreglo usando burbuja simple y mide su rendimiento
- * @param A Apuntador a un arreglo de enteros. Arreglo a ordenar.
- * @param n tamaño del arreglo
- */
 int BurbujaSimple(int** A, int n);
 
 //*****************************************************************
@@ -58,6 +53,11 @@ int main(int argc, char* argv[]) {
 //************************************************************************
 //DEFINICIÓN DE FUNCIONES 
 //************************************************************************
+/**
+ * Ordena un arreglo usando burbuja simple y mide su rendimiento
+ * @param A Apuntador a un arreglo de enteros. Arreglo a ordenar.
+ * @param n tamaño del arreglo
+ */
 int BurbujaSimple(int** A, int n) {
     if(A == NULL || *A == NULL) return ERR;
 

@@ -14,11 +14,6 @@
 #include "../tiempo.h"
 
 //DECLARACIÓN DE FUNCIONES
-/**
- *  Ordena un arreglo de tamaño n usando el algoritmo de seleccion
- *  @param A arreglo a ordenar
- *  @param n tamaño del arreglo
-*/
 void seleccion(int* A, int n); //Función de ordenamiento tomando como parametro un arreglo y el tmño del mismo (Indexado desde 0)
 
 //PROGRAMA PRINCIPAL 
@@ -61,6 +56,11 @@ int main (int argc, char* argv[]){
 	exit (0); //Termino del programa
 }
 
+/**
+ *  Ordena un arreglo de tamaño n usando el algoritmo de seleccion
+ *  @param A arreglo a ordenar
+ *  @param n tamaño del arreglo
+*/
 //DEFINICIÓN DE FUNCIONES 
 void seleccion(int *A, int n){
 	int p, k, temp;

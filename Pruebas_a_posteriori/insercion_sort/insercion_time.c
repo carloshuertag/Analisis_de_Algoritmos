@@ -14,11 +14,6 @@
 #include "../tiempo.h"
 
 //DECLARACIÓN DE FUNCIONES
-/**
- *  Ordena un arreglo de tamaño n usando el algoritmo de insercion
- *  @param A arreglo a ordenar
- *  @param n tamaño del arreglo
-*/
 void insercion(int* A, int n); //Función de ordenamiento tomando como parametro un arreglo y el tmño del mismo (Indexado desde 0)
 
 //PROGRAMA PRINCIPAL 
@@ -62,6 +57,11 @@ int main (int argc, char* argv[]){
 }
 
 //DEFINICIÓN DE FUNCIONES 
+/**
+ *  Ordena un arreglo de tamaño n usando el algoritmo de insercion
+ *  @param A arreglo a ordenar
+ *  @param n tamaño del arreglo
+*/
 void insercion(int *A, int n){
 	for(int i=0; i<n-1; i++){
 		int j=i;
