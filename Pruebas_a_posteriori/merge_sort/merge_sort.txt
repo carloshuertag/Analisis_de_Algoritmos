@@ -1,0 +1,147 @@
+
+n=500000
+real (Tiempo total)  1.7110991478e-01 s
+user (Tiempo de procesamiento en CPU) 1.5459700000e-01 s
+sys (Tiempo en acciónes de E/S)  1.4722000000e-02 s
+CPU/Wall   98.9533541747 % 
+
+
+n=100
+real (Tiempo total)  6.7901611328e-04 s
+user (Tiempo de procesamiento en CPU) 1.8500000000e-04 s
+sys (Tiempo en acciónes de E/S)  2.4900000000e-04 s
+CPU/Wall   63.9160089888 % 
+
+
+n=1000
+real (Tiempo total)  7.2908401489e-04 s
+user (Tiempo de procesamiento en CPU) 3.1900000000e-04 s
+sys (Tiempo en acciónes de E/S)  2.0400000000e-04 s
+CPU/Wall   71.7338453891 % 
+
+
+n=5000
+real (Tiempo total)  1.9350051880e-03 s
+user (Tiempo de procesamiento en CPU) 1.3370000000e-03 s
+sys (Tiempo en acciónes de E/S)  3.4100000000e-04 s
+CPU/Wall   86.7181137506 % 
+
+
+n=10000
+real (Tiempo total)  3.1218528748e-03 s
+user (Tiempo de procesamiento en CPU) 2.5540000000e-03 s
+sys (Tiempo en acciónes de E/S)  3.7700000000e-04 s
+CPU/Wall   93.8865512754 % 
+
+
+n=50000
+real (Tiempo total)  1.5858888626e-02 s
+user (Tiempo de procesamiento en CPU) 1.3938000000e-02 s
+sys (Tiempo en acciónes de E/S)  1.5330000000e-03 s
+CPU/Wall   97.5541247861 % 
+
+
+n=100000
+real (Tiempo total)  3.7200927734e-02 s
+user (Tiempo de procesamiento en CPU) 3.1904000000e-02 s
+sys (Tiempo en acciónes de E/S)  3.6460000000e-03 s
+CPU/Wall   95.5621328958 % 
+
+
+n=200000
+real (Tiempo total)  1.0907912254e-01 s
+user (Tiempo de procesamiento en CPU) 6.2611000000e-02 s
+sys (Tiempo en acciónes de E/S)  8.2520000000e-03 s
+CPU/Wall   64.9647690115 % 
+
+
+n=400000
+real (Tiempo total)  1.4116287231e-01 s
+user (Tiempo de procesamiento en CPU) 1.2592600000e-01 s
+sys (Tiempo en acciónes de E/S)  1.2733000000e-02 s
+CPU/Wall   98.2262529280 % 
+
+
+n=600000
+real (Tiempo total)  2.1557402611e-01 s
+user (Tiempo de procesamiento en CPU) 1.9219600000e-01 s
+sys (Tiempo en acciónes de E/S)  1.8447000000e-02 s
+CPU/Wall   97.7126065710 % 
+
+
+n=800000
+real (Tiempo total)  3.0510592461e-01 s
+user (Tiempo de procesamiento en CPU) 2.6515500000e-01 s
+sys (Tiempo en acciónes de E/S)  2.6515000000e-02 s
+CPU/Wall   95.5963081924 % 
+
+
+n=1000000
+real (Tiempo total)  3.5788702965e-01 s
+user (Tiempo de procesamiento en CPU) 3.2146400000e-01 s
+sys (Tiempo en acciónes de E/S)  2.9229000000e-02 s
+CPU/Wall   97.9898601928 % 
+
+
+n=2000000
+real (Tiempo total)  8.3664393425e-01 s
+user (Tiempo de procesamiento en CPU) 7.2053300000e-01 s
+sys (Tiempo en acciónes de E/S)  6.5293000000e-02 s
+CPU/Wall   93.9259782842 % 
+
+
+n=3000000
+real (Tiempo total)  1.3856439590e+00 s
+user (Tiempo de procesamiento en CPU) 1.1207840000e+00 s
+sys (Tiempo en acciónes de E/S)  1.3010900000e-01 s
+CPU/Wall   90.2752104416 % 
+
+
+n=4000000
+real (Tiempo total)  1.5549860001e+00 s
+user (Tiempo de procesamiento en CPU) 1.3932710000e+00 s
+sys (Tiempo en acciónes de E/S)  1.3511400000e-01 s
+CPU/Wall   98.2893093533 % 
+
+
+n=5000000
+real (Tiempo total)  2.0285880566e+00 s
+user (Tiempo de procesamiento en CPU) 1.8150570000e+00 s
+sys (Tiempo en acciónes de E/S)  1.7147500000e-01 s
+CPU/Wall   97.9268311066 % 
+
+
+n=6000000
+real (Tiempo total)  2.3982520103e+00 s
+user (Tiempo de procesamiento en CPU) 2.1365280000e+00 s
+sys (Tiempo en acciónes de E/S)  2.1180300000e-01 s
+CPU/Wall   97.9184418431 % 
+
+
+n=7000000
+real (Tiempo total)  2.9977009296e+00 s
+user (Tiempo de procesamiento en CPU) 2.5490240000e+00 s
+sys (Tiempo en acciónes de E/S)  2.3791900000e-01 s
+CPU/Wall   92.9693476905 % 
+
+
+n=8000000
+real (Tiempo total)  3.2159709930e+00 s
+user (Tiempo de procesamiento en CPU) 2.8799430000e+00 s
+sys (Tiempo en acciónes de E/S)  2.6940100000e-01 s
+CPU/Wall   97.9282464554 % 
+
+
+n=9000000
+real (Tiempo total)  4.1836290359e+00 s
+user (Tiempo de procesamiento en CPU) 3.3571470000e+00 s
+sys (Tiempo en acciónes de E/S)  3.7519300000e-01 s
+CPU/Wall   89.2129767704 % 
+
+
+n=10000000
+real (Tiempo total)  4.1688799858e+00 s
+user (Tiempo de procesamiento en CPU) 3.7022880000e+00 s
+sys (Tiempo en acciónes de E/S)  3.6952300000e-01 s
+CPU/Wall   97.6715811887 % 
+
