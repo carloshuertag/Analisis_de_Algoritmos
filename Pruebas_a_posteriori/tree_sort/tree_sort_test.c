@@ -2,12 +2,14 @@
  *  Programa de prueba para el ordenamiento de árbol
  *  @author @huerta2502 Carlos Huerta García
  *  @copyright Septiembre 2021
+ *  @version 1.0
  *  Compilación: gcc tree_sort_test.c ../tiempo.c -o tree_sort_test
  *  Ejecución: ./tree_sort_test n < ../../../numeros10millones.txt
 */
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "bst_entry.h" // entrada del árbol binario de búsqueda
 #include "bst.h" // árbol binario de búsqueda
 #include "tree_sort.h" // ordenamiento por árbol

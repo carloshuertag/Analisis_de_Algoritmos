@@ -2,6 +2,7 @@
  *  Programa de prueba para el ordenamiento shell
  *  @author @huerta2502 Carlos Huerta García
  *  @copyright Septiembre 2021
+ *  @version 1.0
  *  Compilación: gcc shell_sort_test.c ../tiempo.c -o shell_sort_test
  *  Ejecución: ./shell_sort_test n < ../../../numeros10millones.txt
 */
@@ -26,6 +27,7 @@ int main(int argc, char **argv)
     else
         n = atoi(argv[1]); // Toma del argumento la longitud del arreglo
     int *arr = (int *)malloc(n * sizeof(int)); // asigna la memoria para el arreglo
+    if (arr == NULL)
     {
         perror("Memory not allocated.\n");
         exit(1);

@@ -7,7 +7,7 @@
 */
 void storeSorted(Node root, Entry *arr, int *i)
 {
-    if (!isEmptyBst(root)) 
+    if (root != NULL) 
     {
         storeSorted(root->left, arr, i);
         arr[(*i)++] = root->key;
