@@ -50,3 +50,18 @@ user (Tiempo de procesamiento en CPU) 5.6598200000e-01 s
 sys (Tiempo en acciónes de E/S)  0.0000000000e+00 s
 CPU/Wall   99.9979176700 % 
 
+Medicion n: 500000
+
+
+n=500000
+real (Tiempo total)  794.8240001202 s
+user (Tiempo de procesamiento en CPU) 782.6561090000 s
+sys (Tiempo en acciónes de E/S)  2.7568730000 s
+CPU/Wall   98.8159620094 % 
+
+
+real (Tiempo total)  7.9482400012e+02 s
+user (Tiempo de procesamiento en CPU) 7.8265610900e+02 s
+sys (Tiempo en acciónes de E/S)  2.7568730000e+00 s
+CPU/Wall   98.8159620094 % 
+
