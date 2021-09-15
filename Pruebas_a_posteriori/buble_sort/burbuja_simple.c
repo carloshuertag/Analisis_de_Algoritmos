@@ -1,3 +1,16 @@
+/**
+ *  @author @Angel Alan Hernandez Dominguez
+ *  Curso: Análisis de algoritmos
+ *  (C) Septiembre 2021
+ *  ESCOM-IPN
+ *  Medición de tiempo del ordenamiento usando el algoritmo de burbuja simple en C
+ *  Compilación: "gcc burbuja_simple.c ../tiempo.c -o bs"
+ *  Ejecución: "./bs n < ../../../numeros10millones.txt" o usando el script "./burbuja_simple.sh"
+*/
+
+//*****************************************************************
+//Librerias
+//*****************************************************************
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

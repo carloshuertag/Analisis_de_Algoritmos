@@ -1,3 +1,16 @@
+/**
+ *  @author @Angel Alan Hernandez Dominguez
+ *  Curso: Análisis de algoritmos
+ *  (C) Septiembre 2021
+ *  ESCOM-IPN
+ *  Medición de tiempo del ordenamiento usando el algoritmo de burbuja optimizada 2 en C
+ *  Compilación: "gcc burbuja_optimizada1.c ../tiempo.c -o bo2"
+ *  Ejecución: "./bo2 n < ../../../numeros10millones.txt" o usando el script "./burbuja_optimizada2.sh"
+*/
+
+//*****************************************************************
+//Librerias
+//*****************************************************************
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
