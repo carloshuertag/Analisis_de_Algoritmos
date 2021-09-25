@@ -1,12 +1,10 @@
 /**
- *  @author @Reina Beatriz Juarez Leonel
- *  Curso: Análisis de algoritmos
- *  (C) Septiembre 2021
+ *  Programa de prueba para la búsqueda Fibonacci
+ *  @author @MarcoLg23 Marco Antonio Lavarrios González
+ *  @copyright Septiembre 2021
  *  @version 1.0
- *  ESCOM-IPN
- *  Busqueda de un numero x dentro de un arreglo ordenado de tamaño n, ocupando la busqueda exponencial en C.
- *  Compilación: "gcc exponencialBusqueda.c -o exponencial"
- *  Ejecución: "exponencial n x <../../../10millones.txt"
+ *  Compilación: gcc fib.c ../tiempo.c -o fib
+ *  Ejecución: ./fib n < ../../../numeros10millones.txt
 */
 #include <pthread.h>
 #include <stdio.h>
@@ -22,7 +20,7 @@ int main(int argc, char *argv[])
 {
     if (argc != 2)
     {
-        printf("el formato es:./fib <valor>\n");
+        printf("el formato es: ./fib <valor>\n");
         return -1; //ERROR
     }
 
@@ -49,10 +47,9 @@ int main(int argc, char *argv[])
     for (j = 0; j < n; j++)
     {
         pthread_join(threads[j], NULL);
-    }                           // End of wating the threads to exit.
-
-    // printing arrfib.
-    printf("The Fibonacci sequence.:");
+    }
+    
+    printf("Secuencia Fibonacci:");
     int k;
 
     for (k = 0; k < n; k++)
@@ -81,4 +78,75 @@ void *runn(void *arg)
         // printf("arrfib[%d]%d,\n",i,arrfib[i]);
         pthread_exit(0);        // thread exit.
     }                           // End of else
-}                               // End of run.
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+// C program for Fibonacci Search
+#include <stdio.h>
+
+// Utility function to find minimum of two elements
+int min(int x, int y) { return (x <= y) ? x : y; }
+
+int fibMonaccianSearch(int arr[], int x, int n)
+{
+	int fibMMm2 = 0; // (m-2)'th Fibonacci No.
+	int fibMMm1 = 1; // (m-1)'th Fibonacci No.
+	int fibM = fibMMm2 + fibMMm1; // m'th Fibonacci
+
+	while (fibM < n) {
+		fibMMm2 = fibMMm1;
+		fibMMm1 = fibM;
+		fibM = fibMMm2 + fibMMm1;
+	}
+
+	// Marks the eliminated range from front
+	int offset = -1;
+	while (fibM > 1) {
+		// Check if fibMm2 is a valid location
+		int i = min(offset + fibMMm2, n - 1);
+		if (arr[i] < x) {
+			fibM = fibMMm1;
+			fibMMm1 = fibMMm2;
+			fibMMm2 = fibM - fibMMm1;
+			offset = i;
+		}
+		else if (arr[i] > x) {
+			fibM = fibMMm2;
+			fibMMm1 = fibMMm1 - fibMMm2;
+			fibMMm2 = fibM - fibMMm1;
+		}
+		else
+			return i;
+	}
+	if (fibMMm1 && arr[offset + 1] == x)
+		return offset + 1;
+	return -1;
+}
+
+int main(void)
+{
+	int arr[]
+		= { 10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100,235};
+	int n = sizeof(arr) / sizeof(arr[0]);
+	int x = 235;
+	int ind = fibMonaccianSearch(arr, x, n);
+if(ind>=0)
+	printf("Found at index: %d",ind);
+else
+	printf("%d isn't present in the array",x);
+	return 0;
+}*/
