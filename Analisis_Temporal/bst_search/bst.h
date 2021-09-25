@@ -4,20 +4,23 @@
 typedef struct Node
 {
     Entry key;
+    unsigned int count;
     struct Node *left, *right;
 } * Node;
 
 /**
  *  creates a new binary search tree node with given nodes and a given entry.
  *  @param item binary search tree node entry.
+ *  @param count binary search tree node entry times.
  *  @param lft binary search tree left node.
  *  @param rght binary search tree right node.
  *  @return new binary search tree node.
 */
-Node createNode(Entry item, Node lft, Node rght)
+Node createNode(Entry item, unsigned int count, Node lft, Node rght)
 {
     Node node = (Node)malloc(sizeof(struct Node));
     node->key = item;
+    node->count = 1;
     node->left = lft;
     node->right = rght;
     return node;
@@ -31,22 +34,23 @@ Node createNode(Entry item, Node lft, Node rght)
 */
 Node insertNode(Entry item, Node root)
 {
-    Node newNode = createNode(item, NULL, NULL);
     Node current = root;
-    Node aux = NULL;
+    Node parent = NULL;
     while(current != NULL)
     {
-        aux = current;
+        parent = current;
         current = (isEntryGreater(item, current->key)) ?
-                    current->left: current->right;
+                    current->left : current->right;
     }
-    if(aux == NULL)
-        aux = newNode;
-    else if (isEntryGreater(item, aux->key))
-        aux->left = newNode;
+    if(parent == NULL)
+        parent = createNode(item, 1, NULL, NULL);
+    else if (isEntryGreater(item, parent->key))
+        parent->left = createNode(item,  1, NULL, NULL);
+    else if (isEntryLower(item, parent->key))
+        parent->right = createNode(item, 1, NULL, NULL);
     else
-        aux->right = newNode;
-    return aux;
+        ++(parent->count);
+    return parent;
 }
 
 /**
@@ -78,4 +82,18 @@ void deleteTree(Node root){
     deleteTree(root->left);
     deleteTree(root->right);
     free(root);
+}
+
+/**
+ *  prints given binary search tree node in inorder.
+ *  @param root binary search tree root node.
+*/
+void printInOrder(Node root)
+{
+    if (root != NULL)
+    {
+        printInOrder(root->left);
+        printEntry(root->key);
+        printInOrder(root->right);
+    }
 }
