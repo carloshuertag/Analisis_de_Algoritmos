@@ -67,3 +67,15 @@ bool searchKey(Node root, Entry item) {
     }
     return false;
 }
+
+/**
+ *  deletes a binary search tree given its root
+ *  @param root binary search tree root node.
+*/
+void deleteTree(Node root){
+    if(root == NULL)
+        return;
+    deleteTree(root->left);
+    deleteTree(root->right);
+    free(root);
+}
