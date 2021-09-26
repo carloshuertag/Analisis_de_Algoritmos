@@ -45,7 +45,7 @@ int main (int argc, char* argv[]){
     int i; //Variables para loops
 
     /*Recepción y decodificación de argumentos*/
-    if(argc!=4){ //Si no se introducen exactamente 2 argumentos (Cadena de ejecución y cadena=n)
+    if(argc!=4){ //Si no se introducen exactamente 4 argumentos (Cadena de ejecución, tamañoArreglo=n, numero a buscar x y numero de hilos)
         printf("\nIndique el tamaño del arreglo y el numero a buscar - Ejemplo: %s 100 5 2\n",argv[0]);
         exit(1);
     } 
