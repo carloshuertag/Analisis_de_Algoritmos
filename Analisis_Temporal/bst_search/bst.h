@@ -32,17 +32,18 @@ Node createNode(Entry item, unsigned int count, Node lft, Node rght)
  *  @param item binary search tree node entry.
  *  @return node which its key is the item.
 */
-Node searchNode(Node root, Entry item) {
+Node searchNode(Node root, Entry item)
+{
     Node current = root;
     while (current != NULL)
     {
-        if(isEntryLower(item, current->key))
-            if(current->right == NULL)
+        if (isEntryLower(item, current->key))
+            if (current->right == NULL)
                 break;
             else
                 current = current->right;
-        else if (isEntryGreater(item, current->key)){
-            if(current->left == NULL)
+        else if (isEntryGreater(item, current->key))
+            if (current->left == NULL)
                 break;
             else
                 current = current->left;
@@ -61,10 +62,10 @@ Node searchNode(Node root, Entry item) {
 Node insertNode(Entry item, Node root)
 {
     Node node = searchNode(root, item);
-    if(node == NULL)
+    if (node == NULL)
         return createNode(item, 1, NULL, NULL);
     else if (isEntryGreater(item, node->key))
-        node->left = createNode(item,  1, NULL, NULL);
+        node->left = createNode(item, 1, NULL, NULL);
     else if (isEntryLower(item, node->key))
         node->right = createNode(item, 1, NULL, NULL);
     else
@@ -89,7 +90,7 @@ bool searchKey(Node root, Entry item)
 */
 void deleteTree(Node root)
 {
-    if(root == NULL)
+    if (root == NULL)
         return;
     deleteTree(root->left);
     deleteTree(root->right);
