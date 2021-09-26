@@ -6,6 +6,93 @@
  *  Compilación: gcc fib.c ../tiempo.c -o fib
  *  Ejecución: ./fib n < ../../../numeros10millones.txt
 */
+
+#include <stdio.h>
+
+int min(int x, int y) {
+    return (x <= y) ? x : y;
+    }
+
+int fibonacci(int arr[], int x, int n)
+{
+	int fibMMm2 = 0;
+	int fibMMm1 = 1;
+	int fibM = fibMMm2 + fibMMm1;
+
+	while (fibM < n) {
+		fibMMm2 = fibMMm1;
+		fibMMm1 = fibM;
+		fibM = fibMMm2 + fibMMm1;
+	}
+
+	// Marks the eliminated range from front
+	int offset = -1;
+	while (fibM > 1) {
+		// Check if fibMm2 is a valid location
+		int i = min(offset + fibMMm2, n - 1);
+		if (arr[i] < x) {
+			fibM = fibMMm1;
+			fibMMm1 = fibMMm2;
+			fibMMm2 = fibM - fibMMm1;
+			offset = i;
+		}
+		else if (arr[i] > x) {
+			fibM = fibMMm2;
+			fibMMm1 = fibMMm1 - fibMMm2;
+			fibMMm2 = fibM - fibMMm1;
+		}
+		else
+			return i;
+	}
+	if (fibMMm1 && arr[offset + 1] == x)
+		return offset + 1;
+	return -1;
+}
+
+int main(void)
+{
+	int arr[] = { 10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100, 235};
+	int n = sizeof(arr) / sizeof(arr[0]);
+	int x = 236;
+	int ind = fibonacci(arr, x, n);
+if(ind>=0)
+	printf("Found at index: %d",ind);
+else
+	printf("%d isn't present in the array",x);
+	return 0;
+}
+
+int main (int argc, char* argv[]){
+    //Declaracion de variables del main
+    int n; //n determina el tamaño del algoritmo dado por argumento al ejecutar
+    int x; //x numero a buscar dado por el argumento
+    int i; //Variables para loops
+
+    /*Recepción y decodificación de argumentos*/
+    if(argc!=3){ //Si no se introducen exactamente 2 argumentos (Cadena de ejecución y cadena=n)
+        printf("\nIndique el tamaño del arreglo y el numero a buscar - Ejemplo: %s 100 5\n",argv[0]);
+        exit(1);
+    } 
+    //Tomar el segundo argumento como tamaño del algoritmo y el tercero como numero a buscar
+    else{
+        n=atoi(argv[1]);
+        x=atoi(argv[2]);
+    }
+    int *A = (int*)malloc(n * sizeof(int)); // tamaño de memoria para el arreglo
+        if (A == NULL) {
+        perror("Espacio de memoria no asignado\n");
+        exit(1);
+        }
+    for(i = 0; i < n; i++)
+            scanf("%d", &A[i]); // llenando el arreglo
+
+   int res = exponentialSearch(A, n, x);
+   (res == -1)? printf("El elemento no se encuentra en el arreglo")
+                 : printf("El elemento se encuentra en el indice %d", res);
+   return 0;
+}
+
+/*
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -78,75 +165,4 @@ void *runn(void *arg)
         printf("arrfib[%d]%d,\n",i,arrfib[i]);
         pthread_exit(0);
     }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-// C program for Fibonacci Search
-#include <stdio.h>
-
-// Utility function to find minimum of two elements
-int min(int x, int y) { return (x <= y) ? x : y; }
-
-int fibMonaccianSearch(int arr[], int x, int n)
-{
-	int fibMMm2 = 0; // (m-2)'th Fibonacci No.
-	int fibMMm1 = 1; // (m-1)'th Fibonacci No.
-	int fibM = fibMMm2 + fibMMm1; // m'th Fibonacci
-
-	while (fibM < n) {
-		fibMMm2 = fibMMm1;
-		fibMMm1 = fibM;
-		fibM = fibMMm2 + fibMMm1;
-	}
-
-	// Marks the eliminated range from front
-	int offset = -1;
-	while (fibM > 1) {
-		// Check if fibMm2 is a valid location
-		int i = min(offset + fibMMm2, n - 1);
-		if (arr[i] < x) {
-			fibM = fibMMm1;
-			fibMMm1 = fibMMm2;
-			fibMMm2 = fibM - fibMMm1;
-			offset = i;
-		}
-		else if (arr[i] > x) {
-			fibM = fibMMm2;
-			fibMMm1 = fibMMm1 - fibMMm2;
-			fibMMm2 = fibM - fibMMm1;
-		}
-		else
-			return i;
-	}
-	if (fibMMm1 && arr[offset + 1] == x)
-		return offset + 1;
-	return -1;
-}
-
-int main(void)
-{
-	int arr[]
-		= { 10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100,235};
-	int n = sizeof(arr) / sizeof(arr[0]);
-	int x = 235;
-	int ind = fibMonaccianSearch(arr, x, n);
-if(ind>=0)
-	printf("Found at index: %d",ind);
-else
-	printf("%d isn't present in the array",x);
-	return 0;
 }*/
