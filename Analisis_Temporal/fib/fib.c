@@ -55,9 +55,9 @@ int main(int argc, char *argv[])
     for (k = 0; k < n; k++)
     {
         printf("%d,", arrfib[k]);
-    }                           // End of printing arrfib.
+    }
     return 0;
-}                               // End of main.
+}
 
 void *runn(void *arg)
 {
@@ -65,19 +65,19 @@ void *runn(void *arg)
     {
         arrfib[i] = 0;
         pthread_exit(0);
-    }                           // first fib term
+    }                           //PRIMER TERMINO
 
     if (i == 1)
     {
         arrfib[i] = 1;
         pthread_exit(0);
-    }                           // seconed fib term
+    }                           //SEGUNDO TERMINO
     else
     {
         arrfib[i] = arrfib[i - 1] + arrfib[i - 2];
-        // printf("arrfib[%d]%d,\n",i,arrfib[i]);
-        pthread_exit(0);        // thread exit.
-    }                           // End of else
+        printf("arrfib[%d]%d,\n",i,arrfib[i]);
+        pthread_exit(0);
+    }
 }
 
 
