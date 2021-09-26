@@ -1,30 +1,30 @@
 
 Threaded BST Search for n = 1000000
-Avergae real time: 1.3269186020e-04 s
+Avergae real time: 1.1383295059e-04 s
 
 Threaded BST Search for n = 2000000
-Avergae real time: 9.7942352295e-05 s
+Avergae real time: 1.2134313583e-04 s
 
 Threaded BST Search for n = 3000000
-Avergae real time: 1.1816024780e-04 s
+Avergae real time: 1.2619495392e-04 s
 
 Threaded BST Search for n = 4000000
-Avergae real time: 1.1806488037e-04 s
+Avergae real time: 1.2425184250e-04 s
 
 Threaded BST Search for n = 5000000
-Avergae real time: 1.1852979660e-04 s
+Avergae real time: 1.2816190720e-04 s
 
 Threaded BST Search for n = 6000000
-Avergae real time: 1.2186765671e-04 s
+Avergae real time: 1.2493133545e-04 s
 
 Threaded BST Search for n = 7000000
-Avergae real time: 1.2047290802e-04 s
+Avergae real time: 1.1858940125e-04 s
 
 Threaded BST Search for n = 8000000
-Avergae real time: 1.1875629425e-04 s
+Avergae real time: 1.3607740402e-04 s
 
 Threaded BST Search for n = 9000000
-Avergae real time: 1.2620687485e-04 s
+Avergae real time: 1.2114048004e-04 s
 
 Threaded BST Search for n = 10000000
-Avergae real time: 2.0824670792e-04 s
+Avergae real time: 1.1794567108e-04 s
