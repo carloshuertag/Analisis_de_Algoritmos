@@ -4,7 +4,7 @@
  *  @copyright Septiembre 2021
  *  @version 1.0
  *  Compilación: gcc fib.c ../tiempo.c -o fib
- *  Ejecución: ./fib n < ../../../numeros10millones.txt
+ *  Ejecución: ./fib n < ../../../10millonesOrd.txt
 */
 
 #include <stdio.h>
@@ -51,15 +51,8 @@ int fibonacci(int arr[], int x, int n)
 
 int main(void)
 {
-	int arr[] = { 10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100, 235};
-	int n = sizeof(arr) / sizeof(arr[0]);
-	int x = 236;
-	int ind = fibonacci(arr, x, n);
-if(ind>=0)
-	printf("Found at index: %d",ind);
-else
-	printf("%d isn't present in the array",x);
-	return 0;
+	
+
 }
 
 int main (int argc, char* argv[]){
@@ -78,18 +71,21 @@ int main (int argc, char* argv[]){
         n=atoi(argv[1]);
         x=atoi(argv[2]);
     }
-    int *A = (int*)malloc(n * sizeof(int)); // tamaño de memoria para el arreglo
-        if (A == NULL) {
+    int *arr = (int*)malloc(n * sizeof(int)); // tamaño de memoria para el arreglo
+        if (arr == NULL) {
         perror("Espacio de memoria no asignado\n");
         exit(1);
         }
     for(i = 0; i < n; i++)
             scanf("%d", &A[i]); // llenando el arreglo
 
-   int res = exponentialSearch(A, n, x);
-   (res == -1)? printf("El elemento no se encuentra en el arreglo")
-                 : printf("El elemento se encuentra en el indice %d", res);
-   return 0;
+    
+    int ind = fibonacci(arr, x, n);
+    if(ind>=0)
+	printf("Found at index: %d",ind);
+    else
+	printf("%d isn't present in the array",x);
+	return 0;   
 }
 
 /*
