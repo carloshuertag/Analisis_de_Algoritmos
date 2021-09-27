@@ -1,13 +1,89 @@
 /**
- *  @author @Reina Beatriz Juarez Leonel
- *  Curso: Análisis de algoritmos
- *  (C) Septiembre 2021
+ *  Programa de prueba para la búsqueda Fibonacci
+ *  @author @MarcoLg23 Marco Antonio Lavarrios González
+ *  @copyright Septiembre 2021
  *  @version 1.0
- *  ESCOM-IPN
- *  Busqueda de un numero x dentro de un arreglo ordenado de tamaño n, ocupando la busqueda exponencial en C.
- *  Compilación: "gcc exponencialBusqueda.c -o exponencial"
- *  Ejecución: "exponencial n x <../../../10millones.txt"
+ *  Compilación: gcc fib.c ../tiempo.c -o fib
+ *  Ejecución: ./fib n x < 10millonesOrd.txt
 */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int min(int x, int y) {
+    return (x <= y) ? x : y;
+    }
+
+int fibonacci(int arr[], int x, int n)
+{
+	int fibMMm2 = 0;
+	int fibMMm1 = 1;
+	int fibM = fibMMm2 + fibMMm1;
+
+	while (fibM < n) {
+		fibMMm2 = fibMMm1;
+		fibMMm1 = fibM;
+		fibM = fibMMm2 + fibMMm1;
+	}
+
+	// Marks the eliminated range from front
+	int offset = -1;
+	while (fibM > 1) {
+		// Check if fibMm2 is a valid location
+		int i = min(offset + fibMMm2, n - 1);
+		if (arr[i] < x) {
+			fibM = fibMMm1;
+			fibMMm1 = fibMMm2;
+			fibMMm2 = fibM - fibMMm1;
+			offset = i;
+		}
+		else if (arr[i] > x) {
+			fibM = fibMMm2;
+			fibMMm1 = fibMMm1 - fibMMm2;
+			fibMMm2 = fibM - fibMMm1;
+		}
+		else
+			return i;
+	}
+	if (fibMMm1 && arr[offset + 1] == x)
+		return offset + 1;
+	return -1;
+}
+
+int main (int argc, char* argv[]){
+    //Declaracion de variables del main
+    int n; //n determina el tamaño del algoritmo dado por argumento al ejecutar
+    int x; //x numero a buscar dado por el argumento
+    int i; //Variables para loops
+
+    /*Recepción y decodificación de argumentos*/
+    if(argc!=3){ //Si no se introducen exactamente 2 argumentos (Cadena de ejecución y cadena=n)
+        printf("\nIndique el tamano del arreglo y el numero a buscar - Ejemplo: %s 100 5\n",argv[0]);
+        exit(1);
+    } 
+    //Tomar el segundo argumento como tamaño del algoritmo y el tercero como numero a buscar
+    else{
+        n=atoi(argv[1]);
+        x=atoi(argv[2]);
+    }
+    int *arr = (int*)malloc(n * sizeof(int)); // tamaño de memoria para el arreglo
+        if (arr == NULL) {
+        perror("Espacio de memoria no asignado\n");
+        exit(1);
+        }
+    for(i = 0; i < n; i++)
+            scanf("%d", &arr[i]); // llenando el arreglo
+
+    
+    int ind = fibonacci(arr, x, n);
+    if(ind>=0)
+	printf("Found at index: %d",ind);
+    else
+	printf("%d isn't present in the array",x);
+	return 0;
+}
+
+/*
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,7 +98,7 @@ int main(int argc, char *argv[])
 {
     if (argc != 2)
     {
-        printf("el formato es:./fib <valor>\n");
+        printf("el formato es: ./fib <valor>\n");
         return -1; //ERROR
     }
 
@@ -49,18 +125,17 @@ int main(int argc, char *argv[])
     for (j = 0; j < n; j++)
     {
         pthread_join(threads[j], NULL);
-    }                           // End of wating the threads to exit.
-
-    // printing arrfib.
-    printf("The Fibonacci sequence.:");
+    }
+    
+    printf("Secuencia Fibonacci:");
     int k;
 
     for (k = 0; k < n; k++)
     {
         printf("%d,", arrfib[k]);
-    }                           // End of printing arrfib.
+    }
     return 0;
-}                               // End of main.
+}
 
 void *runn(void *arg)
 {
@@ -68,17 +143,17 @@ void *runn(void *arg)
     {
         arrfib[i] = 0;
         pthread_exit(0);
-    }                           // first fib term
+    }                           //PRIMER TERMINO
 
     if (i == 1)
     {
         arrfib[i] = 1;
         pthread_exit(0);
-    }                           // seconed fib term
+    }                           //SEGUNDO TERMINO
     else
     {
         arrfib[i] = arrfib[i - 1] + arrfib[i - 2];
-        // printf("arrfib[%d]%d,\n",i,arrfib[i]);
-        pthread_exit(0);        // thread exit.
-    }                           // End of else
-}                               // End of run.
+        printf("arrfib[%d]%d,\n",i,arrfib[i]);
+        pthread_exit(0);
+    }
+}*/

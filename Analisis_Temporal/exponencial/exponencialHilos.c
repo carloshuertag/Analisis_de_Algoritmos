@@ -4,22 +4,39 @@
  *  (C) Septiembre 2021
  *  @version 1.0
  *  ESCOM-IPN
- *  Busqueda de un numero x dentro de un arreglo ordenado de tamaño n, ocupando la busqueda exponencial en C.
- *  Compilación: "gcc exponencialBusqueda.c -o exponencial"
- *  Ejecución: "./exponencial n x < ../../../10millones.txt"
+ *  Busqueda exponencial de un numero x dentro de un arreglo ordenado de tamaño n, ocupando hilos en C.
+ *  Compilación: "gcc exponencialHilos.c -o exponencialHilos -lpthread"
+ *  Ejecución: "./exponencialHilos n x numThreads < ../../../10millones.txt"
 */
 
 //LIBRERIAS
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "tiempo.h"
+#include <math.h>
 
 //DEFINICIONES 
 #define min(X, Y) (((X) < (Y)) ? (X) : (Y))
+//#define NumThreads 4
 
 //DECLARACIÓN DE FUNCIONES
 int busquedaBinaria(int arr[], int l, int r, int x);
 int busquedaExponencial(int arr[], int n, int x);
- 
+void* exponencial(void* args);
+
+//DECLARACION DE ESTRUCTURAS
+struct args {
+    int *A;
+    int n;
+    int x;
+    int li;
+    int id;
+};
+
+//VARIABLES GLOBALES
+int NumThreads;
+
 //PROGRAMA PRINCIPAL
 int main (int argc, char* argv[]){
     //Declaracion de variables del main
@@ -28,28 +45,66 @@ int main (int argc, char* argv[]){
     int i; //Variables para loops
 
     /*Recepción y decodificación de argumentos*/
-    if(argc!=3){ //Si no se introducen exactamente 3 argumentos (Cadena de ejecución, tamañoArreglo=n y numero a buscar x)
-        printf("\nIndique el tamaño del arreglo y el numero a buscar - Ejemplo: %s 100 5\n",argv[0]);
+    if(argc!=4){ //Si no se introducen exactamente 4 argumentos (Cadena de ejecución, tamañoArreglo=n, numero a buscar x y numero de hilos)
+        printf("\nIndique el tamaño del arreglo y el numero a buscar - Ejemplo: %s 100 5 2\n",argv[0]);
         exit(1);
     } 
+
     //Tomar el segundo argumento como tamaño del algoritmo y el tercero como numero a buscar
     else{
-        n=atoi(argv[1]);
-        x=atoi(argv[2]);
+        n = atoi(argv[1]);
+        x = atoi(argv[2]);
+        NumThreads = atoi(argv[3]);
+    }
+
+    if(n < NumThreads){
+        printf("\nLos numeros de hilos deben ser menor al tamaño del arreglo %d < %d \n",n, NumThreads);
+        exit(1);
     }
     int *A = (int*)malloc(n * sizeof(int)); // tamaño de memoria para el arreglo
+    
         if (A == NULL) {
         perror("Espacio de memoria no asignado\n");
         exit(1);
         }
+    
     for(i = 0; i < n; i++)
             scanf("%d", &A[i]); // llenando el arreglo
-
-   int res = busquedaExponencial(A, n, x);
-   (res == -1)? printf("El elemento no se encuentra en el arreglo\n")
-                 : printf("El elemento se encuentra en el indice %d\n", res);
+    
+    /*Parte de hilos*/     
+    pthread_t *thread;
+    thread = malloc(NumThreads*sizeof(pthread_t));
+   	
+   	int subn = n/NumThreads;
+    for (i=0; i<NumThreads; i++){
+    	//Asignación de datos
+        struct args *datos = (struct args *)malloc(sizeof(struct args));
+    	datos->n = subn;
+        datos->x = x;
+        datos->li = ceil(1.0*(n/NumThreads)*i);//,  Hacer condicion para ultima i-->Dentro va la asignación de n
+        datos->A = &A[datos->li];
+        if(i==NumThreads-1){
+            datos->n = n-datos->li;
+        }
+        datos->id = i;
+    	if (pthread_create (&thread[i], NULL, exponencial,(void*)datos) != 0 ){
+    		perror("El thread no  pudo crearse");
+    		exit(-1);
+    	}
+    }
+	for (i=0; i<NumThreads; i++) 
+        pthread_join (thread[i], NULL);
    return 0;
 }
+
+void* exponencial(void* dato){
+    struct args *datos = dato;
+	int res = busquedaExponencial(datos->A, datos->n, datos->x);
+	
+	(res == -1)? printf("\nHola\tSoy el thread %d y no encontre el elemento \n", datos->id+1)
+                 : printf("\nHola\tSoy el thread %d y el elemento se encuentra en el indice %d \n",datos->id+1, datos->li + res);
+}
+
 
 /**
  *  Busca un numero x en un arreglo de tamaño n usando el algoritmo de busqueda exponencial
@@ -85,7 +140,7 @@ int busquedaBinaria(int arr[], int l, int r, int x){
   
         if (arr[m] == x)//Checa si x esta a la mitad
             return m;
-
+  
         if (arr[m] < x) // Si x es mas grande, ignora la mitad izquierda
             l = m + 1;
   
