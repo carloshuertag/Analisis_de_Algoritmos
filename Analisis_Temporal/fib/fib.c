@@ -10,39 +10,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main (int argc, char* argv[]){
-    //Declaracion de variables del main
-    int n; //n determina el tamaño del algoritmo dado por argumento al ejecutar
-    int x; //x numero a buscar dado por el argumento
-    int i; //Variables para loops
-
-    /*Recepción y decodificación de argumentos*/
-    if(argc!=3){ //Si no se introducen exactamente 2 argumentos (Cadena de ejecución y cadena=n)
-        printf("\nIndique el tamano del arreglo y el numero a buscar - Ejemplo: %s 100 5\n",argv[0]);
-        exit(1);
-    } 
-    //Tomar el segundo argumento como tamaño del algoritmo y el tercero como numero a buscar
-    else{
-        n=atoi(argv[1]);
-        x=atoi(argv[2]);
-    }
-    int *arr = (int*)malloc(n * sizeof(int)); // tamaño de memoria para el arreglo
-        if (arr == NULL) {
-        perror("Espacio de memoria no asignado\n");
-        exit(1);
-        }
-    for(i = 0; i < n; i++)
-            scanf("%d", &arr[i]); // llenando el arreglo
-
-    
-    int ind = fibonacci(arr, x, n);
-    if(ind>=0)
-	printf("Found at index: %d",ind);
-    else
-	printf("%d isn't present in the array",x);
-	return 0;
-}
-
 int min(int x, int y) {
     return (x <= y) ? x : y;
     }
@@ -81,6 +48,39 @@ int fibonacci(int arr[], int x, int n)
 	if (fibMMm1 && arr[offset + 1] == x)
 		return offset + 1;
 	return -1;
+}
+
+int main (int argc, char* argv[]){
+    //Declaracion de variables del main
+    int n; //n determina el tamaño del algoritmo dado por argumento al ejecutar
+    int x; //x numero a buscar dado por el argumento
+    int i; //Variables para loops
+
+    /*Recepción y decodificación de argumentos*/
+    if(argc!=3){ //Si no se introducen exactamente 2 argumentos (Cadena de ejecución y cadena=n)
+        printf("\nIndique el tamano del arreglo y el numero a buscar - Ejemplo: %s 100 5\n",argv[0]);
+        exit(1);
+    } 
+    //Tomar el segundo argumento como tamaño del algoritmo y el tercero como numero a buscar
+    else{
+        n=atoi(argv[1]);
+        x=atoi(argv[2]);
+    }
+    int *arr = (int*)malloc(n * sizeof(int)); // tamaño de memoria para el arreglo
+        if (arr == NULL) {
+        perror("Espacio de memoria no asignado\n");
+        exit(1);
+        }
+    for(i = 0; i < n; i++)
+            scanf("%d", &arr[i]); // llenando el arreglo
+
+    
+    int ind = fibonacci(arr, x, n);
+    if(ind>=0)
+	printf("Found at index: %d",ind);
+    else
+	printf("%d isn't present in the array",x);
+	return 0;
 }
 
 /*
