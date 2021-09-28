@@ -1,0 +1,30 @@
+
+Lineal con n = 1000000
+Promedio del tiempo real: 2.3802638054e-03 s
+
+Lineal con n = 2000000
+Promedio del tiempo real: 4.6161174774e-03 s
+
+Lineal con n = 3000000
+Promedio del tiempo real: 6.7278623581e-03 s
+
+Lineal con n = 4000000
+Promedio del tiempo real: 8.8078498840e-03 s
+
+Lineal con n = 5000000
+Promedio del tiempo real: 1.1095345020e-02 s
+
+Lineal con n = 6000000
+Promedio del tiempo real: 1.2949120998e-02 s
+
+Lineal con n = 7000000
+Promedio del tiempo real: 1.5191257000e-02 s
+
+Lineal con n = 8000000
+Promedio del tiempo real: 1.6987609863e-02 s
+
+Lineal con n = 9000000
+Promedio del tiempo real: 1.8502879143e-02 s
+
+Lineal con n = 10000000
+Promedio del tiempo real: 1.9247794151e-02 s
