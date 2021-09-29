@@ -5,8 +5,8 @@
  *  @version 1.0
  *  ESCOM-IPN
  *  Busqueda de un numero x dentro de un arreglo ordenado de tamaño n, ocupando la busqueda exponencial en C.
- *  Compilación: "gcc exponencialBusqueda.c -o exponencial"
- *  Ejecución: "./exponencial n x < ../../../10millones.txt"
+ *  Compilación: gcc exponencialBusqueda.c -o exponencial
+ *  Ejecución: ./exponencial n x < ../../../10millones.txt
 */
 
 //LIBRERIAS
@@ -62,7 +62,7 @@ int busquedaExponencial(int arr[], int n, int x){
     if (arr[0] == x) // Si x esta en la primer posicion del arreglo
         return 0;
  
-    // Encontrando un rango para la busqueda binaria mediante duplicacion repetida¿?
+    // Encontrando un rango para la busqueda binaria mediante duplicacion repetida
     int i = 1;
     while (i < n && arr[i] <= x)
         i = i*2;
