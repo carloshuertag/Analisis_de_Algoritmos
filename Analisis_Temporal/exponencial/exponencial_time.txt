@@ -1,0 +1,30 @@
+
+Busqueda exponencial con n = 1000000
+Promedio del tiempo real: 1.2397766113e-06 s
+
+Busqueda exponencial con n = 2000000
+Promedio del tiempo real: 1.2636184692e-06 s
+
+Busqueda exponencial con n = 3000000
+Promedio del tiempo real: 1.3113021851e-06 s
+
+Busqueda exponencial con n = 4000000
+Promedio del tiempo real: 1.4662742615e-06 s
+
+Busqueda exponencial con n = 5000000
+Promedio del tiempo real: 1.4901161194e-06 s
+
+Busqueda exponencial con n = 6000000
+Promedio del tiempo real: 1.3947486877e-06 s
+
+Busqueda exponencial con n = 7000000
+Promedio del tiempo real: 1.6927719116e-06 s
+
+Busqueda exponencial con n = 8000000
+Promedio del tiempo real: 1.7046928406e-06 s
+
+Busqueda exponencial con n = 9000000
+Promedio del tiempo real: 1.6093254089e-06 s
+
+Busqueda exponencial con n = 10000000
+Promedio del tiempo real: 1.8835067749e-06 s
