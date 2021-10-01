@@ -9,6 +9,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
+
+
+
+void *runn(void *arg);
 
 int min(int x, int y) {
     return (x <= y) ? x : y;
@@ -67,6 +72,8 @@ int main (int argc, char* argv[]){
         x=atoi(argv[2]);
     }
     int *arr = (int*)malloc(n * sizeof(int)); // tamaño de memoria para el arreglo
+    pthread_t *threads = (pthread_t *) malloc(n * sizeof(pthread_t)); //TAMAÑO DEL ARREGLO DE HILOS
+    pthread_attr_t attr; //ATRIBUTO DEL HILO
         if (arr == NULL) {
         perror("Espacio de memoria no asignado\n");
         exit(1);
@@ -74,47 +81,7 @@ int main (int argc, char* argv[]){
     for(i = 0; i < n; i++)
             scanf("%d", &arr[i]); // llenando el arreglo
 
-    
-    int ind = fibonacci(arr, x, n);
-    if(ind>=0)
-	printf("Found at index: %d",ind);
-    else
-	printf("%d isn't present in the array",x);
-	return 0;
-}
-
-/*
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-int n;                          // TMAÑO DE LA SECUENCIA
-int *arrfib;                    // ARREGLO PARA CADA VALOR
-int i;                          
-
-void *runn(void *arg);
-
-int main(int argc, char *argv[])
-{
-    if (argc != 2)
-    {
-        printf("el formato es: ./fib <valor>\n");
-        return -1; //ERROR
-    }
-
-    if (atoi(argv[1]) < 0)
-    {
-        printf("%d debe ser>0\n", atoi(argv[1]));
-        return -1; //ERROR
-    }
-
-    n = atoi(argv[1]);
-    arrfib = (int *)malloc(n * sizeof(int)); //TAMAÑO DEL ARREGLO
-    pthread_t *threads = (pthread_t *) malloc(n * sizeof(pthread_t)); //TAMAÑO DEL ARREGLO DE HILOS
-    pthread_attr_t attr; //ATRIBUTO DEL HILO
-
     pthread_attr_init(&attr);
-
     for (i=0; i<n; i++)
     {
         pthread_create(&threads[i], &attr, runn, NULL);
@@ -135,7 +102,34 @@ int main(int argc, char *argv[])
         printf("%d,", arrfib[k]);
     }
     return 0;
+
+    int ind = fibonacci(arr, x, n);
+    if(ind>=0)
+	printf("Found at index: %d",ind);
+    else
+	printf("%d isn't present in the array",x);
+	return 0;
 }
+
+/*
+
+
+int main(int argc, char *argv[])
+{
+    if (argc != 2)
+    {
+        printf("el formato es: ./fib <valor>\n");
+        return -1; //ERROR
+    }
+
+    if (atoi(argv[1]) < 0)
+    {
+        printf("%d debe ser>0\n", atoi(argv[1]));
+        return -1; //ERROR
+    }
+
+    n = atoi(argv[1]);
+    arrfib = (int *)malloc(n * sizeof(int)); //TAMAÑO DEL ARREGLO    
 
 void *runn(void *arg)
 {
