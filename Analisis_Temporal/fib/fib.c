@@ -11,7 +11,8 @@
 #include <stdlib.h>
 #include <pthread.h>
 
-
+int *arr;
+int i;
 
 void *runn(void *arg);
 
@@ -71,7 +72,7 @@ int main (int argc, char* argv[]){
         n=atoi(argv[1]);
         x=atoi(argv[2]);
     }
-    int *arr = (int*)malloc(n * sizeof(int)); // tamaño de memoria para el arreglo
+    arr = (int*)malloc(n * sizeof(int)); // tamaño de memoria para el arreglo
     pthread_t *threads = (pthread_t *) malloc(n * sizeof(pthread_t)); //TAMAÑO DEL ARREGLO DE HILOS
     pthread_attr_t attr; //ATRIBUTO DEL HILO
         if (arr == NULL) {
@@ -99,7 +100,7 @@ int main (int argc, char* argv[]){
 
     for (k = 0; k < n; k++)
     {
-        printf("%d,", arrfib[k]);
+        printf("%d,", arr[k]);
     }
     return 0;
 
@@ -110,44 +111,23 @@ int main (int argc, char* argv[]){
 	printf("%d isn't present in the array",x);
 	return 0;
 }
-
-/*
-
-
-int main(int argc, char *argv[])
-{
-    if (argc != 2)
-    {
-        printf("el formato es: ./fib <valor>\n");
-        return -1; //ERROR
-    }
-
-    if (atoi(argv[1]) < 0)
-    {
-        printf("%d debe ser>0\n", atoi(argv[1]));
-        return -1; //ERROR
-    }
-
-    n = atoi(argv[1]);
-    arrfib = (int *)malloc(n * sizeof(int)); //TAMAÑO DEL ARREGLO    
-
 void *runn(void *arg)
 {
     if (i == 0)
     {
-        arrfib[i] = 0;
+        arr[i] = 0;
         pthread_exit(0);
     }                           //PRIMER TERMINO
 
     if (i == 1)
     {
-        arrfib[i] = 1;
+        arr[i] = 1;
         pthread_exit(0);
     }                           //SEGUNDO TERMINO
     else
     {
-        arrfib[i] = arrfib[i - 1] + arrfib[i - 2];
-        printf("arrfib[%d]%d,\n",i,arrfib[i]);
+        arr[i] = arr[i - 1] + arr[i - 2];
+        printf("arr[%d]%d,\n",i,arr[i]);
         pthread_exit(0);
     }
-}*/
+}
