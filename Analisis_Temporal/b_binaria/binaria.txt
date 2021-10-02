@@ -1,30 +1,30 @@
 
 Binaria con n = 1000000
-Promedio del tiempo real: 1.0013580322e-06 s
+Promedio del tiempo real: 2.8192996979e-05 s
 
 Binaria con n = 2000000
-Promedio del tiempo real: 9.0599060059e-07 s
+Promedio del tiempo real: 2.5403499603e-05 s
 
 Binaria con n = 3000000
-Promedio del tiempo real: 9.0599060059e-07 s
+Promedio del tiempo real: 2.4056434631e-05 s
 
 Binaria con n = 4000000
-Promedio del tiempo real: 9.0599060059e-07 s
+Promedio del tiempo real: 2.5379657745e-05 s
 
 Binaria con n = 5000000
-Promedio del tiempo real: 9.5367431641e-07 s
+Promedio del tiempo real: 2.6893615723e-05 s
 
 Binaria con n = 6000000
-Promedio del tiempo real: 9.6559524536e-07 s
+Promedio del tiempo real: 2.3889541626e-05 s
 
 Binaria con n = 7000000
-Promedio del tiempo real: 1.2040138245e-06 s
+Promedio del tiempo real: 2.8002262115e-05 s
 
 Binaria con n = 8000000
-Promedio del tiempo real: 1.0013580322e-06 s
+Promedio del tiempo real: 2.4640560150e-05 s
 
 Binaria con n = 9000000
-Promedio del tiempo real: 8.4638595581e-07 s
+Promedio del tiempo real: 2.7656555176e-05 s
 
 Binaria con n = 10000000
-Promedio del tiempo real: 1.0371208191e-06 s
+Promedio del tiempo real: 3.3283233643e-05 s

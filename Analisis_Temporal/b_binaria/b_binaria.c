@@ -84,7 +84,6 @@ int busqueda_binaria(int* A, int tam, int buscado){
     int inferior = 0, superior = tam - 1; //Busqueda binaria  
     int mitad = ((superior - inferior) >> 1) + inferior;
     int index = NO_ENCONTRADO; //Index del elemento buscado
-    mitad >> 1; //divide entre 2
     while(inferior <= superior && index == NO_ENCONTRADO){
         if(A[mitad] == buscado)
             index = mitad;
