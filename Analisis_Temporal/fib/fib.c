@@ -19,9 +19,6 @@
 int *arr;
 int i;
 
-void *runn(void *arg);
-int min(int x, int y);
-
 int min(int x, int y)
 {
     return (x <= y) ? x : y;
@@ -77,15 +74,13 @@ int main (int argc, char* argv[]){
     int i; //Variables para loops
 
     /*Recepción y decodificación de argumentos*/
-    if(argc!=3){ //Si no se introducen exactamente 2 argumentos (Cadena de ejecución y cadena=n)
+    if(argc!=2){ //Si no se introducen exactamente 2 argumentos (Cadena de ejecución y cadena=n)
         printf("\nIndique el tamano del arreglo y el numero a buscar - Ejemplo: %s 100 5\n",argv[0]);
         exit(1);
     }
     //Tomar el segundo argumento como tamaño del algoritmo y el tercero como numero a buscar
-    else{
+    else
         n=atoi(argv[1]);
-        x=atoi(argv[2]);
-    }
     arr = (int*)malloc(n * sizeof(int)); // tamaño de memoria para el arreglo
         if (arr == NULL) {
         perror("Espacio de memoria no asignado\n");
@@ -104,18 +99,5 @@ int main (int argc, char* argv[]){
     avg /= 20; // promediar el tiempo real
     printf("\nLineal con n = %d\nPromedio del tiempo real: %.10e s\n", n, avg);
     free(arr);
-    printf("Secuencia Fibonacci:");
-    int k;
-
-    for(k = 0; k < n; k++)
-    {
-        printf("%d,", arr[k]);
-    }
-
-    int ind = fibonacci(arr, x, n);
-    if(ind>=0)
-	printf("Found at index: %d",ind);
-    else
-	printf("%d isn't present in the array",x);
 	return 0;
 }
