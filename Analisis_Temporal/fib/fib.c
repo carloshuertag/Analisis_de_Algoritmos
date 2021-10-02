@@ -73,7 +73,8 @@ int main (int argc, char* argv[]){
         x=atoi(argv[2]);
     }
     arr = (int*)malloc(n * sizeof(int)); // tamaño de memoria para el arreglo
-    pthread_t *threads = (pthread_t *) malloc(n * sizeof(pthread_t)); //TAMAÑO DEL ARREGLO DE HILOS
+    pthread_t *threads;
+    threads = malloc(4*sizeof(pthread_t)); //TAMAÑO DEL ARREGLO DE HILOS
     pthread_attr_t attr; //ATRIBUTO DEL HILO
         if (arr == NULL) {
         perror("Espacio de memoria no asignado\n");
