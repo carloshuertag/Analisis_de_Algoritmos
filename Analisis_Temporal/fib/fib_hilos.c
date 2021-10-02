@@ -9,23 +9,16 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../tiempo.h"
-
-#define OK 1
-#define ERR -1
-#define NO_ENCONTRADO -2
-#define N_VECES 20 //Numero de iteraciones para encontrar el caso medio
+#include <pthread.h>
 
 int *arr;
 int i;
 
 void *runn(void *arg);
-int min(int x, int y);
 
-int min(int x, int y)
-{
+int min(int x, int y) {
     return (x <= y) ? x : y;
-}
+    }
 
 int fibonacci(int arr[], int x, int n)
 {
@@ -64,13 +57,6 @@ int fibonacci(int arr[], int x, int n)
 }
 
 int main (int argc, char* argv[]){
-
-    double utime0, stime0, wtime0, utime1, stime1, wtime1, avg = 0; //para los tiempos
-    int buscados[] = {322486, 14700764, 3128036, 6337399, 61396, 10393545, 2147445644,
-                    1295390003, 450057883,  18765041, 1980098116, 152503, 5000,
-                    1493283650, 214826, 1843349527, 1360839354, 2109248666,
-                    2147470852, 0};
-
     //Declaracion de variables del main
     int n; //n determina el tamaño del algoritmo dado por argumento al ejecutar
     int x; //x numero a buscar dado por el argumento
@@ -80,37 +66,44 @@ int main (int argc, char* argv[]){
     if(argc!=3){ //Si no se introducen exactamente 2 argumentos (Cadena de ejecución y cadena=n)
         printf("\nIndique el tamano del arreglo y el numero a buscar - Ejemplo: %s 100 5\n",argv[0]);
         exit(1);
-    }
+    } 
     //Tomar el segundo argumento como tamaño del algoritmo y el tercero como numero a buscar
     else{
         n=atoi(argv[1]);
         x=atoi(argv[2]);
     }
     arr = (int*)malloc(n * sizeof(int)); // tamaño de memoria para el arreglo
+    pthread_t *threads;
+    threads = malloc(4*sizeof(pthread_t)); //TAMAÑO DEL ARREGLO DE HILOS
+    pthread_attr_t attr; //ATRIBUTO DEL HILO
         if (arr == NULL) {
         perror("Espacio de memoria no asignado\n");
         exit(1);
         }
     for(i = 0; i < n; i++)
             scanf("%d", &arr[i]); // llenando el arreglo
-    for(int i = 0; i < N_VECES; i++)
+
+    pthread_attr_init(&attr);
+    for (i=0; i<n; i++)
     {
-        uswtime(&utime0, &stime0, &wtime0); // empieza la medición de tiempos
-        int posicion = fibonacci(arr, n, buscados[i]); //Busca el elemento
-        uswtime(&utime1, &stime1, &wtime1); // termina la medición de tiempos
-        avg += wtime1 - wtime0; // acumular el tiempo real
-        stime0 = stime1 = utime0 = utime1 = wtime0 = wtime1 = 0.0; // reiniciar
+        pthread_create(&threads[i], &attr, runn, NULL);
+    }                           //CREACIÓN DE HILOS
+
+    int j;
+
+    for (j = 0; j < n; j++)
+    {
+        pthread_join(threads[j], NULL);
     }
-    avg /= 20; // promediar el tiempo real
-    printf("\nLineal con n = %d\nPromedio del tiempo real: %.10e s\n", n, avg);
-    free(arr);
+    
     printf("Secuencia Fibonacci:");
     int k;
 
-    for(k = 0; k < n; k++)
+    for (k = 0; k < n; k++)
     {
         printf("%d,", arr[k]);
     }
+    return 0;
 
     int ind = fibonacci(arr, x, n);
     if(ind>=0)
@@ -118,4 +111,24 @@ int main (int argc, char* argv[]){
     else
 	printf("%d isn't present in the array",x);
 	return 0;
+}
+void *runn(void *arg)
+{
+    if (i == 0)
+    {
+        arr[i] = 0;
+        pthread_exit(0);
+    }                           //PRIMER TERMINO
+
+    if (i == 1)
+    {
+        arr[i] = 1;
+        pthread_exit(0);
+    }                           //SEGUNDO TERMINO
+    else
+    {
+        arr[i] = arr[i - 1] + arr[i - 2];
+        printf("arr[%d]%d,\n",i,arr[i]);
+        pthread_exit(0);
+    }
 }
