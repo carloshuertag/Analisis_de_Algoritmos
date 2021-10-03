@@ -16,7 +16,7 @@
 #define ERR -1
 #define NO_ENCONTRADO -2
 
-int busqueda_lineal(int* A, int tam, int buscado, int *i);
+int busqueda_lineal(int* A, int tam, int buscado);
 
 int main(int argc, char* argv[]) {
     register int n, i; // tamaño de problema e iterador
@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
         scanf("%d", &A[i]);
     i = 0;
     uswtime(&utime0, &stime0, &wtime0); // empieza la medición de tiempos
-    int posicion = busqueda_lineal(A, n, buscado, &i); //Busca el elemento
+    int posicion = busqueda_lineal(A, n, buscado); //Busca el elemento
     uswtime(&utime1, &stime1, &wtime1); // termina la medición de tiempos
     avg += wtime1 - wtime0; // acumular el tiempo real
     printf("\n Lineal con n = %d\nTiempo real: %10e\n", n, avg);
@@ -56,17 +56,15 @@ int main(int argc, char* argv[]) {
  * @param buscado es el elemento buscado en el arreglo
  * @returns index del elemento buscado o NO_ECNONTRADO
  */
-int busqueda_lineal(int* A, int tam, int buscado, int* k){
+int busqueda_lineal(int* A, int tam, int buscado){
     if(A == NULL){
         perror("Apuntador invalido");
         return ERR;
     }
 
     int i = 0;
-    while(i < tam && A[i] != buscado){
+    while(i < tam && A[i] != buscado)
         i++;
-        (*k)++;
-    }
 
     return i < tam ? i : NO_ENCONTRADO;
 }

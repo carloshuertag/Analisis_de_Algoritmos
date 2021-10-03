@@ -1,30 +1,30 @@
 
 Binaria con n = 1000000
-Tiempo real: 0
+Tiempo real: 5.669594e-04
 
 Binaria con n = 2000000
-Tiempo real: 0
+Tiempo real: 6.330013e-04
 
 Binaria con n = 3000000
-Tiempo real: 0
+Tiempo real: 4.949570e-04
 
 Binaria con n = 4000000
-Tiempo real: 0
+Tiempo real: 5.090237e-04
 
 Binaria con n = 5000000
-Tiempo real: 0
+Tiempo real: 5.199909e-04
 
 Binaria con n = 6000000
-Tiempo real: 0
+Tiempo real: 5.071163e-04
 
 Binaria con n = 7000000
-Tiempo real: 0
+Tiempo real: 5.450249e-04
 
 Binaria con n = 8000000
-Tiempo real: 0
+Tiempo real: 7.309914e-04
 
 Binaria con n = 9000000
-Tiempo real: 0
+Tiempo real: 5.121231e-04
 
 Binaria con n = 10000000
-Tiempo real: 0
+Tiempo real: 6.008148e-04
