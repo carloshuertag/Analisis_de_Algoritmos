@@ -1,0 +1,30 @@
+
+Busqueda exponencial_hilos con n = 1000000
+Promedio del tiempo real: 9.9372863770e-05 s
+
+Busqueda exponencial_hilos con n = 2000000
+Promedio del tiempo real: 1.0596513748e-04 s
+
+Busqueda exponencial_hilos con n = 3000000
+Promedio del tiempo real: 1.5366077423e-04 s
+
+Busqueda exponencial_hilos con n = 4000000
+Promedio del tiempo real: 1.3951063156e-04 s
+
+Busqueda exponencial_hilos con n = 5000000
+Promedio del tiempo real: 1.0019540787e-04 s
+
+Busqueda exponencial_hilos con n = 6000000
+Promedio del tiempo real: 1.0664463043e-04 s
+
+Busqueda exponencial_hilos con n = 7000000
+Promedio del tiempo real: 1.1657476425e-04 s
+
+Busqueda exponencial_hilos con n = 8000000
+Promedio del tiempo real: 1.0489225388e-04 s
+
+Busqueda exponencial_hilos con n = 9000000
+Promedio del tiempo real: 1.0424852371e-04 s
+
+Busqueda exponencial_hilos con n = 10000000
+Promedio del tiempo real: 1.0808706284e-04 s
