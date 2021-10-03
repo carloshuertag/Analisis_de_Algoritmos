@@ -1,18 +1,30 @@
 
-Lineal con n = 1000000
-Nùmero de operaciones: 1000000
+ Lineal con n = 1000000
+Tiempo real: 2.357006e-03
 
-Lineal con n = 2000000
-Nùmero de operaciones: 2000000
+ Lineal con n = 2000000
+Tiempo real: 4.246950e-03
 
-Lineal con n = 3000000
-Nùmero de operaciones: 3000000
+ Lineal con n = 3000000
+Tiempo real: 6.122828e-03
 
-Lineal con n = 4000000
-Nùmero de operaciones: 4000000
+ Lineal con n = 4000000
+Tiempo real: 8.074999e-03
 
-Lineal con n = 5000000
-Nùmero de operaciones: 5000000
+ Lineal con n = 5000000
+Tiempo real: 1.008916e-02
 
-Lineal con n = 6000000
-Nùmero de operaciones: 6000000
+ Lineal con n = 6000000
+Tiempo real: 1.249719e-02
+
+ Lineal con n = 7000000
+Tiempo real: 1.384401e-02
+
+ Lineal con n = 8000000
+Tiempo real: 1.599813e-02
+
+ Lineal con n = 9000000
+Tiempo real: 1.785803e-02
+
+ Lineal con n = 10000000
+Tiempo real: 1.990294e-02
