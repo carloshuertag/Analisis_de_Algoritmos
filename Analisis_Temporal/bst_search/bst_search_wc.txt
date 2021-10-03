@@ -1,0 +1,30 @@
+
+BST Search for n = 10000
+Avergae real time: 5.6910514832e-04 s
+
+BST Search for n = 20000
+Avergae real time: 6.2203407288e-04 s
+
+BST Search for n = 30000
+Avergae real time: 6.4611434937e-04 s
+
+BST Search for n = 40000
+Avergae real time: 6.6900253296e-04 s
+
+BST Search for n = 50000
+Avergae real time: 8.1515312195e-04 s
+
+BST Search for n = 60000
+Avergae real time: 7.4791908264e-04 s
+
+BST Search for n = 70000
+Avergae real time: 8.2492828369e-04 s
+
+BST Search for n = 80000
+Avergae real time: 8.3088874817e-04 s
+
+BST Search for n = 90000
+Avergae real time: 9.4103813171e-04 s
+
+BST Search for n = 100000
+Avergae real time: 9.0813636780e-04 s
