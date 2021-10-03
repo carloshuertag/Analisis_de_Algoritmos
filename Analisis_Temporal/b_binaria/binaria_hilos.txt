@@ -1,30 +1,30 @@
 
 Binaria hilos: n = 1000000
-Promedio del tiempo real: 7.3230266571e-05 s
+Promedio del tiempo real: 1.1150836945e-04 s
 
 Binaria hilos: n = 2000000
-Promedio del tiempo real: 6.8342685699e-05 s
+Promedio del tiempo real: 1.1451244354e-04 s
 
 Binaria hilos: n = 3000000
-Promedio del tiempo real: 7.4541568756e-05 s
+Promedio del tiempo real: 1.1684894562e-04 s
 
 Binaria hilos: n = 4000000
-Promedio del tiempo real: 7.1609020233e-05 s
+Promedio del tiempo real: 1.1861324310e-04 s
 
 Binaria hilos: n = 5000000
-Promedio del tiempo real: 7.1549415588e-05 s
+Promedio del tiempo real: 1.1622905731e-04 s
 
 Binaria hilos: n = 6000000
-Promedio del tiempo real: 7.1811676025e-05 s
+Promedio del tiempo real: 1.1588335037e-04 s
 
 Binaria hilos: n = 7000000
-Promedio del tiempo real: 7.8618526459e-05 s
+Promedio del tiempo real: 1.1487007141e-04 s
 
 Binaria hilos: n = 8000000
-Promedio del tiempo real: 7.6603889465e-05 s
+Promedio del tiempo real: 1.1620521545e-04 s
 
 Binaria hilos: n = 9000000
-Promedio del tiempo real: 7.4589252472e-05 s
+Promedio del tiempo real: 1.4680624008e-04 s
 
 Binaria hilos: n = 10000000
-Promedio del tiempo real: 7.1859359741e-05 s
+Promedio del tiempo real: 1.1620521545e-04 s

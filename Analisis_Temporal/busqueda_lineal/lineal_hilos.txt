@@ -1,15 +1,30 @@
 
 Lineal hilos: n = 1000000
-Promedio del tiempo real: 7.4784755707e-04 s
+Promedio del tiempo real: 1.2042641640e-03 s
 
 Lineal hilos: n = 2000000
-Promedio del tiempo real: 1.3505458832e-03 s
+Promedio del tiempo real: 2.2153496742e-03 s
 
 Lineal hilos: n = 3000000
-Promedio del tiempo real: 1.9613265991e-03 s
+Promedio del tiempo real: 3.3698439598e-03 s
 
 Lineal hilos: n = 4000000
-Promedio del tiempo real: 2.6103734970e-03 s
+Promedio del tiempo real: 4.2615652084e-03 s
 
 Lineal hilos: n = 5000000
-Promedio del tiempo real: 3.2230377197e-03 s
+Promedio del tiempo real: 5.2098155022e-03 s
+
+Lineal hilos: n = 6000000
+Promedio del tiempo real: 6.1021327972e-03 s
+
+Lineal hilos: n = 7000000
+Promedio del tiempo real: 7.2842717171e-03 s
+
+Lineal hilos: n = 8000000
+Promedio del tiempo real: 8.2693934441e-03 s
+
+Lineal hilos: n = 9000000
+Promedio del tiempo real: 8.4457635880e-03 s
+
+Lineal hilos: n = 10000000
+Promedio del tiempo real: 8.4097981453e-03 s
