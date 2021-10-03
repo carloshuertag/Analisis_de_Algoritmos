@@ -41,7 +41,6 @@ int main (int argc, char* argv[]){
     int n; //n determina el tamaño del algoritmo dado por argumento al ejecutar
     int x; //x numero a buscar dado por el argumento
     int i; //Variables para loops
-    printf("\nmain");
     double utime0, stime0, wtime0, utime1, stime1, wtime1, avg = 0; //para los tiempos
     int numBuscar[] = {322486, 14700764, 3128036, 6337399, 61396, 10393545, 2147445644,
                         1295390003, 450057883,  18765041, 1980098116, 152503, 5000,
@@ -74,8 +73,8 @@ int main (int argc, char* argv[]){
     
     int subn = n/NumThreads;
 
-    for (int i =0; i<N_Veces;i++){
-        x = numBuscar[i];
+    for (int j =0; j<N_Veces;j++){
+        x = numBuscar[j];
 
         uswtime(&utime0, &stime0, &wtime0); // empieza la medición de tiempos
         for (i=0; i<NumThreads; i++){
@@ -159,3 +158,4 @@ int busquedaBinaria(int arr[], int l, int r, int x){
     }
     return -1; //Si no encuentra el numero
 }
+
