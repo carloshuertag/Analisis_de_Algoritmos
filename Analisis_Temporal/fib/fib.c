@@ -70,34 +70,33 @@ int main (int argc, char* argv[]){
 
     //Declaracion de variables del main
     int n; //n determina el tamaño del algoritmo dado por argumento al ejecutar
-    int x; //x numero a buscar dado por el argumento
     int i; //Variables para loops
 
     /*Recepción y decodificación de argumentos*/
     if(argc!=2){ //Si no se introducen exactamente 2 argumentos (Cadena de ejecución y cadena=n)
-        printf("\nIndique el tamano del arreglo y el numero a buscar - Ejemplo: %s 100 5\n",argv[0]);
+        printf("\nIndique el tamano del arreglo - Ejemplo: %s 100\n",argv[0]);
         exit(1);
     }
     //Tomar el segundo argumento como tamaño del algoritmo y el tercero como numero a buscar
     else
         n=atoi(argv[1]);
     arr = (int*)malloc(n * sizeof(int)); // tamaño de memoria para el arreglo
-        if (arr == NULL) {
+    if (arr == NULL) {
         perror("Espacio de memoria no asignado\n");
         exit(1);
-        }
+    }
     for(i = 0; i < n; i++)
-            scanf("%d", &arr[i]); // llenando el arreglo
+        scanf("%d", &arr[i]); // llenando el arreglo
     for(int i = 0; i < N_VECES; i++)
     {
         uswtime(&utime0, &stime0, &wtime0); // empieza la medición de tiempos
-        int posicion = fibonacci(arr, n, buscados[i]); //Busca el elemento
+        int posicion = fibonacci(arr, buscados[i], n); //Busca el elemento
         uswtime(&utime1, &stime1, &wtime1); // termina la medición de tiempos
         avg += wtime1 - wtime0; // acumular el tiempo real
         stime0 = stime1 = utime0 = utime1 = wtime0 = wtime1 = 0.0; // reiniciar
     }
     avg /= 20; // promediar el tiempo real
-    printf("\nLineal con n = %d\nPromedio del tiempo real: %.10e s\n", n, avg);
+    printf("\nFibonacci con n = %d\nPromedio del tiempo real: %.10e s\n", n, avg);
     free(arr);
 	return 0;
 }
