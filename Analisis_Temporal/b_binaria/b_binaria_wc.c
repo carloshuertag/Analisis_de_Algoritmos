@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
     int index = busqueda_binaria(A, n, buscado); //Busca el elemento
     uswtime(&utime1, &stime1, &wtime1); // termina la medición de tiempos
     avg += wtime1 - wtime0; // acumular el tiempo real
-    printf("\nBinaria con n = %d\nTiempo real: %d\n", n, avg);
+    printf("\nBinaria con n = %d\nTiempo real: %10e\n", n, avg);
     free(A);
     return 0;
 }
