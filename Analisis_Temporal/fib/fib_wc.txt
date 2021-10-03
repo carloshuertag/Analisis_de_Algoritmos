@@ -1,0 +1,30 @@
+
+Fibonacci con n = 1000000
+Promedio del tiempo real: 5.1498413086e-04 s
+
+Fibonacci con n = 2000000
+Promedio del tiempo real: 5.2094459534e-04 s
+
+Fibonacci con n = 3000000
+Promedio del tiempo real: 5.2309036255e-04 s
+
+Fibonacci con n = 4000000
+Promedio del tiempo real: 4.9996376038e-04 s
+
+Fibonacci con n = 5000000
+Promedio del tiempo real: 6.3610076904e-04 s
+
+Fibonacci con n = 6000000
+Promedio del tiempo real: 5.2690505981e-04 s
+
+Fibonacci con n = 7000000
+Promedio del tiempo real: 4.9519538879e-04 s
+
+Fibonacci con n = 8000000
+Promedio del tiempo real: 5.8913230896e-04 s
+
+Fibonacci con n = 9000000
+Promedio del tiempo real: 5.4192543030e-04 s
+
+Fibonacci con n = 10000000
+Promedio del tiempo real: 5.1498413086e-04 s
