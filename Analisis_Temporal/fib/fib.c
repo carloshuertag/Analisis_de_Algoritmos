@@ -24,6 +24,14 @@ int min(int x, int y)
     return (x <= y) ? x : y;
 }
 
+/**
+*  Busca un numero x en un arreglo de tamaño n usando el algoritmo de busqueda fibonacci iterativa
+*  @param arr arreglo de tamaño n
+*  @param n tamaño del arreglo
+*  @param x numero a buscar
+*  @return la posicion de x en el arreglo si se encuentra, de lo contrario -1.
+*/
+
 int fibonacci(int arr[], int x, int n)
 {
 	int fibMMm2 = 0;

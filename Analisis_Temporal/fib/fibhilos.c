@@ -4,7 +4,7 @@
  *  @copyright Septiembre 2021
  *  @version 1.0
  *  Compilación: gcc fibhilos.c ../tiempo.c -o fibhilos -lpthread -lm
- *  Ejecución: ./fibhilos tamañoarreglo numdehilos < 10millonesOrd.txt
+ *  Ejecución: ./fibhilos tamañoarreglo < 10millonesOrd.txt
 */
 
 #include <stdio.h>
