@@ -1,0 +1,30 @@
+
+Busqueda fibonacci_hilos con n = 1000000
+Promedio del tiempo real: 1.0646581650e-04 s
+
+Busqueda fibonacci_hilos con n = 2000000
+Promedio del tiempo real: 1.5624761581e-04 s
+
+Busqueda fibonacci_hilos con n = 3000000
+Promedio del tiempo real: 1.0453462601e-04 s
+
+Busqueda fibonacci_hilos con n = 4000000
+Promedio del tiempo real: 1.0719299316e-04 s
+
+Busqueda fibonacci_hilos con n = 5000000
+Promedio del tiempo real: 1.4270544052e-04 s
+
+Busqueda fibonacci_hilos con n = 6000000
+Promedio del tiempo real: 1.2202262878e-04 s
+
+Busqueda fibonacci_hilos con n = 7000000
+Promedio del tiempo real: 9.9945068359e-05 s
+
+Busqueda fibonacci_hilos con n = 8000000
+Promedio del tiempo real: 1.0071992874e-04 s
+
+Busqueda fibonacci_hilos con n = 9000000
+Promedio del tiempo real: 1.0641813278e-04 s
+
+Busqueda fibonacci_hilos con n = 10000000
+Promedio del tiempo real: 1.0521411896e-04 s

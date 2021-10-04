@@ -1,30 +1,30 @@
 
 BST Search for n = 1000000
-Avergae real time: 2.9587745667e-05 s
+Avergae real time: 2.7441978455e-05 s
 
 BST Search for n = 2000000
-Avergae real time: 3.1137466431e-05 s
+Avergae real time: 3.2639503479e-05 s
 
 BST Search for n = 3000000
-Avergae real time: 3.0136108398e-05 s
+Avergae real time: 2.9301643372e-05 s
 
 BST Search for n = 4000000
-Avergae real time: 2.7406215668e-05 s
+Avergae real time: 3.0958652496e-05 s
 
 BST Search for n = 5000000
-Avergae real time: 3.2031536102e-05 s
+Avergae real time: 3.0171871185e-05 s
 
 BST Search for n = 6000000
-Avergae real time: 3.1208992004e-05 s
+Avergae real time: 3.1697750092e-05 s
 
 BST Search for n = 7000000
-Avergae real time: 3.0887126923e-05 s
+Avergae real time: 3.2246112823e-05 s
 
 BST Search for n = 8000000
-Avergae real time: 3.3557415009e-05 s
+Avergae real time: 3.2997131348e-05 s
 
 BST Search for n = 9000000
-Avergae real time: 3.3903121948e-05 s
+Avergae real time: 3.1161308289e-05 s
 
 BST Search for n = 10000000
-Avergae real time: 3.2305717468e-05 s
+Avergae real time: 3.3068656921e-05 s

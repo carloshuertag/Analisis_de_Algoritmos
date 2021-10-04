@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # sudo chmod 777 fib.sh
 rm fib.txt
 gcc fib.c ../tiempo.c -o fib
