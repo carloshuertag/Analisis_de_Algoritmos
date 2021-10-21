@@ -100,6 +100,12 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+/**
+ *  compare function for qsort stdlib implementation.
+ *  @param a element to compare
+ *  @param b next element to compare
+ *  @return comparisson according to qsort doc.
+*/
 int compareTo(const void *a, const void *b)
 {
     unsigned int *element = (unsigned int *)a;
