@@ -9,7 +9,6 @@ void traverseInOrder(Node root, int code);
 
 int codes[256];
 
-
 int main(int argc, char *argv[])
 {
     if (argc != 2)
