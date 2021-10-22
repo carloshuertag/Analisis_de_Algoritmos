@@ -50,7 +50,7 @@ Node createNode(int item, int cnt, Node lft, Node rght)
 */
 Node createTree(unsigned int arr[][2], int n)
 {
-    Node nodeArr[2 * n]; //max si<e since it will renove 2 or 1 nodes and add 1
+    Node nodeArr[2 * n]; //max size since it will renove 2 or 1 nodes and add 1
     int i;
     for (i = 0; i < n; i++)
     { // initilializing nodes
@@ -62,7 +62,7 @@ Node createTree(unsigned int arr[][2], int n)
     {
         lowest1 = lowest2 = index1 = index2 = INT_MAX;
         for (i = 0; i < end; i++)
-        { // find the lowest two nodes
+        { // find the lowest two nodesk
             if (nodeArr[i]->count < lowest1)
             {
                 lowest2 = lowest1;
@@ -88,25 +88,32 @@ Node createTree(unsigned int arr[][2], int n)
 /**
  *  
 */
-unsigned char *byteToWrite (int data, int *offset)
+void byteToWrite (unsigned char *dest, int data, int *offset, unsigned int *index)
 {
-    unsigned char *byte = malloc();
-    int b;
-    for(b = 128; b >= 0; b = b >> 1)
+    int b, cntrl = 0, tmp = 0;//data=0->dest=0xxxxxxx
+    for(b = 128; b > 0; b >>= 1, tmp++) //10000000, 01000000
     {
         if(data & b)
         {
-            if(offset < 0)
+            if(*offset < 0)
             {
-
+                *offset = 7;
+                ++(*index);
             }
-            turnBitOnAt(byte, *offset);
+            turnBitOnAt(dest[*index], *offset);
+            (*offset)--;
         }
-        else
-            turnBitOffAt(byte, *offset);
-        (*offset)--;
+        else if (cntrl || tmp == 8)
+        {
+            if(*offset < 0)
+            {
+                *offset = 7;
+                ++(*index);
+            }
+            turnBitOffAt(dest[*index], *offset);
+            (*offset)--;
+        }
     }
-    return byte;
 }
 
 /** 
