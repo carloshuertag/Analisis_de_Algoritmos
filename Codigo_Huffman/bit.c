@@ -30,8 +30,8 @@ int main(void)
 	//Modificar el valor de algunos bits
 	printf("Modificar el valor de los bits\n");
 	PONE_1(numero,7); 		//1 en Bit 0  
-	//PONE_1(numero,3); 		//1 en Bit 3
-	PONE_1(numero,5); 		//1 en Bit 5
+	PONE_1(numero,3); 		//1 en Bit 3
+	//PONE_1(numero,5); 		//1 en Bit 5
 	//PONE_0(numero,5); 		//0 en Bit 5
 	
 	CAMBIA(numero,0);		//Negar Bit 0

@@ -1,181 +1,193 @@
 #include <stdio.h>
 #include <stdlib.h>
- 
-typedef struct MinHeap MinHeap;
-struct MinHeap {
-    int* arr;
-    // Current Size of the Heap
+
+/** 
+ *  Node struct definition for binary tree nodes
+ *  key: node's item
+ *  count: key frequency count
+ *  left: left child node
+ *  right: right child node
+*/
+typedef struct Node
+{
+    int key, count;
+    struct Node *left, *right;
+} * Node;
+
+/**
+ *  creates a new binary tree node with given nodes, entry n count.
+ *  @param item binary tree node entry.
+ *  @param cnt binary tree node count.
+ *  @param lft binary tree left node.
+ *  @param rght binary tree right node.
+ *  @return new binary tree node.
+*/
+Node createNode(int item, int cnt, Node lft, Node rght)
+{
+    Node node = (Node)malloc(sizeof(struct Node));
+    if (!node)
+    {
+        perror("Error: Node memory allocation failed");
+        exit(1);
+    }
+    if (lft == NULL && rght == NULL)
+        node->count = cnt;
+    else
+        node->count = lft->count + rght->count;
+    node->key = item;
+    node->left = lft;
+    node->right = rght;
+    return node;
+}
+
+/**
+ *  MinHeap struct definition for min-heap
+ *  arr: heap array
+ *  size: size of heap array
+ *  capacity: heap array max length
+*/
+typedef struct MinHeap {
+    Node* arr;
     int size;
-    // Maximum capacity of the heap
     int capacity;
-};
- 
-int parent(int i) {
-    // Get the index of the parent
-    return (i - 1) / 2;
-}
- 
-int left_child(int i) {
-    return (2*i + 1);
-}
- 
-int right_child(int i) {
-    return (2*i + 2);
-}
- 
-int get_min(MinHeap* heap) {
-    // Return the root node element,
+} MinHeap;
+
+// Get the index of the parent
+int parent(int i) { return (i - 1) / 2; }
+
+int leftChild(int i) { return (2*i + 1); }
+
+int rightChild(int i) { return (2*i + 2); }
+
+// Return the root node element,
     // since that's the minimum
-    return heap->arr[0];
-}
- 
-MinHeap* init_minheap(int capacity) {
-    MinHeap* minheap = (MinHeap*) calloc (1, sizeof(MinHeap));
-    minheap->arr = (int*) calloc (capacity, sizeof(int));
+Node getMin(MinHeap* heap) { return heap->arr[0]; }
+
+MinHeap* createMinHeap(unsigned int capacity)
+{
+    MinHeap* minheap = (MinHeap*) malloc(sizeof(MinHeap));
+    minheap->arr = (Node*) calloc(capacity, sizeof(struct Node));
     minheap->capacity = capacity;
     minheap->size = 0;
     return minheap;
 }
- 
-MinHeap* insert_minheap(MinHeap* heap, int element) {
-    // Inserts an element to the min heap
+
+// Inserts an element to the min heap
     // We first add it to the bottom (last level)
     // of the tree, and keep swapping with it's parent
     // if it is lesser than it. We keep doing that until
     // we reach the root node. So, we will have inserted the
     // element in it's proper position to preserve the min heap property
+MinHeap* insert2MinHeap(MinHeap* heap, Node element)
+{
     if (heap->size == heap->capacity) {
-        fprintf(stderr, "Cannot insert %d. Heap is already full!\n", element);
+        perror("Couldn't insert node, heap is full.");
         return heap;
     }
-    // We can add it. Increase the size and add it to the end
     heap->size++;
-    heap->arr[heap->size - 1] = element;
- 
-    // Keep swapping until we reach the root
-    int curr = heap->size - 1;
-    // As long as you aren't in the root node, and while the 
-    // parent of the last element is greater than it
-    while (curr > 0 && heap->arr[parent(curr)] > heap->arr[curr]) {
-        // Swap
-        int temp = heap->arr[parent(curr)];
+    heap->arr[heap->size - 1] = element; //add element to end
+    int curr = heap->size - 1; // swap until the root is reached
+    while (curr > 0 && heap->arr[parent(curr)]->count > heap->arr[curr]->count) {
+        Node temp = heap->arr[parent(curr)];
         heap->arr[parent(curr)] = heap->arr[curr];
         heap->arr[curr] = temp;
-        // Update the current index of element
-        curr = parent(curr);
+        curr = parent(curr); // update the current index of element
     }
     return heap; 
 }
- 
+
+// Rearranges the heap as to maintain
+// the min-heap property
 MinHeap* heapify(MinHeap* heap, int index) {
-    // Rearranges the heap as to maintain
-    // the min-heap property
     if (heap->size <= 1)
         return heap;
-     
-    int left = left_child(index); 
-    int right = right_child(index); 
- 
-    // Variable to get the smallest element of the subtree
-    // of an element an index
-    int smallest = index; 
-     
-    // If the left child is smaller than this element, it is
-    // the smallest
-    if (left < heap->size && heap->arr[left] < heap->arr[index]) 
-        smallest = left; 
-     
-    // Similarly for the right, but we are updating the smallest element
-    // so that it will definitely give the least element of the subtree
-    if (right < heap->size && heap->arr[right] < heap->arr[smallest]) 
-        smallest = right; 
- 
-    // Now if the current element is not the smallest,
-    // swap with the current element. The min heap property
-    // is now satisfied for this subtree. We now need to
-    // recursively keep doing this until we reach the root node,
-    // the point at which there will be no change!
-    if (smallest != index) 
-    { 
-        int temp = heap->arr[index];
+    int left = leftChild(index); 
+    int right = rightChild(index); 
+    int smallest = index;
+    if (left < heap->size && heap->arr[left]->count < heap->arr[index]->count) 
+        smallest = left; // update smallest to the left child
+    if (right < heap->size && heap->arr[right]->count < heap->arr[smallest]->count) 
+        smallest = right; // update smallest to the right child,
+    //guarantees smallest from the subtree
+    if (smallest != index) //until the root is reached
+    { // swap smallest with current element
+        Node temp = heap->arr[index];
         heap->arr[index] = heap->arr[smallest];
         heap->arr[smallest] = temp;
         heap = heapify(heap, smallest); 
     }
- 
     return heap;
 }
- 
-MinHeap* delete_minimum(MinHeap* heap) {
-    // Deletes the minimum element, at the root
+
+// Deletes the minimum element, at the root
+MinHeap* deleteMin(MinHeap* heap) {
     if (!heap || heap->size == 0)
         return heap;
- 
     int size = heap->size;
-    int last_element = heap->arr[size-1];
-     
-    // Update root value with the last element
-    heap->arr[0] = last_element;
- 
-    // Now remove the last element, by decreasing the size
-    heap->size--;
-    size--;
- 
-    // We need to call heapify(), to maintain the min-heap
-    // property
-    heap = heapify(heap, 0);
+    Node last_element = heap->arr[size-1];
+    heap->arr[0] = last_element; // update root value with the last element
+    heap->size--; size--; // remove the last element
+    heap = heapify(heap, 0); // mantain min-heap property
     return heap;
 }
- 
-MinHeap* delete_element(MinHeap* heap, int index) {
-    // Deletes an element, indexed by index
-    // Ensure that it's lesser than the current root
-    heap->arr[index] = get_min(heap) - 1;
-     
+
+// Deletes an element, indexed by index
+MinHeap* deleteElement(MinHeap* heap, int index) {
+    heap->arr[index] = getMin(heap);
+    heap->arr[index]->count--;// indexed element is the lowest
     // Now keep swapping, until we update the tree
     int curr = index;
-    while (curr > 0 && heap->arr[parent(curr)] > heap->arr[curr]) {
-        int temp = heap->arr[parent(curr)];
+    while (curr > 0 && heap->arr[parent(curr)]->count > heap->arr[curr]->count) {
+        Node temp = heap->arr[parent(curr)];
         heap->arr[parent(curr)] = heap->arr[curr];
         heap->arr[curr] = temp;
         curr = parent(curr);
     }
- 
-    // Now simply delete the minimum element
-    heap = delete_minimum(heap);
+    heap = deleteMin(heap);
     return heap;
 }
- 
-void print_heap(MinHeap* heap) {
-    // Simply print the array. This is an
-    // inorder traversal of the tree
+
+// prints heap in an inorder traversal
+void printMinHeap(MinHeap* heap) {
     printf("Min Heap:\n");
     for (int i=0; i<heap->size; i++) {
-        printf("%d -> ", heap->arr[i]);
+        printf("%d -> ", heap->arr[i]->count);
     }
     printf("\n");
 }
- 
-void free_minheap(MinHeap* heap) {
+
+void freeMinHeap(MinHeap* heap) {
     if (!heap)
         return;
     free(heap->arr);
     free(heap);
 }
- 
+
 int main() {
     // Capacity of 10 elements
-    MinHeap* heap = init_minheap(10);
- 
-    insert_minheap(heap, 40);
-    insert_minheap(heap, 50);
-    insert_minheap(heap, 5);
-    print_heap(heap);
-     
+    MinHeap* heap = createMinHeap(4);
+    Node node1 = createNode(23, 1, NULL, NULL);
+    Node node2 = createNode(21, 2, NULL, NULL);
+    Node node3 = createNode(22, 2, NULL, NULL);
+    Node node4 = createNode(20, 4, NULL, NULL);
+    insert2MinHeap(heap, node3);
+    insert2MinHeap(heap, node4);
+    insert2MinHeap(heap, node1);
+    insert2MinHeap(heap, node2);
+    printMinHeap(heap);
+    while(heap->size > 1)
+    {
+        Node aux1 = getMin(heap);
+        deleteMin(heap);
+        Node aux2 = getMin(heap);
+        deleteMin(heap);
+        insert2MinHeap(heap, createNode(257, -1, aux1, aux2));
+    }
+    printMinHeap(heap);
     // Delete the heap->arr[1] (50)
     //delete_element(heap, 1);
-    delete_minimum(heap);
-    print_heap(heap);
-    free_minheap(heap);
+    //deleteMin(heap);
+    //printMinHeap(heap);
+    freeMinHeap(heap);
     return 0;
 }

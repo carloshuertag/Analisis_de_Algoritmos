@@ -5,18 +5,10 @@
 #include <math.h>
 #include "p3h.h"
 
-int compareTo(const void *a, const void *b);
 void traverseInOrder(Node root, int code);
-int getBitsCount(int n);
 
 int codes[256];
 
-void printDecToBin(int dec) {
-    if(dec > 1){
-        printDecToBin(dec>>1);
-    }
-    printf("%d", dec&1);
-}
 
 int main(int argc, char *argv[])
 {
@@ -60,22 +52,15 @@ int main(int argc, char *argv[])
         }
     }
     elementsSize = j;
-    qsort(elements, elementsSize, 2 * sizeof(unsigned int), compareTo);
-    for (j = 0; j < elementsSize; j++)
-    {
-        printf("\n0x%02x\t%d", elements[j][0], elements[j][1]);
-    }
     Node tree = createTree(elements, elementsSize);
-    memset(codes, -1, 256 * sizeof(int)); //initialize codes in -1
+    memset(codes, -1, 256 * sizeof(unsigned int)); //initialize codes in -1
     traverseInOrder(tree, 0);
-    long outputSize = 0;
+    long long outputBits = 0;
     for(j = 0; j < 256; j++)
     {
         if(codes[j] != -1)
         {
-            outputSize += getBitsCount(codes[j]) * frequencies[j];
-            printf("\n0x%02x: code: (0x%02x) ", j, codes[j]);
-            printDecToBin(codes[j]);
+            outputBits += getBitsCount(codes[j]) * frequencies[j];
         }
     }
     char* codedFilePath = malloc(sizeof(argv[1]) + 9 * sizeof(char));
@@ -87,56 +72,20 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Error: file open failed '%s'.\n", codedFilePath);
         exit(1);
     }
-    printf("\n");
-    unsigned char *output = calloc((int)ceil((double)outputSize/8.0), sizeof(unsigned char));
+    long outputBytes = (int)ceil((double)outputBits/8.0);
+    unsigned char *output = calloc(outputBytes, sizeof(unsigned char));
+    memset(output, 0, outputBytes * sizeof(unsigned char));
     int offset = 7;
     unsigned int k = 0;
-    for(i = 0; i < fileSize; i++)
-    { // reads file byte to byte
+    for(i = 0; i < fileSize; i++) // reads file byte to byte
         for(j = 0; j < 256; j++)
-        {
-            if(buffer[i] == j)
-            {
-                byteToWrite(output, codes[j], &offset, &k);
-                //write in file codes[j]
-                //fwrite(&sth, sizeof(sth), 1, codedFile)
-            }
-        }
-        printf("0x%02x\t", buffer[i]);
-    }
-    fwrite(output, sizeof(output[0]), outputSize, codedFile);
+            if(buffer[i] == j) 
+                writeByte(output, codes[j], &offset, &k);    
+    fwrite(output, sizeof(output[0]), outputBytes, codedFile);
     fclose(codedFile);
-    printf("\n");
-    for(i = 0; i < outputSize; i++)
-    {
-        printDecToBin(output[i]);
-    }
     free(output);
     free(buffer);
     return 0;
-}
-
-int getBitsCount(int n)
-{
-    return (n == 0) ? 1 : ((int)log2(n) + 1);
-}
-
-/**
- *  compare function for qsort stdlib implementation.
- *  @param a element to compare
- *  @param b next element to compare
- *  @return comparisson according to qsort doc.
-*/
-int compareTo(const void *a, const void *b)
-{
-    unsigned int *element = (unsigned int *)a;
-    unsigned int *anotherElement = (unsigned int *)b;
-    int compareValue = element[1] - anotherElement[1];
-    if (compareValue == 0)
-    {
-        return element[0] - anotherElement[0];
-    }
-    return compareValue;
 }
 
 /**

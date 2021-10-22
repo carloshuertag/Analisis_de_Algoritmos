@@ -88,30 +88,31 @@ Node createTree(unsigned int arr[][2], int n)
 /**
  *  
 */
-void byteToWrite (unsigned char *dest, int data, int *offset, unsigned int *index)
+int getBitsCount(int n) { return (n == 0) ? 1 : ((int)log2(n) + 1); }
+
+/**
+ *  
+*/
+void writeByte (unsigned char *dest, int data, int *offset, unsigned int *index)
 {
-    int b, cntrl = 0, tmp = 0;//data=0->dest=0xxxxxxx
-    for(b = 128; b > 0; b >>= 1, tmp++) //10000000, 01000000
+    int b, wrote = 0, tmp = 7;
+    for(b = 128; b > 0; b >>= 1, tmp--)
     {
+        if(*offset < 0)
+        {
+            *offset = 7;
+            ++(*index);
+        }
         if(data & b)
         {
-            if(*offset < 0)
-            {
-                *offset = 7;
-                ++(*index);
-            }
-            turnBitOnAt(dest[*index], *offset);
-            (*offset)--;
+            printf("1");
+            turnBitOnAt(dest[*index], (*offset)--);
+            wrote = 1;
         }
-        else if (cntrl || tmp == 8)
+        else if (wrote || tmp == 0)
         {
-            if(*offset < 0)
-            {
-                *offset = 7;
-                ++(*index);
-            }
-            turnBitOffAt(dest[*index], *offset);
-            (*offset)--;
+            printf("0");
+            turnBitOffAt(dest[*index], (*offset)--);
         }
     }
 }
@@ -139,17 +140,13 @@ char *remove_ext (char* filePath, char extSep, char pathSep) {
     lastExt = strrchr (retStr, extSep);
     lastPath = (pathSep == 0) ? NULL : strrchr (retStr, pathSep);
     // If it has an extension separator.
-    if (lastExt != NULL) { // and it's to the right of the path separator.
+    if (lastExt != NULL)
+    { // and it's to the right of the path separator.
         if (lastPath != NULL)
-        {
-            if (lastPath < lastExt) 
-            { // then remove it.
-                *lastExt = '\0';
-            }
-        } else
-        { // Has extension separator with no path separator.
-            *lastExt = '\0';
-        }
+            if (lastPath < lastExt) *lastExt = '\0';
+        else
+            *lastExt = '\0'; // Has extension separator with no path separator.
+        
     }
     return retStr;
 }
