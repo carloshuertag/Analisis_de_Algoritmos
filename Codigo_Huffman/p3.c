@@ -11,12 +11,51 @@ int getBitsCount(int n);
 
 int codes[256];
 
+
+/** 
+ *  conversion de un numero decimal a binario
+ *  @param dec numero en decimal.
+ *  @param tam bits que ocupa el numero decimal.
+ *  @param arr arreglo donde se coloca el numero en binario.
+*/
+void DecToBin(int dec, int tam, char* arr) {
+    int  aux=1;
+    for(int i=tam-1;i>=0;i--){
+        arr[i] = dec&aux? 1:0;
+        aux*=2; 
+    }
+}
+
+/** 
+ *  Impresión de numero decimal, formando bytes
+ *  @param dec numero en decimal.
+*/
+void printByte(int dec) {
+    int tam = 8;
+    char* arr = malloc(sizeof(char) * tam);
+    DecToBin( dec, tam, arr);
+    for(int i=0;i<tam;i++){
+        printf("%d", arr[i]);
+    }
+}
+
+/** 
+ *  impresion de numeros binarios (dentro se ocupa DecToBin)
+ *  @param dec numero en decimal.
+*/
 void printDecToBin(int dec) {
-    if(dec > 1){
+    /*if(dec > 1){
         printDecToBin(dec>>1);
     }
-    printf("%d", dec&1);
+    printf("%d", dec&1);*/
+    int tam = getBitsCount(dec);
+    char* arr = malloc(sizeof(char) * tam);
+    DecToBin( dec, tam, arr);
+    for(int i=0;i<tam;i++){
+        printf("%d", arr[i]);
+    }
 }
+
 
 int main(int argc, char *argv[])
 {
@@ -76,6 +115,7 @@ int main(int argc, char *argv[])
             outputSize += getBitsCount(codes[j]) * frequencies[j];
             printf("\n0x%02x: code: (0x%02x) ", j, codes[j]);
             printDecToBin(codes[j]);
+
         }
     }
     char* codedFilePath = malloc(sizeof(argv[1]) + 9 * sizeof(char));
@@ -88,29 +128,60 @@ int main(int argc, char *argv[])
         exit(1);
     }
     printf("\n");
-    unsigned char *output = calloc((int)ceil((double)outputSize/8.0), sizeof(unsigned char));
-    int offset = 7;
+    int tamSalBytes = (int)ceil((double)outputSize/8.0); //Numero de bytes 
+    unsigned char *output = calloc(tamSalBytes, sizeof(unsigned char));
+    unsigned char *auxOutput = calloc((int)ceil((double)outputSize), sizeof(unsigned char)); //Auxiliar de output
+    memset(output, 0, tamSalBytes * sizeof(char)); //estableciendo output en ceros
+    memset(auxOutput, 0, outputSize* sizeof(char)); //estableciendo auxOutput en ceros
+    int offset = 0;
     unsigned int k = 0;
+   
+    /*Llenando arreglo de bits*/
     for(i = 0; i < fileSize; i++)
     { // reads file byte to byte
-        for(j = 0; j < 256; j++)
-        {
-            if(buffer[i] == j)
-            {
-                byteToWrite(output, codes[j], &offset, &k);
-                //write in file codes[j]
-                //fwrite(&sth, sizeof(sth), 1, codedFile)
-            }
+        int aux=codes[buffer[i]];
+        int tam = getBitsCount(aux);
+        char* arr = malloc(sizeof(char) * tam);
+        DecToBin( aux, tam, arr);
+        for(int j=0;j<tam;j++){
+            auxOutput[offset+j] = arr[j];
+            
         }
-        printf("0x%02x\t", buffer[i]);
+        offset+=tam;
+
+       // byteToWrite(output, codes[buffer[i]], &offset, &k);
     }
+
+    /*Acomodando en bytes*/
+    for(i=0; i<tamSalBytes; i++){
+        for(j=0; j<8 && i*8+j<outputSize; j++){
+                if(auxOutput[i*8+j]){
+                    output[i]+=pow(2,7-j);
+                }
+        }
+    }
+    
+    printf("Salida\n");
+    for(i=0; i<tamSalBytes; i++){
+        printByte(output[i]);
+    }
+
+    printf("\nAuxiliar\n");
+    for(i=0; i<outputSize; i++){
+        printf("%d", auxOutput[i]);
+    }
+    printf("\n");
+
+            
+    //printf("0x%02x\t", buffer[i]);
+
     fwrite(output, sizeof(output[0]), outputSize, codedFile);
     fclose(codedFile);
     printf("\n");
-    for(i = 0; i < outputSize; i++)
+    /*for(i = 0; i < outputSize; i++)
     {
         printDecToBin(output[i]);
-    }
+    }*/
     free(output);
     free(buffer);
     return 0;
