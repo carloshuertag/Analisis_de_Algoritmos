@@ -46,7 +46,8 @@ Node createNode(int item, int cnt, Node lft, Node rght)
  *  size: size of heap array
  *  capacity: heap array max length
 */
-typedef struct MinHeap {
+typedef struct MinHeap
+{
     Node* arr;
     int size;
     int capacity;
@@ -160,7 +161,8 @@ MinHeap* heapify(MinHeap* heap, int index)
  *  @param heap given heap
  *  @return updated given heap
 */
-MinHeap* deleteMin(MinHeap* heap) {
+MinHeap* deleteMin(MinHeap* heap)
+{
     if (!heap || heap->size == 0)
         return heap;
     int size = heap->size;
@@ -173,17 +175,18 @@ MinHeap* deleteMin(MinHeap* heap) {
 
 
 // prints heap in an inorder traversal
-void printMinHeap(MinHeap* heap) {
-    for (int i=0; i<heap->size; i++) {
+void printMinHeap(MinHeap* heap)
+{
+    for (int i=0; i<heap->size; i++)
         printf("%d -> ", heap->arr[i]->count);
-    }
     printf("\n");
 }
 /**
  *  frees min heap memory: its fields and array
  *  @param heap given heap
 */
-void freeMinHeap(MinHeap* heap) {
+void freeMinHeap(MinHeap* heap)
+{
     if (!heap)
         return;
     free(heap->arr);
