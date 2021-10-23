@@ -13,13 +13,13 @@ int codes[256]; // stores Huffman codes for each byte
 int main(int argc, char *argv[])
 {
     if (argc != 2)
-    {
-        fprintf(stderr, "Error: correct usage: ./%s filePath", argv[0]);
+    { // usage error
+        fprintf(stderr, "Usage: ./%s <filePath>", argv[0]);
         return 1;
     }
     FILE *filePtr = fopen(argv[1], "rb"); //open file in binary read
     if (!filePtr)
-    {
+    { // file open error
         fprintf(stderr, "Error: file open failed '%s'.\n", argv[1]);
         return 1;
     }
@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
     rewind(filePtr); // sets position of filePtr at the beginning
     unsigned char *buffer = calloc(fileSize, sizeof(unsigned char));
     if (!buffer)
-    {
+    {  // memory allocation error
         perror("Error: buffer memory allocation failed");
         return 1;
     }
@@ -52,13 +52,14 @@ int main(int argc, char *argv[])
             elements[j][1] = frequencies[i];
             j++;
             printf("Byte: 0x%02x\tFreq: %d\n", i, frequencies[i]);
-            fprintf(auxFile, "%d\n", i); // writes byte and frequency table
-            fprintf(auxFile, "%d\n", frequencies[i]); // in auxFile
+            fprintf(auxFile, "%u\n", i); // writes byte and frequency table
+            fprintf(auxFile, "%u\n", frequencies[i]); // in auxFile
         }
     }
+    fprintf(auxFile, "%u\n", NOITEM); // writes NOITEM in auxFile
     elementsSize = j;
     printf("\nHuffman Tree\n");
-    Node tree = createTree(elements, elementsSize); // Huffman tree for codes
+    Node tree = buildTree(elements, elementsSize); // Huffman tree for codes
     memset(codes, -1, 256 * sizeof(unsigned int)); //initialize codes in -1
     traverseInOrder(tree, 0); // store byte codes into codes array
     unsigned long long outputBits = 0;
@@ -68,13 +69,13 @@ int main(int argc, char *argv[])
     fprintf(auxFile, "%llu\n", outputBits); // writes outputBits in auxFile
     char* codedFilePath = calloc(255, sizeof(char));
     if (!codedFilePath)
-    {
-        perror("Error: codedFilePath memory allocation failed");
+    { // memory allocation error
+        perror("Error: coded file path memory allocation failed");
         return 1;
     }
     char* extension = calloc(255-strlen(argv[1]), sizeof(char));
     if (!extension)
-    {
+    { // memory allocation error
         perror("Error: extension memory allocation failed");
         return 1;
     }
@@ -84,7 +85,7 @@ int main(int argc, char *argv[])
     printf("Encoded filename: %s, og extension: %s\n", codedFilePath, extension);
     FILE *codedFile = fopen(codedFilePath, "wb"); // created file to store encoded
     if(!codedFile)
-    {
+    { // file creation error
         fprintf(stderr, "Error: file open failed '%s'.\n", codedFilePath);
         exit(1);
     }

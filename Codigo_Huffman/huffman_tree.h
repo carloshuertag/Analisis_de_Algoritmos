@@ -194,13 +194,13 @@ void freeMinHeap(MinHeap* heap)
 }
 
 /**
- *  creates the binary tree to Huffman code a file, with a given frequency table.
+ *  builds the binary tree to Huffman code a file, with a given frequency table.
  *  @param arr nx2 dimensions array in which elements are definied.
  *  like this: arr[x][0] for the element and its frequenct arr[x][1]
  *  @param n dimension of the array of the 2 dimensions array.
  *  @return binary tree root in which is built the tree to Hufman code.
 */
-Node createTree(unsigned int arr[][2], int n)
+Node buildTree(unsigned int arr[][2], int n)
 {
     MinHeap* heap = createMinHeap(n);
     int i;
