@@ -22,9 +22,11 @@ void writeCode (unsigned char *buffer, int code[2],
             *offset = 7;
             ++(*index);
         }
-        if (getBitAt(code[0], i))
+        if (getBitAt(code[0], code[1] - i - 1))
         {
+            //printf("AAALLAAVVVV\n");
             printf("1");
+            //printf(" en pos %d y offset %d \n", *index, *offset);
             turnBitOnAt(buffer[*index], (*offset)--);
         }
         else

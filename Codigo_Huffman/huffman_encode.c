@@ -108,6 +108,7 @@ int main(int argc, char *argv[])
     memset(output, 0, outputBytes * sizeof(unsigned char)); // initialize output in 0
     short offset = 7; // offset for the first byte
     unsigned int k = 0; // index for output
+    printf("\n");
     for(i = 0; i < fileSize; i++) // visits every byte in buffer
         for(j = 0; j < 256; j++)
             if(buffer[i] == j) // write codes in output
@@ -115,6 +116,11 @@ int main(int argc, char *argv[])
                 printf(" Byte: 0x%02x -> Code %d: ", j, codes[j][0]);
                 writeCode(output, codes[j], &offset, &k); // write code in output
             }
+
+    //printf("bit %d : %d\n", 0, getBitAt(output[0], 0));
+    //printf("bit %d : %d\n", 1, getBitAt(output[0], 1));
+    //printf("bit %d : %d\n", 2, getBitAt(output[0], 2));
+    //printf("bit %d : %d\n", 3, getBitAt(output[0], 3));
     printf("\n");
     fwrite(output, sizeof(output[0]), outputBytes, codedFile); // write encoded file
     fclose(codedFile);
