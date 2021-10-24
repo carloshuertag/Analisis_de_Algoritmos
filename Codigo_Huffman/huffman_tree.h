@@ -28,17 +28,29 @@ Node createNode(unsigned short item, unsigned int cnt, Node lft, Node rght)
 {
     Node node = (Node)malloc(sizeof(struct Node));
     if (!node)
-    {
+    { // error allocating memory
         perror("Error: Node memory allocation failed");
         exit(1);
     }
-    if (lft == NULL && rght == NULL)
-        node->count = cnt;
-    else
-        node->count = lft->count + rght->count;
     node->byte = item;
+    if (lft == NULL && rght == NULL)
+        node->count = cnt; // leaf with given count
+    else // merge two subtrees
+        node->count = lft->count + rght->count;
     node->left = lft;
     node->right = rght;
+}
+
+/**
+ *  frees the memory allocated for a binary tree.
+ *  @param node binary tree root.
+*/
+void freeTree(Node root)
+{
+    if (root == NULL) return;
+    freeTree(root->left);
+    freeTree(root->right);
+    free(root);
 }
 
 /**
@@ -209,25 +221,15 @@ Node buildTree(unsigned int arr[][2], unsigned int n)
                                         NULL, NULL));
     Node leftToMerge, rightToMerge;
     while(heap->size > 1)
-    {
-        leftToMerge = getMin(heap);
+    { // merge two smallest nodes
+        leftToMerge = getMin(heap); // get the smallest node
         heap = deleteMin(heap);
-        rightToMerge = getMin(heap);
-        heap = deleteMin(heap);
-        // inserts the 2 lowest nodes merged
+        rightToMerge = getMin(heap); // get the next smallest node
+        heap = deleteMin(heap); // inserts the 2 smallest nodes merged
         insert2MinHeap(heap, createNode(NOITEM, NOCOUNT,
                                 leftToMerge, rightToMerge));
     }
     leftToMerge = getMin(heap); // built Huffman tree at min heap root
     freeMinHeap(heap);
     return leftToMerge; // return root of Huffman tree
-}
-
-void printTree(Node root)
-{
-    if (root == NULL)
-        return;
-    printTree(root->left);
-    printf("0x%02x: %d\n", root->byte, root->count);
-    printTree(root->right);
 }

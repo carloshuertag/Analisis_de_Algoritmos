@@ -20,7 +20,6 @@ int main(int argc, char *argv[])
     }
     unsigned int elements[256][2] = {{0}, {0}},
                 elementsSize = 0, fileSize;
-    unsigned long long bitsCount;
     char *extension = calloc(264 - strlen(argv[1]), sizeof(char));
     if (!extension)
     { // error allocating memory
@@ -31,146 +30,81 @@ int main(int argc, char *argv[])
     { // read file until EOF
         fscanf(auxFilePtr, "%u", &elements[elementsSize][0]);
         if (elements[elementsSize][0] == NOITEM)
-        {
-            fscanf(auxFilePtr, "%llu", &bitsCount);
+        { // last metadata at the end of file
             fscanf(auxFilePtr, "%u", &fileSize);
             fscanf(auxFilePtr, "%s", extension);
             break;
         }
         else
-        {
+        { // read frequency
             fscanf(auxFilePtr, "%u", &elements[elementsSize][1]);
             elementsSize++;
         }
     }
     fclose(auxFilePtr);
-    printf("\nFrequency Table\n");
-    int p;
-    for (p = 0; p < elementsSize; p++)
-        printf("Byte: 0x%02x\tFreq: %d\n", elements[p][0], elements[p][1]);
-    printf("\nExtension: %s\n", extension);
-    printf("Bits count: %llu\n", bitsCount);
-    printf("Original file size: %u\n", fileSize);
-    printf("\nHuffman Tree\n");
-    Node tree = buildTree(elements, elementsSize); // Huffman tree for codes
-    printTree(tree);
-    //FILE* encodedFilePtr = fopen(argv[1], "rb"); // open encoded file])
-    //if (!encodedFilePtr)
-    //{ // error opening file
-    //    fprintf(stderr, "Error: file open failed '%s'.\n", argv[1]);
-    //    return 1;
-    //}
-    //fseek(encodedFilePtr, 0, SEEK_END); // go to eof
-    //unsigned int encodedFileSize = ftell(encodedFilePtr); // get the file bytes
-    //rewind(encodedFilePtr); // sets position of filePtr at the beginning
-    //unsigned char *buffer = calloc(encodedFileSize, sizeof(unsigned char));
-    //if (!buffer)
-    //{ // error allocating memory
-    //    perror("Error: buffer memory allocation failed.\n");
-    //    return 1;
-    //} // initialize buffer in 0
-    //fread(buffer, sizeof(unsigned char), encodedFileSize, encodedFilePtr);
-    //fclose(encodedFilePtr); // read entire encoded file n close it
-    //char *filePath = calloc(strlen(argv[1]) + strlen(extension), sizeof(char));
-    //if (!filePath)
-    //{ // error allocating memory
-    //    perror("Error: file path memory allocation failed.\n");
-    //    return 1;
-    //}
-    //strcpy(filePath, argv[1]); // copy og file path
-    //stripExtension(filePath, argv[2]); // argv[2] no longer needed, storing ".dat"
-    //strcat(filePath, extension); // add og extension
-    //free(extension); // extension no longer needed
-    //printf("\nFile path: %s\n", filePath);
-    //FILE *filePtr = fopen(filePath, "wb"); // create decoded file
-    //if (!filePtr)
-    //{ // file creation error
-    //    fprintf(stderr, "Error: file creation failed '%s'.\n", filePath);
-    //    return 1;
-    //}
-    //unsigned char *output = calloc(fileSize, sizeof(unsigned char));
-    //if (!output)
-    //{  // memory allocation error
-    //    perror("Error: output memory allocation failed\n");
-    //    return 1;
-    //}
-    //unsigned long long i;
-    //unsigned int j, k;
-    //short codeLength = 0, codeLenAcc = 0, offset = 7;
-    //Node node = tree; // start at root
-    /*for(i = 0, j = 0, k = 0; i < bitsCount; i++)
-    {
-        if(offset < 0)
-        {
-            offset = 7;
-            j++;
-        }
-        if(getBitAt(buffer[j], offset--) & 1)
-            node = node->right;
-        else
-            node = node->left;
-        if(node->byte != NOITEM)
-        { // leaf node
-            output[k++] = node->byte;
-            node = tree; // reset node to root
-            printf("\nOutput: 0x%02x", output[k - 1]);
-        }
-    }*/
-    //for(i = 0, j = 0, k = 0; i < bitsCount; i += codeLength)
-    //{ // write bytes in output from codes at input
-    //    writeBytes(node, buffer, output, &offset, &j, &k, &codeLenAcc);
-    //    codeLength = codeLenAcc; // written byte's code length
-    //    codeLenAcc = 0; // reset code length accumulator
-    //    node = tree; // reset node to root
-    //    printf("\nOutput: 0x%02x Code length: %hd", output[k - 1], codeLength);
-    //}
-    //printf("\nOutput length vs original file size comparisson: %u == %u: %d\n", fileSize, k, fileSize == k);
-    //fwrite(output, sizeof(output[0]), fileSize, filePtr); // write decoded file
-    //fclose(filePtr);
-    //free(filePath);
-    //free(tree);
-    //free(buffer);
-    //free(output);
-    //return 0;
-
-    ////read the .dat file
-    FILE *filePtr = fopen(argv[1], "rb"); //open file in binary read
-    if (!filePtr)
-    { // file open error
+    Node root = buildTree(elements, elementsSize); // Huffman tree for codes
+    FILE* encodedFilePtr = fopen(argv[1], "rb"); //open file in binary read
+    if (!encodedFilePtr)
+    { // error opening file
         fprintf(stderr, "Error: file open failed '%s'.\n", argv[1]);
         return 1;
     }
-    fseek(filePtr, 0, SEEK_END); // go to eof
-    unsigned int datfileSize = ftell(filePtr); // get the file size in bytes
-    rewind(filePtr); // sets position of filePtr at the beginning
-    unsigned char *buffer = calloc(datfileSize, sizeof(unsigned char));
-    unsigned char *bufferToPrint = calloc(fileSize, sizeof(unsigned char));
-    if (!buffer || !bufferToPrint)
-    {  // memory allocation error
-        perror("Error: buffer memory allocation failed");
+    fseek(encodedFilePtr, 0, SEEK_END); // go to eof
+    unsigned int encodedFileSize = ftell(encodedFilePtr); // get the file bytes
+    rewind(encodedFilePtr); // sets position of filePtr at the beginning
+    unsigned char *buffer = calloc(encodedFileSize, sizeof(unsigned char));
+    if (!buffer)
+    { // error allocating memory
+        perror("Error: buffer memory allocation failed.\n");
+        return 1;
+    } // initialize buffer in 0
+    fread(buffer, sizeof(unsigned char), encodedFileSize, encodedFilePtr);
+    fclose(encodedFilePtr); // read entire encoded file n close it
+    char *filePath = calloc(strlen(argv[1]) + strlen(extension), sizeof(char));
+    if (!filePath)
+    { // error allocating memory
+        perror("Error: file path memory allocation failed.\n");
         return 1;
     }
-    fread(buffer, datfileSize, 1, filePtr); // stores entire file in buffer
-    fclose(filePtr);
-    printf("arg %s\n",argv[1]);
-    //Go t
-    Node auxNode;
-    int j = 0, k = 7;
-    //printf("bit %d : %d\n", j + k, getBitAt(buffer[0], 3));
-    for(int i = 0; i < fileSize; i++){
-        auxNode = tree;
-        while(auxNode->byte == NOITEM){
-            printf("bit %d : %d\n", j + k, getBitAt(buffer[j], k));
-            if(getBitAt(buffer[j], k--))
-                auxNode = auxNode->right;
-            else
-                auxNode = auxNode->left;
-
-            if( k < 0  ){ k = 7; j++; }
-        }
-        printf("byte is %c\n",auxNode->byte);
-        bufferToPrint[i] = auxNode->byte;
+    strcpy(filePath, argv[1]); // copy og file path
+    stripExtension(filePath, argv[2]); // argv[2] as aux to store ".dat"
+    strcat(filePath, extension); // add og extension
+    free(extension); // extension no longer needed
+    FILE *filePtr = fopen(filePath, "wb"); // create decoded file
+    if (!filePtr)
+    { // file creation error
+        fprintf(stderr, "Error: file creation failed '%s'.\n", filePath);
+        return 1;
     }
-    printf("Aqui es\n");
-    printf("%s\n", bufferToPrint);
+    unsigned char *output = calloc(fileSize, sizeof(unsigned char));
+    if (!output)
+    {  // memory allocation error
+        perror("Error: output memory allocation failed\n");
+        return 1;
+    }
+    Node node; // tree node to traverse
+    unsigned int j, i;
+    short bitOffset = 7; // bits range from 7 to 0
+    for(i = 0, j = 0; i < fileSize; i++){
+        node = root; // reset node to root
+        while(node->byte == NOITEM){ // while node is internal
+            if(getBitAt(buffer[j], bitOffset--))
+                node = node->right; // go right
+            else // go left
+                node = node->left;
+            if( bitOffset < 0  ){ bitOffset = 7; j++; }
+        }
+        output[i] = node->byte;
+    }
+    printf("\nOutput length vs original file size: %u vs %u: %d\n",
+            fileSize, i, fileSize == i);
+    fwrite(output, sizeof(output[0]), fileSize, filePtr);
+    fclose(filePtr); // write decoded file and close it
+    printf("Huffman decoded file: %s\n", filePath);
+    free(filePath);
+    freeTree(root);
+    root = NULL;
+    free(buffer);
+    free(output);
+    return 0; // success
 }
