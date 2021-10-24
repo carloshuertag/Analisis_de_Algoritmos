@@ -3,14 +3,15 @@
 
 /** 
  *  Node struct definition for Huffman binary tree nodes
- *  key: node's item
- *  count: key frequency count
+ *  byte: node's item
+ *  count: byte frequency count
  *  left: left child node
  *  right: right child node
 */
 typedef struct Node
 {
-    int key, count;
+    unsigned short byte;
+    unsigned int count;
     struct Node *left, *right;
 } * Node;
 
@@ -23,7 +24,7 @@ typedef struct Node
  *  @param rght binary tree right node.
  *  @return new binary tree node.
 */
-Node createNode(int item, int cnt, Node lft, Node rght)
+Node createNode(unsigned short item, unsigned int cnt, Node lft, Node rght)
 {
     Node node = (Node)malloc(sizeof(struct Node));
     if (!node)
@@ -35,7 +36,7 @@ Node createNode(int item, int cnt, Node lft, Node rght)
         node->count = cnt;
     else
         node->count = lft->count + rght->count;
-    node->key = item;
+    node->byte = item;
     node->left = lft;
     node->right = rght;
 }
@@ -49,8 +50,8 @@ Node createNode(int item, int cnt, Node lft, Node rght)
 typedef struct MinHeap
 {
     Node* arr;
-    int size;
-    int capacity;
+    unsigned int size;
+    unsigned int capacity;
 } MinHeap;
 
 /** 
@@ -89,13 +90,14 @@ MinHeap* createMinHeap(unsigned int capacity)
 {
     MinHeap* minheap = (MinHeap*) malloc(sizeof(MinHeap));
     if (!minheap)
-    {
+    { // error allocating memory
         perror("Error: minheap memory allocation failed");
         exit(1);
     }
-    minheap->arr = (Node*) calloc(capacity, sizeof(struct Node));
+    minheap->arr = (Node*) calloc(capacity, 
+                                    sizeof(struct Node));
     if (!minheap->arr)
-    {
+    { // error allocating memory
         perror("Error: arr memory allocation failed");
         exit(1);
     }
@@ -111,24 +113,28 @@ MinHeap* createMinHeap(unsigned int capacity)
 */
 MinHeap* insert2MinHeap(MinHeap* heap, Node element)
 {
-    if (heap->size == heap->capacity) {
-        perror("Couldn't insert node, heap is full");
+    if (heap->size == heap->capacity)
+    {
+        perror("Couldn't insert node, heap is full.\n");
         return heap;
     }
     heap->size++;
-    heap->arr[heap->size - 1] = element; //add element to end
-    int curr = heap->size - 1; // swap until the root is reached
-    while (curr > 0 && heap->arr[parent(curr)]->count > heap->arr[curr]->count) {
-        Node temp = heap->arr[parent(curr)];
-        heap->arr[parent(curr)] = heap->arr[curr];
-        heap->arr[curr] = temp;
-        curr = parent(curr); // update the current index of element
+    int current = heap->size - 1;
+    heap->arr[current] = element; //add element to end
+    // swap until the root is reached
+    while (current != 0 &&
+            heap->arr[parent(current)]->count > heap->arr[current]->count)
+    {
+        Node temp = heap->arr[parent(current)];
+        heap->arr[parent(current)] = heap->arr[current];
+        heap->arr[current] = temp;
+        current = parent(current); // update the current index
     }
     return heap; 
 }
 
 /**
- *  rearranges the min heap as to maintain the min-heap property
+ *  rearranges the min heap to maintain the min-heap property
  *  starting from given index
  *  @param heap given heap
  *  @param index given index
@@ -141,9 +147,11 @@ MinHeap* heapify(MinHeap* heap, int index)
     int left = leftChild(index); 
     int right = rightChild(index); 
     int smallest = index;
-    if (left < heap->size && heap->arr[left]->count < heap->arr[index]->count) 
+    if (left < heap->size
+        && heap->arr[left]->count < heap->arr[index]->count) 
         smallest = left; // update smallest to the left child
-    if (right < heap->size && heap->arr[right]->count < heap->arr[smallest]->count) 
+    if (right < heap->size
+        && heap->arr[right]->count < heap->arr[smallest]->count) 
         smallest = right; // update smallest to the right child,
     //guarantees smallest from the subtree
     if (smallest != index) //until the root is reached
@@ -167,20 +175,12 @@ MinHeap* deleteMin(MinHeap* heap)
         return heap;
     int size = heap->size;
     Node lastElement = heap->arr[size-1];
-    heap->arr[0] = lastElement; // update root value with the last element
+    heap->arr[0] = lastElement; // update root with the last element
     heap->size--; size--; // remove the last element
     heap = heapify(heap, 0); // mantain min-heap property
     return heap;
 }
 
-
-// prints heap in an inorder traversal
-void printMinHeap(MinHeap* heap)
-{
-    for (int i=0; i<heap->size; i++)
-        printf("%d -> ", heap->arr[i]->count);
-    printf("\n");
-}
 /**
  *  frees min heap memory: its fields and array
  *  @param heap given heap
@@ -194,33 +194,40 @@ void freeMinHeap(MinHeap* heap)
 }
 
 /**
- *  builds the binary tree to Huffman code a file, with a given frequency table.
+ *  builds the Huffman binary tree, with a given frequency table.
  *  @param arr nx2 dimensions array in which elements are definied.
  *  like this: arr[x][0] for the element and its frequenct arr[x][1]
  *  @param n dimension of the array of the 2 dimensions array.
- *  @return binary tree root in which is built the tree to Hufman code.
+ *  @return binary tree root in which the Huffman tree is built.
 */
-Node buildTree(unsigned int arr[][2], int n)
+Node buildTree(unsigned int arr[][2], unsigned int n)
 {
-    MinHeap* heap = createMinHeap(n);
+    MinHeap* heap = createMinHeap(n); // create min heap
     int i;
-    for (i = 0; i < n; i++)
-    { // initilializing heap with items and frequencies from given table
-        insert2MinHeap(heap, createNode(arr[i][0], arr[i][1], NULL, NULL));
-    }
-    printMinHeap(heap);
-    Node firstLowest, secondLowest;
+    for (i = 0; i < n; i++) // init muin heap with frequencies table
+        insert2MinHeap(heap, createNode(arr[i][0], arr[i][1],
+                                        NULL, NULL));
+    Node leftToMerge, rightToMerge;
     while(heap->size > 1)
     {
-        firstLowest = getMin(heap);
+        leftToMerge = getMin(heap);
         heap = deleteMin(heap);
-        secondLowest = getMin(heap);
+        rightToMerge = getMin(heap);
         heap = deleteMin(heap);
-        // inserts a new node in which the lowest two nodes will be merged
-        insert2MinHeap(heap, createNode(NOITEM, NOCOUNT, firstLowest, secondLowest));
+        // inserts the 2 lowest nodes merged
+        insert2MinHeap(heap, createNode(NOITEM, NOCOUNT,
+                                leftToMerge, rightToMerge));
     }
-    firstLowest = getMin(heap); // built Huffman tree in its root
-    printMinHeap(heap);
+    leftToMerge = getMin(heap); // built Huffman tree at min heap root
     freeMinHeap(heap);
-    return firstLowest;
+    return leftToMerge; // return root of Huffman tree
+}
+
+void printTree(Node root)
+{
+    if (root == NULL)
+        return;
+    printTree(root->left);
+    printf("0x%02x: %d\n", root->byte, root->count);
+    printTree(root->right);
 }
