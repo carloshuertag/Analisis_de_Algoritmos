@@ -122,8 +122,8 @@ int main(int argc, char *argv[])
 	printf("sys (E/S time)  %.10e s\n",  stime1 - stime0);
 	printf("CPU/Wall: %.10f %% \n",
             100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
-    printf("\nCompression OG vs Compressed: %u %u %f %%\n", fileSize,
-            encodedFileSize, 100.0 * (double)fileSize / (double)encodedFileSize);
+    printf("Compression OG vs Compressed: %u %u %f %%\n", fileSize,
+            encodedFileSize, 100.0 * (double)encodedFileSize / (double)fileSize);
     free(filePath);
     freeTree(root);
     root = NULL;
