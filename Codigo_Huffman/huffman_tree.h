@@ -39,6 +39,7 @@ Node createNode(unsigned short item, unsigned int cnt, Node lft, Node rght)
         node->count = lft->count + rght->count;
     node->left = lft;
     node->right = rght;
+    return node;
 }
 
 /**

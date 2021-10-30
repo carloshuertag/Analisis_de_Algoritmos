@@ -1,3 +1,18 @@
+/**
+ *  @author @huerta2502 - Carlos Huerta Garcia
+ *          @angel-hache-de - Angel
+ *          @MarcoLg23 - Marco Lavarrios
+ *          @ReinaLeonel - Reina Beatriz Juarez Leonel
+ *  Curso: Analisis de algoritmos  3CM13
+ *  (C) Octubre 2021
+ *  @version 1.0
+ *  ESCOM-IPN
+ *  Codificación de un archivo codificado con el alglritmo de Hufffman
+ *  Además crea un arhivo de texto con la tabla de frecuencias.
+ *  Compilación: gcc huffman_encode.c tiempo.c -o huffman_encode
+ *  Ejecución: ./huffman_encode filePath
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -5,6 +20,7 @@
 #include <math.h>
 #include "huffman_tree.h"
 #include "huffman_code.h"
+#include "tiempo.h"
 
 void getCodes(Node root, int code, int length);
 
@@ -17,6 +33,8 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Usage: ./%s <file path>\n", argv[0]);
         return 1;
     }
+    double utime0, stime0, wtime0, utime1, stime1, wtime1; // time meassure
+    uswtime(&utime0, &stime0, &wtime0); // start time meassure
     FILE *filePtr = fopen(argv[1], "rb"); //open file in binary read
     if (!filePtr)
     { // file open error
@@ -71,7 +89,6 @@ int main(int argc, char *argv[])
     fprintf(auxFile, "%u\n", fileSize); // writes fileSize in aux file
     fprintf(auxFile, "%s", extension); // writes extension in aux file
     fclose(auxFile);
-    printf("\nHuffman coding aux file: %s\n", filePath);
     Node root = buildTree(elements, elementsSize); // Huffman tree for codes
     memset(codes, -1, 512 * sizeof(unsigned int)); //initialize codes in -1
     getCodes(root, 0, 0);// store byte codes into codes array
@@ -105,7 +122,12 @@ int main(int argc, char *argv[])
                 writeCode(output, codes[j], &offset, &k);
     fwrite(output, sizeof(output[0]), outputBytes, codedFile);
     fclose(codedFile); // write coded file n close it
-    printf("Huffman encoded file: %s\n", filePath);
+    uswtime(&utime1, &stime1, &wtime1); // stop time meassure
+    printf("\nHuffman decoded file: %s\n", filePath);
+    printf("\nn=%u\nreal (total time)  %.10e s\n", fileSize, wtime1 - wtime0);
+	printf("user (CPU time) %.10e s\n",  utime1 - utime0);
+	printf("sys (E/S time)  %.10e s\n",  stime1 - stime0);
+	printf("CPU/Wall: %.10f %% \n",100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
     free(filePath);
     freeTree(root);
     root = NULL;

@@ -1,9 +1,24 @@
+/**
+ *  @author @huerta2502 - Carlos Huerta Garcia
+ *          @angel-hache-de - Angel
+ *          @MarcoLg23 - Marco Lavarrios
+ *          @ReinaLeonel - Reina Beatriz Juarez Leonel
+ *  Curso: Analisis de algoritmos  3CM13
+ *  (C) Octubre 2021
+ *  @version 1.0
+ *  ESCOM-IPN
+ *  Decodificación de un archivo .dat codificado con el alglritmo de Hufffman
+ *  Dado un archivo auixiliar con la tabla de frecuencias de los bytes originales.
+ *  Compilación: gcc huffman_decode.c tiempo.c -o huffman_decode
+ *  Ejecución: ./huffman_decode filePath auxFilePath
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <math.h>
 #include "huffman_tree.h"
 #include "huffman_code.h"
+#include "tiempo.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,6 +27,8 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Usage: ./%s <file path> <aux file path>\n", argv[0]);
         return 1;
     }
+    double utime0, stime0, wtime0, utime1, stime1, wtime1; // time meassure
+    uswtime(&utime0, &stime0, &wtime0); // start time meassure
     FILE *auxFilePtr = fopen(argv[2], "r"); // open aux file
     if (!auxFilePtr)
     { // error opening file
@@ -96,11 +113,17 @@ int main(int argc, char *argv[])
         }
         output[i] = node->byte;
     }
-    printf("\nOutput length vs original file size: %u vs %u: %d\n",
-            fileSize, i, fileSize == i);
     fwrite(output, sizeof(output[0]), fileSize, filePtr);
     fclose(filePtr); // write decoded file and close it
-    printf("Huffman decoded file: %s\n", filePath);
+    uswtime(&utime1, &stime1, &wtime1); // stop time meassure
+    printf("\nHuffman decoded file: %s\n", filePath);
+    printf("\nn=%u\nreal (total time)  %.10e s\n", fileSize, wtime1 - wtime0);
+	printf("user (CPU time) %.10e s\n",  utime1 - utime0);
+	printf("sys (E/S time)  %.10e s\n",  stime1 - stime0);
+	printf("CPU/Wall: %.10f %% \n",
+            100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
+    printf("\nCompression OG vs Compressed: %u %u %f %%\n", fileSize,
+            encodedFileSize, 100.0 * (double)fileSize / (double)encodedFileSize);
     free(filePath);
     freeTree(root);
     root = NULL;

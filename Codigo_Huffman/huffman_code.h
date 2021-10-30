@@ -22,7 +22,7 @@ void writeCode (unsigned char *buffer, int code[2],
             *offset = 7;
             ++(*index);
         }
-        if (getBitAt(code[0], code[1] - i - 1))
+        if (getBitAt(code[0], (code[1] - i - 1)))
             turnBitOnAt(buffer[*index], (*offset)--);
         else
             turnBitOffAt(buffer[*index], (*offset)--);
