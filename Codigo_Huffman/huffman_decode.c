@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
 	printf("CPU/Wall: %.10f %% \n",
             100.0 * (utime1 - utime0 + stime1 - stime0) / (wtime1 - wtime0));
     printf("\nDecoded size vs Coded size: %u %u %f %%\n", fileSize, encodedFileSize,
-            100.0 - (100.0 * (double)fileSize / (double)encodedFileSize));
+            100.0 - (100.0 * (double)encodedFileSize / (double)fileSize));
     free(filePath);
     freeTree(root);
     root = NULL;

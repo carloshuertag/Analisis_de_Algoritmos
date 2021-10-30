@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
     fwrite(output, sizeof(output[0]), outputBytes, codedFile);
     fclose(codedFile); // write coded file n close it
     uswtime(&utime1, &stime1, &wtime1); // stop time meassure
-    printf("\nHuffman decoded file: %s\n", filePath);
+    printf("\nHuffman encoded file: %s\n", filePath);
     printf("\nn=%u\nreal (total time)  %.10e s\n", fileSize, wtime1 - wtime0);
 	printf("user (CPU time) %.10e s\n",  utime1 - utime0);
 	printf("sys (E/S time)  %.10e s\n",  stime1 - stime0);
