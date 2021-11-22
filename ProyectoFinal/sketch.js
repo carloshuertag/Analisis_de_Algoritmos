@@ -12,16 +12,32 @@ function setup(){
     //COLORES
     //
     createCanvas(windowWidth,windowHeight);
-    background(150);
+    background(255);
 }
 
-function draw(){
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
 }
 
 function mouseClicked() {
-    ellipse(mouseX, mouseY, 10, 10);
-        let dot = new Point(mouseX, mouseY, 0);
-        dots.push(dot);
-        console.log(dots);
-        count++;
-  }
+    fill(0);
+    ellipse(mouseX, mouseY, 5, 5);
+    let dot = new Point(mouseX, mouseY, 0);
+    dots.push(dot);
+    count++;
+    console.log(dots[dots.length-1].x);
+    lines();
+}
+
+function lines(){
+    if(dots.length>1){
+        for(i=0;i<dots.length-1;i++){
+            for(j=0;j<dots.length-1;j++){
+                stroke(0);
+                line(dots[i].x,dots[i].y,dots[i+1].x,dots[i+1].y);
+                if(1){
+                }
+            }
+        }
+    }
+}
