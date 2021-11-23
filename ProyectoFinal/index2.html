@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Pares de Puntos más Cercanos</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="tools/utils.js" type="text/javascript"></script>
+    <script src="tools/index.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <header>
+        <section>
+            <span id="title">Pares de Puntos más Cercanos</span>
+            <span id="darkMode">
+        <label for="dark">Modo oscuro<span class="buttonSpace"></span></label>
+            <label class="switch">
+          <input id="dark" type="checkbox" checked>
+          <span class="slider round"></span>
+        </label>
+            </span>
+        </section>
+        <nav>
+            <ul>
+                <li id="aboutTab">Descripción</li>
+                <li id="stackTab">Fuerza Bruta</li>
+                <li id="queueTab">Divide y Vencerás</li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="about">
+            <article>
+                <h1>Descripción del problema</h1>
+                <p>
+                    En geometría computacional, el problema del par de puntos más cercano es un problema clásico donde:
+                    <br /> "Dados n puntos en un espacio métrico, se pide encontrar un par de puntos con la distancia más pequeña entre ellos".
+                </p>
+                <img src="img/p1.png" alt="points image" width="450" height="110" />
+                <br /><br /><br />
+                <h4>Autores:</h4>
+                <h5>Hernández Domínguez Ángel Alan</h5>
+                <h5>Huerta García Carlos</h5>
+                <h5>Juárez Leonel Reina Beatriz</h5>
+                <h5>Lavarrios González Marco Antonio</h5>
+            </article>
+        </section>
+        <section id="stack">
+            <article>
+                <h1>Solución por fuerza bruta</h1>
+                <p>
+                    La solución por fuerza bruta consiste en utilizar un ciclo (for) anidado para comparar cada punto con el resto de puntos del conjunto dado.
+                    <br/> En esta solución se va guardando la distancia mínima obtenida y el par de puntos que arrojaron dicha distancia.
+                </p>
+            </article>
+            <section class="dsGrid">
+                <article id="sOptions">
+                    <h3>Animación</h3>
+                    <img src="img/p1.png" alt="points image" width="450" height="110" />
+                    <br /><br /><br />
+                    <!--<button class="btn" id="newStack"><span><img src="icons/new.svg" /></span>New Stack</button>
+                    <span class="buttonSpace"></span>
+                    <button class="btn" id="saveStack"><img src="icons/save.svg" />Save Stack</button>
+                    <span class="buttonSpace"></span>
+                    <button class="btn" id="loadStack"><img src="icons/load.svg" />Load Stack</button>
+                    <br/><br/>
+                    <form>
+                        <label for="sElement">Element:</label>
+                        <input id="sElement" name="sElement" type="number" size="8" required />
+                        <span class="buttonSpace"></span>
+                        <button class="btn" type="button" id="push"><img src="icons/add.svg" />Push</button>
+                    </form>
+                    <br/>
+                    <button class="btn" id="pop"><img src="icons/remove.svg" />Pop</button>-->
+                </article>
+                <article id="sAnimation">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th id="sHead">head</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stackAnimation"></tbody>
+                        <tfoot>
+                            <tr>
+                                <td id="sTail">tail</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </article>
+                <article id="sCode">
+                    <h3>Algoritmo</h3>
+                    <code>
+                        bruteForceClosestPoints(P)// P is list of points <br/>
+                        &nbsp;&nbsp;dmin = ∞<br/>
+                        &nbsp;&nbsp;i1 = 0<br/>
+                        &nbsp;&nbsp;i2 = 0<br/>
+                        &nbsp;&nbsp;for (i = 0; i < n - 1; i++)<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;for (int j = i + 1; j < n; j++)<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d = sqrt((P[i].x - P[j].x)^2 + (P[i].y - P[j].y)^2)<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (d < dmin) <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dmin = d<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i1 = i<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i2 = j<br/>
+                        &nbsp;&nbsp;return (P[i1], P[i2]);<br/>
+                    </code>
+                    <h3>Descripción del algoritmo</h3>
+                    <p>
+                        Ciclos anidados que recorren el conjunto de puntos.
+                        <br />Distancia entre los puntos i y j.
+                        <br />Comparar con la distancia mínima que hasta el momento se ha calculado (Inicializada con un valor muy grande).
+                        <br />Si la distancia recién comparada es la menor, entonces actualizar la menor distancia obtenida y los índices de los puntos que la producen.
+                    </p>
+                </article>
+            </section>
+        </section>
+        <section id="queue">
+            <section class="dsGrid">
+                <article id="qAnimation">
+                    <table>
+                        <tbody id="queueAnimation"></tbody>
+                    </table>
+                </article>
+                <!--
+                <article id="qOptions">
+                    <button class="btn" id="newQueue"><img src="icons/load.svg" />New Queue</button>
+                    <span class="buttonSpace"></span>
+                    <button class="btn" id="saveQueue"><img src="icons/save.svg" />Save Queue</button>
+                    <span class="buttonSpace"></span>
+                    <button class="btn" id="loadQueue"><img src="icons/load.svg" />Load Queue</button>
+                    <br /><br />
+                    <form>
+                        <label for="qElement">Element:</label>
+                        <input id="qElement" name="qElement" type="number" size="8" required />
+                        <span class="buttonSpace"></span>
+                        <button class="btn" type="button" id="enqueue"><img src="icons/add.svg" />Enqueue</button>
+                    </form>
+                    <br/>
+                    <button class="btn" id="dequeue"><img src="icons/remove.svg" />Dequeue</button>
+                </article>
+                <article id="qCode">
+                    #include &lt;stdlib.h&gt;<br/> #include &lt;limits.h&gt;<br/> #include &lt;stdio.h&gt;<br/><br/> typedef int QueueEntry;<br/> typedef struct QueueNode<br/> {
+                    <br/> &nbsp;&nbsp;QueueEntry entry;<br/> &nbsp;&nbsp;struct QueueNode *next;<br/> } QueueNode;<br/> typedef struct Queue<br/> {
+                    <br/> &nbsp;&nbsp;QueueNode *head;<br/> &nbsp;&nbsp;QueueNode *tail;<br/> } Queue;<br/><br/>
+                    <article id="createQueue">
+                        <span>Queue *createQueue()</span><br/> {
+                        <br/>
+                        <span>&nbsp;&nbsp;Queue *queue = (Queue *)malloc(sizeof(Queue));</span><br/>
+                        <span>&nbsp;&nbsp;queue->head = queue->tail = NULL;</span><br/>
+                        <span>&nbsp;&nbsp;return queue;</span><br/> }
+                        <br/>
+                    </article><br/>
+                    <article id="createQueueNode">
+                        <span>QueueNode *createQueueNode(QueueEntry item)</span><br/> {
+                        <br/>
+                        <span>&nbsp;&nbsp;QueueNode *node = (QueueNode *)malloc(sizeof(QueueNode));</span><br/>
+                        <span>&nbsp;&nbsp;node->entry = item;</span><br/>
+                        <span>&nbsp;&nbsp;return node;</span><br/> }
+                        <br/>
+                    </article><br/>
+                    <article id="enqueueCode">
+                        <span>void enqueue(QueueEntry item, Queue *queue)</span><br/> {
+                        <br/>
+                        <span>&nbsp;&nbsp;QueueNode *node = createQueueNode(item);</span><br/>
+                        <span>&nbsp;&nbsp;if((queue->head)==NULL) queue->head = queue->tail = node;</span><br/>
+                        <span>&nbsp;&nbsp;else {</span><br/>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;queue->tail->next = node;</span><br/>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;queue->tail = node;</span><br/>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;node->next = NULL;</span><br/> &nbsp;&nbsp;}
+                        <br/> }
+                        <br/>
+                    </article><br/>
+                    <article id="dequeueCode">
+                        <span>QueueEntry dequeue(Queue *queue)</span><br/> {
+                        <br/>
+                        <span>&nbsp;&nbsp;QueueEntry dequeued = INT_MIN;</span><br/>
+                        <span>&nbsp;&nbsp;if ((queue->head)==NULL){</span><br/>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;perror("Error: current queue is empty");</span><br/>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;return dequeued;</span><br/> &nbsp;&nbsp;}
+                        <br/>
+                        <span>&nbsp;&nbsp;QueueNode *temp = queue->head;</span><br/>
+                        <span>&nbsp;&nbsp;queue->head = queue->head->next;</span><br/>
+                        <span>&nbsp;&nbsp;dequeued = temp->entry;</span><br/>
+                        <span>&nbsp;&nbsp;free(temp);</span><br/>
+                        <span>&nbsp;&nbsp;return dequeued;</span><br/> }
+                        <br/>
+                    </article>
+                </article>-->
+            </section>
+        </section>
+    </main>
+</body>
+
+</html>
