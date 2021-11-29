@@ -3,58 +3,124 @@ let stackArray = new Array();
 let queueArray = new Array();
 let listArray = new Array();
 
+let bruteForceCanvas;
+
 window.addEventListener("load", loadPage, false);
+
 function loadPage() {
     //Events
     //Stack
-    document.getElementById("pop").addEventListener("click", pop, false);
-    document.getElementById("push").addEventListener("click", push, false);
-    document.getElementById("newStack").addEventListener("click", newStack, false);
-    document.getElementById("saveStack").addEventListener("click", saveStack, false);
-    document.getElementById("loadStack").addEventListener("click", loadStack, false);
+    //document.getElementById("pop").addEventListener("click", pop, false);
+    //document.getElementById("push").addEventListener("click", push, false);
+    //document.getElementById("newStack").addEventListener("click", newStack, false);
+    //document.getElementById("saveStack").addEventListener("click", saveStack, false);
+    //document.getElementById("loadStack").addEventListener("click", loadStack, false);
     //Queue
-    document.getElementById("enqueue").addEventListener("click", enqueue, false);
-    document.getElementById("dequeue").addEventListener("click", dequeue, false);
-    document.getElementById("newQueue").addEventListener("click", newQueue, false);
-    document.getElementById("saveQueue").addEventListener("click", saveQueue, false);
-    document.getElementById("loadQueue").addEventListener("click", loadQueue, false);
-    //list
-    document.getElementById("insertAtStart").addEventListener("click", insertAtStart, false);
-    document.getElementById("insertAt").addEventListener("click", insertAt, false);
-    document.getElementById("append").addEventListener("click", append, false);
-    document.getElementById("deleteAtStart").addEventListener("click", deleteAtStart, false);
-    document.getElementById("deleteAt").addEventListener("click", deleteAt, false);
-    document.getElementById("deleteAtEnd").addEventListener("click", deleteAtEnd, false);
-    document.getElementById("newList").addEventListener("click", newList, false);
-    document.getElementById("saveList").addEventListener("click", saveList, false);
-    document.getElementById("loadList").addEventListener("click", loadList, false);
+    //document.getElementById("enqueue").addEventListener("click", enqueue, false);
+    //document.getElementById("dequeue").addEventListener("click", dequeue, false);
+    //document.getElementById("newQueue").addEventListener("click", newQueue, false);
+    //document.getElementById("saveQueue").addEventListener("click", saveQueue, false);
+    //document.getElementById("loadQueue").addEventListener("click", loadQueue, false);
     //Objets
-    stack = document.getElementById("stackAnimation");
-    queue = document.getElementById("queueAnimation");
-    list = document.getElementById("listAnimation");
+    //stack = document.getElementById("stackAnimation");
+    //queue = document.getElementById("queueAnimation");
+    //list = document.getElementById("listAnimation");
+
+    bruteForceCanvas = new p5(sketchBruteForce, "bruteForce");
+}
+
+let dots = new Array();
+let d;
+let indexi;
+let indexj;
+let dmin = Number.POSITIVE_INFINITY;
+let count = 0;
+let bruteForceButton;
+
+function setup() {
+
+}
+
+class Point {
+    constructor(x, y, b) {
+        this.x = x;
+        this.y = y;
+        this.b = b;
+    }
+}
+
+function sketchBruteForce(p) {
+    p.setup = function() {
+        createCanvas(windowWidth / 3, windowHeight / 3);
+        background(255);
+        bruteForceButton = createButton('submit');
+        bruteForceButton.position(windowWidth / 3 - 100, (2 * windowHeight) / 3 + 50);
+        bruteForceButton.mousePressed(bruteForceSimulation);
+    };
+    p.mouseClicked = function() {
+        fill(0);
+        ellipse(mouseX, mouseY, 5, 5);
+        let dot = new Point(mouseX, mouseY, 0);
+        dots.push(dot);
+        count++;
+        console.log(dots[dots.length - 1]);
+    };
+}
+
+async function bruteForceSimulation() {
+    if (dots.length >= 2) {
+        for (i = 0; i < dots.length - 1; i++) {
+            for (j = i + 1; j < dots.length; j++) {
+                d = Math.sqrt(Math.pow((dots[i].x - dots[j].x), 2) + Math.pow((dots[i].y - dots[j].y), 2));
+                stroke(0);
+                if (d < dmin) {
+                    dmin = d;
+                    indexi = i;
+                    indexj = j;
+                }
+                line(dots[i].x, dots[i].y, dots[j].x, dots[j].y);
+                await sleep(500);
+            }
+        }
+    }
+    stroke(255, 0, 0);
+    line(dots[indexi].x, dots[indexi].y, dots[indexj].x, dots[indexj].y);
+    await sleep(500);
+    console.log(dmin);
+    console.log(new Point(dots[indexi].x, dots[indexi].y, dots[indexi].b));
+    console.log(new Point(dots[indexj].x, dots[indexj].y, dots[indexj].b));
+}
+
+// custom helper function to deliberately slow down
+// the process and make visualization easy
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 //Code Animations
 
 function resetCodeAnimations(sectionId) {
     let paragraphs = document.getElementById(sectionId).children;
-    for (let i = 0; i < paragraphs.length; i++) if(paragraphs.item(i).tagName != "br"){
-        let lines = paragraphs.item(i).children;
-        for (let j = 0; j < lines.length; j++) if(lines.item(j).tagName != "br"){
-            lines.item(j).style.color = document.body.style.color;
-            lines.item(j).style.backgroundColor = "";
+    for (let i = 0; i < paragraphs.length; i++)
+        if (paragraphs.item(i).tagName != "br") {
+            let lines = paragraphs.item(i).children;
+            for (let j = 0; j < lines.length; j++)
+                if (lines.item(j).tagName != "br") {
+                    lines.item(j).style.color = document.body.style.color;
+                    lines.item(j).style.backgroundColor = "";
+                }
         }
-    }
 }
 
 function codeAnimation(articleId) {
     let lines = document.getElementById(articleId).children;
-    for (let i = 0; i < lines.length; i++) if(lines.item(i).tagName != "br"){
-        lines.item(i).style.color = (document.body.style.color == "rgb(46, 46, 46)")
-            ? "rgba(0, 127, 63, 0.9)" : "rgba(0, 255, 127, 0.9)";
-        lines.item(i).style.backgroundColor = (document.body.style.color == "rgb(46, 46, 46)")
-            ? "rgba(0, 255, 127, 0.3)" : "rgba(0, 127, 63, 0.3)";
-    }
+    for (let i = 0; i < lines.length; i++)
+        if (lines.item(i).tagName != "br") {
+            lines.item(i).style.color = (document.body.style.color == "rgb(46, 46, 46)") ?
+                "rgba(0, 127, 63, 0.9)" : "rgba(0, 255, 127, 0.9)";
+            lines.item(i).style.backgroundColor = (document.body.style.color == "rgb(46, 46, 46)") ?
+                "rgba(0, 255, 127, 0.3)" : "rgba(0, 127, 63, 0.3)";
+        }
     lines.item(0).scrollIntoView();
 }
 
@@ -115,7 +181,7 @@ function saveStack() {
 function push() {
     resetCodeAnimations("sCode");
     let value = document.getElementById("sElement").value;
-    if(value == "") {
+    if (value == "") {
         alert("Please enter the data to push into the stack.");
         return;
     }
@@ -161,7 +227,7 @@ function pop() {
 function enqueue() {
     resetCodeAnimations("qCode");
     let value = document.getElementById("qElement").value;
-    if(value == "") {
+    if (value == "") {
         alert("Please enter the data to enqueues.");
         return;
     }
@@ -182,8 +248,7 @@ function enqueue() {
         row.appendChild(head);
         row.appendChild(element);
         row.appendChild(tail);
-    }
-    else {
+    } else {
         row = queue.firstChild;
         if (row.hasChildNodes()) {
             let aux = row.lastChild;
@@ -205,8 +270,9 @@ function enqueue() {
 function dequeue() {
     resetCodeAnimations("qCode");
     if (queue.hasChildNodes()) {
-        let row = queue.firstChild, i = 3;
-        while(i--) row.removeChild(row.firstChild);
+        let row = queue.firstChild,
+            i = 3;
+        while (i--) row.removeChild(row.firstChild);
         if (row.hasChildNodes()) {
             let head = document.createElement("td");
             let headtext = document.createTextNode("head");
@@ -317,8 +383,8 @@ function loadList() {
                 let nullIcon = document.createElement("img");
                 nullIcon.src = "../icons/null.svg"
                 nullE.appendChild(nullIcon);
-                nullIcon.style.filter = (document.body.style.color == "rgb(46, 46, 46)")
-                ? "brightness(10%)" : "brightness(100%)";
+                nullIcon.style.filter = (document.body.style.color == "rgb(46, 46, 46)") ?
+                    "brightness(10%)" : "brightness(100%)";
             }
         }
         alert("List previously stored loaaded successfully");
@@ -346,7 +412,7 @@ function newList() {
 
 function insertAtStart() {
     let value = document.getElementById("lElement").value;
-    if(value == "") {
+    if (value == "") {
         alert("Please enter the data to append.");
         return;
     }
@@ -358,8 +424,8 @@ function insertAtStart() {
     let nullIcon = document.createElement("img");
     nullIcon.src = "../icons/null.svg"
     nullE.appendChild(nullIcon);
-    nullIcon.style.filter = (document.body.style.color == "rgb(46, 46, 46)")
-            ? "brightness(10%)" : "brightness(100%)";
+    nullIcon.style.filter = (document.body.style.color == "rgb(46, 46, 46)") ?
+        "brightness(10%)" : "brightness(100%)";
     if (!list.hasChildNodes()) {
         row = document.createElement("tr");
         list.appendChild(row);
@@ -371,8 +437,7 @@ function insertAtStart() {
         row.appendChild(element);
         row.appendChild(pointer);
         row.appendChild(nullE);
-    }
-    else{
+    } else {
         row = list.firstChild;
         let arrow = document.createElement("td");
         let next = row.children.item(1);
@@ -392,21 +457,21 @@ function insertAtStart() {
 
 function insertAt() {
     let value = document.getElementById("lElement").value;
-    if(value == "") {
+    if (value == "") {
         alert("Please enter the data to insert.");
         return;
     }
     let position = document.getElementById("lPosition").value;
-    if(position == "") {
+    if (position == "") {
         alert("Please enter the posistion to insert at");
         return;
     }
     position = Number(document.getElementById("lPosition").value);
-    if(position < 0 || listArray.length == 0 || position >= listArray.length) {
+    if (position < 0 || listArray.length == 0 || position >= listArray.length) {
         alert("Please enter a valid posistion to insert at.");
         return;
     }
-    if(position == 0) {
+    if (position == 0) {
         insertAtStart();
         return;
     }
@@ -431,7 +496,7 @@ function insertAt() {
 
 function append() {
     let value = document.getElementById("lElement").value;
-    if(value == "") {
+    if (value == "") {
         alert("Please enter the data to append.");
         return;
     }
@@ -444,8 +509,8 @@ function append() {
     let nullIcon = document.createElement("img");
     nullIcon.src = "../icons/null.svg"
     nullE.appendChild(nullIcon);
-    nullIcon.style.filter = (document.body.style.color == "rgb(46, 46, 46)")
-            ? "brightness(10%)" : "brightness(100%)";
+    nullIcon.style.filter = (document.body.style.color == "rgb(46, 46, 46)") ?
+        "brightness(10%)" : "brightness(100%)";
     if (!list.hasChildNodes()) {
         row = document.createElement("tr");
         list.appendChild(row);
@@ -457,8 +522,7 @@ function append() {
         row.appendChild(element);
         row.appendChild(pointer);
         row.appendChild(nullE);
-    }
-    else {
+    } else {
         row = list.firstChild;
         if (row.hasChildNodes()) {
             let aux = row.lastChild;
@@ -481,8 +545,10 @@ function append() {
 function deleteAtStart() {
     resetCodeAnimations("lCode");
     if (list.hasChildNodes()) {
-        let row = list.firstChild, i = 4;
-        while(i--) if (row.hasChildNodes()) row.removeChild(row.firstChild);
+        let row = list.firstChild,
+            i = 4;
+        while (i--)
+            if (row.hasChildNodes()) row.removeChild(row.firstChild);
         if (row.hasChildNodes()) {
             let start = document.createElement("td");
             let starttext = document.createTextNode("start");
@@ -499,27 +565,28 @@ function deleteAtStart() {
 function deleteAt() {
     resetCodeAnimations("lCode");
     let position = document.getElementById("lPosition").value;
-    if(position == "") {
+    if (position == "") {
         alert("Please enter the posistion to insert at");
         return;
     }
     position = Number(document.getElementById("lPosition").value);
-    if(position < 0 || listArray.length == 0 || position >= listArray.length) {
+    if (position < 0 || listArray.length == 0 || position >= listArray.length) {
         alert("Please enter a valid posistion to insert at.");
         return;
     }
-    if(position == 0) {
+    if (position == 0) {
         deleteAtStart();
         return;
     }
-    if(position == (listArray.length - 1)) {
+    if (position == (listArray.length - 1)) {
         deleteAtEnd();
         return;
     }
-    if(list.hasChildNodes()) {
+    if (list.hasChildNodes()) {
         let row = list.firstChild;
-        let i = 0, index = position * 3;
-        while(i++ < 3) row.removeChild(row.children.item(index));
+        let i = 0,
+            index = position * 3;
+        while (i++ < 3) row.removeChild(row.children.item(index));
     }
     listArray.splice(position, 1);
     codeAnimation("deleteAtCode");
@@ -527,10 +594,11 @@ function deleteAt() {
 
 function deleteAtEnd() {
     resetCodeAnimations("lCode");
-    if(list.hasChildNodes()) {
+    if (list.hasChildNodes()) {
         let row = list.firstChild;
-        let i = 0, index = (listArray.length - 1) * 3;
-        while(i++ < 3) row.removeChild(row.children.item(index));
+        let i = 0,
+            index = (listArray.length - 1) * 3;
+        while (i++ < 3) row.removeChild(row.children.item(index));
         if (row.children.length == 1) row.removeChild(row.children.item(0));
     }
     listArray.pop();
