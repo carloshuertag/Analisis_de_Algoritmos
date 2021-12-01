@@ -1,0 +1,17 @@
+button {
+    border: 0ex;
+    background: #97CAD8;
+    color: #001B48;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 3ex;
+    padding: 2ex 1.5ex;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+button :hover {
+    color: rgba(0, 0, 0, 0.6);
+}
