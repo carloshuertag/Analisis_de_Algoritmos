@@ -25,8 +25,8 @@ function loadPage() {
     //stack = document.getElementById("stackAnimation");
     //queue = document.getElementById("queueAnimation");
     //list = document.getElementById("listAnimation");
-
-    bruteForceCanvas = new p5(sketchBruteForce, "bruteForce");
+    //let div = document.getElementById("bruteForce");
+    //bruteForceCanvas = new p5(sketchBruteForce, div);
 }
 
 let dots = new Array();
@@ -79,7 +79,7 @@ async function bruteForceSimulation() {
                     indexj = j;
                 }
                 line(dots[i].x, dots[i].y, dots[j].x, dots[j].y);
-                await sleep(500);
+                await sleep(333);
             }
         }
     }

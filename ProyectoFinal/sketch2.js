@@ -8,8 +8,8 @@ class Point {
 
 let dots = [];
 let d;
-let indexi;
-let indexj;
+let indexi = 0;
+let indexj = 1;
 let dmin = Number.POSITIVE_INFINITY;
 let count = 0;
 let button;
@@ -45,6 +45,7 @@ async function lines() {
     if (dots.length >= 2) {
         for (i = 0; i < dots.length - 1; i++) {
             for (j = i + 1; j < dots.length; j++) {
+                console.log(i, j);
                 d = Math.sqrt(Math.pow((dots[i].x - dots[j].x), 2) + Math.pow((dots[i].y - dots[j].y), 2));
                 stroke(0);
                 if (d < dmin) {
@@ -57,6 +58,7 @@ async function lines() {
             }
         }
     }
+    console.log(dots)
     stroke(255, 0, 0);
     line(dots[indexi].x, dots[indexi].y, dots[indexj].x, dots[indexj].y);
     await sleep(500);
