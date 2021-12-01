@@ -1,4 +1,4 @@
-let dots = new Array();
+let points = new Array();
 let bruteForceCanvas;
 let buttonY;
 let mouseYOffset = 5;
@@ -22,6 +22,9 @@ class Point {
         this.y = y;
         this.b = b;
     }
+    static distance(p1, p2) {
+        return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+    }
     toString() {
         return "P(" + this.x + ", " + this.y + ")";
     }
@@ -37,7 +40,7 @@ function sketchBruteForce(p) {
             p.fill(0);
             p.ellipse(p.mouseX, p.mouseY, 10, 10);
             let dot = new Point(p.mouseX, p.mouseY.toFixed(0), 0);
-            dots.push(dot);
+            points.push(dot);
         }
     };
     let button = p.createButton('Comenzar');
@@ -53,18 +56,18 @@ async function bruteForceSimulation() {
     let dCell = document.getElementById("d");
     let p1Cell = document.getElementById("p1");
     let p2Cell = document.getElementById("p2");
-    nCell.innerHTML = dots.length.toString();
-    if (dots.length >= 2) {
+    nCell.innerHTML = points.length.toString();
+    if (points.length >= 2) {
         let dmin = Number.POSITIVE_INFINITY;
         let d, acc = 0;
         let indexi = 0;
         let indexj = 1;
-        for (let i = 0; i < dots.length - 1; i++) {
+        for (let i = 0; i < points.length - 1; i++) {
             iCell.innerHTML = i.toString();
-            for (let j = i + 1; j < dots.length; j++) {
+            for (let j = i + 1; j < points.length; j++) {
                 jCell.innerHTML = j.toString();
                 accCell.innerHTML = (++acc).toString();
-                d = Math.sqrt(Math.pow((dots[i].x - dots[j].x), 2) + Math.pow((dots[i].y - dots[j].y), 2));
+                d = Point.distance(points[i], points[j]);
                 bruteForceCanvas.stroke(0);
                 if (d < dmin) {
                     dmin = d;
@@ -72,23 +75,24 @@ async function bruteForceSimulation() {
                     indexi = i;
                     indexj = j;
                 }
-                bruteForceCanvas.line(dots[i].x, dots[i].y, dots[j].x, dots[j].y);
+                bruteForceCanvas.line(points[i].x, points[i].y, points[j].x, points[j].y);
                 await sleep(500);
             }
         }
         await sleep(500);
         bruteForceCanvas.stroke(255, 0, 0);
-        bruteForceCanvas.line(dots[indexi].x, dots[indexi].y, dots[indexj].x, dots[indexj].y);
+        bruteForceCanvas.line(points[indexi].x, points[indexi].y, points[indexj].x, points[indexj].y);
         bruteForceCanvas.fill(255, 0, 0);
-        bruteForceCanvas.ellipse(dots[indexi].x, dots[indexi].y, 10, 10);
-        bruteForceCanvas.ellipse(dots[indexj].x, dots[indexj].y, 10, 10);
+        bruteForceCanvas.ellipse(points[indexi].x, points[indexi].y, 10, 10);
+        bruteForceCanvas.ellipse(points[indexj].x, points[indexj].y, 10, 10);
         bruteForceCanvas.stroke(0);
         bruteForceCanvas.fill(0);
-        p1Cell.innerHTML = dots[indexi].toString();
-        p2Cell.innerHTML = dots[indexj].toString();
-        await sleep(1000);
+        p1Cell.innerHTML = points[indexi].toString();
+        p2Cell.innerHTML = points[indexj].toString();
+        await sleep(5000);
         bruteForceCanvas.clear();
         bruteForceCanvas.background(255);
+        points = new Array();
     }
 }
 
