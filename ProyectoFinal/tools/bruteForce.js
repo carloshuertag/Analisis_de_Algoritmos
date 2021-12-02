@@ -9,7 +9,6 @@ window.addEventListener("load", loadPage, false);
 function loadPage() {
     let div = document.getElementById("bruteForce");
     buttonY = div.getBoundingClientRect().top;
-    console.log(mouseYOffset);
     bruteForceCanvas = new p5(sketchBruteForce, div);
 }
 
@@ -56,6 +55,8 @@ async function bruteForceSimulation() {
     let dCell = document.getElementById("d");
     let p1Cell = document.getElementById("p1");
     let p2Cell = document.getElementById("p2");
+    let speed = (100 - document.getElementById("speed").value) * 10;
+    console.log(speed);
     nCell.innerHTML = points.length.toString();
     if (points.length >= 2) {
         let dmin = Number.POSITIVE_INFINITY;
@@ -76,10 +77,10 @@ async function bruteForceSimulation() {
                     indexj = j;
                 }
                 bruteForceCanvas.line(points[i].x, points[i].y, points[j].x, points[j].y);
-                await sleep(500);
+                await sleep(speed);
             }
         }
-        await sleep(500);
+        await sleep(speed);
         bruteForceCanvas.stroke(255, 0, 0);
         bruteForceCanvas.line(points[indexi].x, points[indexi].y, points[indexj].x, points[indexj].y);
         bruteForceCanvas.fill(255, 0, 0);
@@ -89,7 +90,7 @@ async function bruteForceSimulation() {
         bruteForceCanvas.fill(0);
         p1Cell.innerHTML = points[indexi].toString();
         p2Cell.innerHTML = points[indexj].toString();
-        await sleep(5000);
+        await sleep(10000);
         bruteForceCanvas.clear();
         bruteForceCanvas.background(255);
         points = new Array();
