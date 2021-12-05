@@ -1,0 +1,74 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animación Divide y Vencerás</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sim.css">
+    <script src="p5.js"></script>
+    <script src="tools/divideNConquer.js"></script>
+</head>
+
+<body>
+    <nav>
+        <h1>Animación Divide y Vencerás</h1>
+    </nav>
+    <main>
+        <section>
+            <h3>Instrucciones</h3>
+            <ol>
+                <li>Ingrese la velocidad de animación deseada en el deslizador:<br/>
+                    <input type="range" list="tickmarks" id="speed" min="1" max="99" step="1" value="50" /><br/>
+                </li>
+                <li>Haga click en el lienzo en blanco de la parte de abajo para añadir un punto.</li>
+                <li>Haga click en comenzar cuando haya terminado de añadir los puntos.</li>
+                <li>La simulación se comenzará y podrá visualizar los resultados en la tabla.</li>
+                <li>Haga click en limpiar si quiere simular de nuevo con nuevos puntos.</li>
+            </ol>
+            <article id="res">
+                <table>
+                    <caption>Resultados</caption>
+                    <thead>
+                        <tr>
+                            <th>Número de puntos</th>
+                            <th>Punto analizado</th>
+                            <th>Iteración</th>
+                            <th>Ejecuciones del ciclo</th>
+                            <th>Distancia mínima</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="n">0</td>
+                            <td id="i">-</td>
+                            <td id="j">-</td>
+                            <td id="acc">0</td>
+                            <td id="d">Infinito</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <caption>Par de puntos</caption>
+                    <thead>
+                        <tr>
+                            <th>Punto 1</th>
+                            <th>Punto 2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="p1">P(,)</td>
+                            <td id="p2">P(,)</td>
+                        </tr>
+                </table>
+            </article>
+            <br/><br/>
+        </section>
+        <section>
+            <div id="divideNConquer"></div>
+        </section>
+    </main>
+</body>
+
+</html>

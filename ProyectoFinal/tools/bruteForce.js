@@ -12,8 +12,7 @@ function loadPage() {
     bruteForceCanvas = new p5(sketchBruteForce, div);
 }
 
-// p5.js setup
-function setup() {}
+function setup() {} // p5.js setup
 
 class Point {
     constructor(x, y, b) {
@@ -42,12 +41,15 @@ function sketchBruteForce(p) {
             points.push(dot);
         }
     };
-    let button = p.createButton('Comenzar');
-    button.position(windowWidth - 100, buttonY - 80);
-    button.mousePressed(bruteForceSimulation);
+    let startButton = p.createButton('Comenzar');
+    startButton.position(windowWidth - 120, buttonY - 80);
+    startButton.mousePressed(bruteForceSimulation);
+    let clearButton = p.createButton('Limpiar');
+    clearButton.position(windowWidth - 200, buttonY - 80);
+    clearButton.mousePressed(clearSimulation);
 }
 
-async function bruteForceSimulation() {
+function clearSimulation() {
     let nCell = document.getElementById("n");
     let iCell = document.getElementById("i");
     let jCell = document.getElementById("j");
@@ -55,17 +57,40 @@ async function bruteForceSimulation() {
     let dCell = document.getElementById("d");
     let p1Cell = document.getElementById("p1");
     let p2Cell = document.getElementById("p2");
-    let speed = (100 - document.getElementById("speed").value) * 10;
-    console.log(speed);
+    points = new Array();
+    nCell.innerHTML = points.length.toString();
+    iCell.innerHTML = "-";
+    jCell.innerHTML = "-";
+    accCell.innerHTML = "0";
+    dCell.innerHTML = "Infinito";
+    p1Cell.innerHTML = "-";
+    p2Cell.innerHTML = "-";
+    bruteForceCanvas.clear();
+    bruteForceCanvas.background(255);
+}
+
+async function bruteForceSimulation() {
+    let nCell = document.getElementById("n");
     nCell.innerHTML = points.length.toString();
     if (points.length >= 2) {
+        let iCell = document.getElementById("i");
+        let jCell = document.getElementById("j");
+        let accCell = document.getElementById("acc");
+        let dCell = document.getElementById("d");
+        let p1Cell = document.getElementById("p1");
+        let p2Cell = document.getElementById("p2");
+        let speed = (100 - document.getElementById("speed").value) * 10;
         let dmin = Number.POSITIVE_INFINITY;
         let d, acc = 0;
         let indexi = 0;
         let indexj = 1;
         for (let i = 0; i < points.length - 1; i++) {
+            bruteForceCanvas.fill(255, 0, 0);
+            bruteForceCanvas.ellipse(points[i].x, points[i].y, 10, 10);
             iCell.innerHTML = i.toString();
             for (let j = i + 1; j < points.length; j++) {
+                bruteForceCanvas.fill(255, 0, 0);
+                bruteForceCanvas.ellipse(points[j].x, points[j].y, 10, 10);
                 jCell.innerHTML = j.toString();
                 accCell.innerHTML = (++acc).toString();
                 d = Point.distance(points[i], points[j]);
@@ -78,7 +103,12 @@ async function bruteForceSimulation() {
                 }
                 bruteForceCanvas.line(points[i].x, points[i].y, points[j].x, points[j].y);
                 await sleep(speed);
+                bruteForceCanvas.fill(0);
+                bruteForceCanvas.ellipse(points[j].x, points[j].y, 10, 10);
             }
+            await sleep(speed);
+            bruteForceCanvas.fill(0);
+            bruteForceCanvas.ellipse(points[i].x, points[i].y, 10, 10);
         }
         await sleep(speed);
         bruteForceCanvas.stroke(255, 0, 0);
@@ -90,15 +120,9 @@ async function bruteForceSimulation() {
         bruteForceCanvas.fill(0);
         p1Cell.innerHTML = points[indexi].toString();
         p2Cell.innerHTML = points[indexj].toString();
-        await sleep(10000);
-        bruteForceCanvas.clear();
-        bruteForceCanvas.background(255);
-        points = new Array();
-    }
+    } else alert("Debe haber al menos dos puntos");
 }
 
-// custom helper function to deliberately slow down
-// the process and make visualization easy
-function sleep(ms) {
+function sleep(ms) { // deliberately slow down the process
     return new Promise(resolve => setTimeout(resolve, ms));
 }
