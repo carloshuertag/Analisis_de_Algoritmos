@@ -15,10 +15,9 @@ function loadPage() {
 function setup() {} // p5.js setup
 
 class Point {
-    constructor(x, y, b) {
+    constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.b = b;
     }
     static distance(p1, p2) {
         return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
@@ -37,7 +36,7 @@ function sketchBruteForce(p) {
         if (p.mouseY >= mouseYOffset) {
             p.fill(0);
             p.ellipse(p.mouseX, p.mouseY, 10, 10);
-            let dot = new Point(p.mouseX, p.mouseY.toFixed(0), 0);
+            let dot = new Point(p.mouseX, +p.mouseY.toFixed(0));
             points.push(dot);
         }
     };
@@ -97,7 +96,7 @@ async function bruteForceSimulation() {
                 bruteForceCanvas.stroke(0);
                 if (d < dmin) {
                     dmin = d;
-                    dCell.innerHTML = dmin.toFixed(2).toString();
+                    dCell.innerHTML = dmin.toFixed(2);
                     indexi = i;
                     indexj = j;
                 }
