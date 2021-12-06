@@ -90,17 +90,17 @@ async function divideNConquerSimulation() {
     } else alert("Debe haber al menos dos puntos");
 }
 
-async function bruteForce() {
+async function bruteForce(p, n) {
     let dCell = document.getElementById("d");
     let p1Cell = document.getElementById("p1");
     let p2Cell = document.getElementById("p2");
     let dmin = Number.POSITIVE_INFINITY;
     let indexi = 0;
     let indexj = 1;
-    for (let i = 0; i < points.length - 1; i++) {
+    for (let i = 0; i < n - 1; i++) {
         divideNConquerCanvas.fill(255, 0, 0);
         divideNConquerCanvas.ellipse(points[i].x, points[i].y, 10, 10);
-        for (let j = i + 1; j < points.length; j++) {
+        for (let j = i + 1; j < n; j++) {
             divideNConquerCanvas.fill(255, 0, 0);
             divideNConquerCanvas.ellipse(points[j].x, points[j].y, 10, 10);
             d = Point.distance(points[i], points[j]);
@@ -134,7 +134,7 @@ async function bruteForce() {
 
 async function closestPair(pointsX, pointsY, n) {
     if (n <= 3) {
-        bruteForce();
+        await bruteForce(pointsX, n);
         return;
     }
     let mid = Math.floor(n / 2);
