@@ -37,6 +37,7 @@ function sketchBruteForce(p) {
             p.fill(0);
             p.ellipse(p.mouseX, p.mouseY, 10, 10);
             let dot = new Point(p.mouseX, +p.mouseY.toFixed(0));
+            p.text(dot.toString(), p.mouseX + 10, p.mouseY + 10);
             points.push(dot);
         }
     };
