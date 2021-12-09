@@ -140,8 +140,8 @@ async function closestPair(pointsX, pointsY, n) {
     if (n <= 3) return await bruteForce(pointsX, n);
     let mid = Math.floor(n / 2);
     let midPointX = pointsX[mid];
-    let pointsYLeft = new Array();
-    let pointsYRight = new Array();
+    let pointsYLeft = new Array(mid);
+    let pointsYRight = new Array(n - mid);
     let leftIndex = 0;
     let rightIndex = 0;
     for (let i = 0; i < n; i++)
@@ -150,10 +150,10 @@ async function closestPair(pointsX, pointsY, n) {
             pointsYLeft[leftIndex++] = pointsY[i];
         else pointsYRight[rightIndex++] = pointsY[i];
     await sleep(speed);
-    let leftDistanceToMid = closestPair(pointsX, pointsYLeft, mid);
-    let rightDistanceToMid = closestPair(pointsX.filter((_, k) => k >= mid), pointsYRight, n - mid);
+    let leftDistanceToMid = await closestPair(pointsX, pointsYLeft, ++mid);
+    let rightDistanceToMid = await closestPair(pointsX.filter((_, k) => k >= mid), pointsYRight, n - mid);
     let distanceToMid = Math.min(leftDistanceToMid, rightDistanceToMid);
-    let closestPointsToMidStrip = new Array();
+    let closestPointsToMidStrip = new Array(n);
     let closestPointsToMidIndex = 0;
     for (let i = 0; i < n; i++)
         if (Math.abs(pointsY[i].x - midPointX.x) < distanceToMid)
