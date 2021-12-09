@@ -115,7 +115,9 @@ async function bruteForceSimulation() {
         bruteForceCanvas.line(points[indexi].x, points[indexi].y, points[indexj].x, points[indexj].y);
         bruteForceCanvas.fill(255, 0, 0);
         bruteForceCanvas.ellipse(points[indexi].x, points[indexi].y, 10, 10);
+        bruteForceCanvas.text(points[indexi].toString(), points[indexi].x + 10, points[indexi].y + 10);
         bruteForceCanvas.ellipse(points[indexj].x, points[indexj].y, 10, 10);
+        bruteForceCanvas.text(points[indexj].toString(), points[indexj].x + 10, points[indexj].y + 10);
         bruteForceCanvas.stroke(0);
         bruteForceCanvas.fill(0);
         p1Cell.innerHTML = points[indexi].toString();
