@@ -1,8 +1,12 @@
 let points = new Array();
 let divideNConquerCanvas;
 let buttonY;
-let mouseYOffset = 5;
+let mouseYOffset = 5,
+    rec = -1,
+    speed;
 let nCell, iCell, jCell, accCell, dCell, p1Cell, p2Cell;
+let p1, p2;
+let ymin, ymax;
 
 window.addEventListener("load", loadPage, false);
 
@@ -38,6 +42,7 @@ function sketchDivideNConquer(p) {
             p.ellipse(p.mouseX, p.mouseY, 10, 10);
             let dot = new Point(p.mouseX, +p.mouseY.toFixed(0));
             p.text(dot.toString(), p.mouseX + 10, p.mouseY + 10);
+            points.forEach(point => {});
             points.push(dot);
         }
     };
@@ -58,6 +63,7 @@ function clearSimulation() {
     p1Cell = document.getElementById("p1");
     p2Cell = document.getElementById("p2");
     points = new Array();
+    rec = -1;
     nCell.innerHTML = points.length.toString();
     iCell.innerHTML = "-";
     jCell.innerHTML = "-";
@@ -73,12 +79,14 @@ async function divideNConquerSimulation() {
     nCell = document.getElementById("n");
     nCell.innerHTML = points.length.toString();
     if (points.length >= 2) {
-        let dCell = document.getElementById("d");
-        let speed = (100 - document.getElementById("speed").value) * 10;
+        dCell = document.getElementById("d");
+        speed = (100 - document.getElementById("speed").value) * 10;
         let pointsX = [...points];
         let pointsY = [...points];
         pointsX.sort((a, b) => a.x - b.x); // sort points by x
-        pointsY.sort((a, b) => b.y - a.y); // sort points by y
+        pointsY.sort((a, b) => b.y - a.y); // sort points by y (desc)
+        ymin = pointsY[pointsY.length - 1].y;
+        ymax = pointsY[0].y;
         divideNConquerCanvas.stroke('rgba(255, 0, 0, 0.3)');
         divideNConquerCanvas.strokeWeight(5);
         divideNConquerCanvas.line(pointsX[0].x - 10, 10, pointsX[pointsX.length - 1].x + 10, 10);
@@ -89,15 +97,14 @@ async function divideNConquerSimulation() {
         divideNConquerCanvas.strokeWeight(1);
         await sleep(speed);
         let d = await closestPair(pointsX, pointsY, points.length);
-        console.log(d);
         dCell.innerHTML = d.toFixed(2);
     } else alert("Debe haber al menos dos puntos");
 }
 
 async function bruteForce(p, n) {
-    let speed = (100 - document.getElementById("speed").value) * 10;
-    let p1Cell = document.getElementById("p1");
-    let p2Cell = document.getElementById("p2");
+    speed = (100 - document.getElementById("speed").value) * 10;
+    p1Cell = document.getElementById("p1");
+    p2Cell = document.getElementById("p2");
     let dmin = Number.POSITIVE_INFINITY;
     let indexi = 0;
     let indexj = 1;
@@ -113,6 +120,12 @@ async function bruteForce(p, n) {
                 dmin = d;
                 indexi = i;
                 indexj = j;
+                p1Cell = document.getElementById("p1");
+                p1Cell.innerHTML = p[i].toString();
+                p2Cell = document.getElementById("p2");
+                p2Cell.innerHTML = p[j].toString();
+                dCell = document.getElementById("d");
+                dCell.innerHTML = dmin.toFixed(2);
             }
             divideNConquerCanvas.line(p[i].x, p[i].y, p[j].x, p[j].y);
             await sleep(speed);
@@ -137,9 +150,14 @@ async function bruteForce(p, n) {
 }
 
 async function closestPair(pointsX, pointsY, n) {
+    rec++;
     if (n <= 3) return await bruteForce(pointsX, n);
     let mid = Math.floor(n / 2);
     let midPointX = pointsX[mid];
+    divideNConquerCanvas.stroke('rgba(20, 255, 100, 0.3)');
+    divideNConquerCanvas.strokeWeight(5);
+    divideNConquerCanvas.line(midPointX.x, ymin + 10, midPointX.x, ymax - 10);
+    divideNConquerCanvas.strokeWeight(1);
     let pointsYLeft = new Array(mid);
     let pointsYRight = new Array(n - mid);
     let leftIndex = 0;
@@ -150,7 +168,7 @@ async function closestPair(pointsX, pointsY, n) {
             pointsYLeft[leftIndex++] = pointsY[i];
         else pointsYRight[rightIndex++] = pointsY[i];
     await sleep(speed);
-    let leftDistanceToMid = await closestPair(pointsX, pointsYLeft, ++mid);
+    let leftDistanceToMid = await closestPair(pointsX, pointsYLeft, mid);
     let rightDistanceToMid = await closestPair(pointsX.filter((_, k) => k >= mid), pointsYRight, n - mid);
     let distanceToMid = Math.min(leftDistanceToMid, rightDistanceToMid);
     let closestPointsToMidStrip = new Array(n);
@@ -163,26 +181,28 @@ async function closestPair(pointsX, pointsY, n) {
 }
 
 async function closestPairInStrip(strip, m, distanceToMid) {
-    let min = distanceToMid;
+    let dmin = distanceToMid;
     let d = 0;
+    let indexi = 0;
+    let indexj = 1;
     for (let i = 0; i < m; i++) {
         for (let j = i + 1; j < m &&
-            (strip[j].y - strip[i].y) < min; j++) {
+            (strip[j].y - strip[i].y) < dmin; j++) {
             d = Point.distance(strip[i], strip[j]);
-            if (d < min) {
-                min = d;
+            if (d < dmin) {
+                dmin = d;
                 p1Cell = document.getElementById("p1");
                 p1Cell.innerHTML = strip[i].toString();
                 p2Cell = document.getElementById("p2");
                 p2Cell.innerHTML = strip[j].toString();
                 dCell = document.getElementById("d");
-                dCell.innerHTML = min.toFixed(2);
+                dCell.innerHTML = dmin.toFixed(2);
             }
             await sleep(speed);
         }
         await sleep(speed);
     }
-    return min;
+    return dmin;
 }
 
 function sleep(ms) { // deliberately slow down the process
