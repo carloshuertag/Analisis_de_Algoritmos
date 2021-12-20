@@ -5,6 +5,7 @@ const mouseYOffset = 5;
 let rec = -1,
     subCount = 0,
     stripCount = 0,
+    result = Number.POSITIVE_INFINITY,
     speed;
 let nCell, iCell, jCell, accCell, dCell, p1Cell, p2Cell;
 let p1, p2;
@@ -82,6 +83,9 @@ function clearSimulation() {
     p1Cell = document.getElementById("p1");
     p2Cell = document.getElementById("p2");
     points = new Array();
+    p1 = null;
+    p2 = null;
+    result = Number.POSITIVE_INFINITY;
     rec = -1;
     nCell.innerHTML = points.length.toString();
     iCell.innerHTML = "-";
@@ -90,6 +94,7 @@ function clearSimulation() {
     dCell.innerHTML = "Infinito";
     p1Cell.innerHTML = "-";
     p2Cell.innerHTML = "-";
+    divideNConquerCanvas.fill(0);
     divideNConquerCanvas.stroke(0);
     divideNConquerCanvas.clear();
     divideNConquerCanvas.background(151, 202, 216);
@@ -99,6 +104,7 @@ async function divideNConquerSimulation() {
     nCell = document.getElementById("n");
     nCell.innerHTML = points.length.toString();
     if (points.length >= 2) {
+        if (points.length >= 20) alert("No se recomienda un número de puntos mayor a 20");
         dCell = document.getElementById("d");
         speed = (100 - document.getElementById("speed").value) * 10;
         let pointsX = [...points];
@@ -118,6 +124,17 @@ async function divideNConquerSimulation() {
         await sleep(speed);
         let d = await closestPair(pointsX, pointsY, points.length);
         dCell.innerHTML = d.toFixed(2);
+        p1Cell = document.getElementById("p1");
+        p1Cell.innerHTML = p1.toString();
+        p2Cell = document.getElementById("p2");
+        p2Cell.innerHTML = p2.toString();
+        divideNConquerCanvas.stroke(255, 0, 0);
+        divideNConquerCanvas.line(p1.x, p1.y, p2.x, p2.y);
+        divideNConquerCanvas.fill(255, 0, 0);
+        divideNConquerCanvas.ellipse(p1.x, p1.y, 10, 10);
+        divideNConquerCanvas.ellipse(p2.x, p2.y, 10, 10);
+        divideNConquerCanvas.stroke(0);
+        divideNConquerCanvas.fill(0);
     } else alert("Debe haber al menos dos puntos");
 }
 
@@ -133,17 +150,18 @@ async function bruteForce(p, n) {
     for (let i = 0; i < n - 1; i++) {
         if (p[i].x < minX) minX = p[i].x;
         if (p[i].x > maxX) maxX = p[i].x;
-        divideNConquerCanvas.fill(255, 0, 0);
-        divideNConquerCanvas.ellipse(p[i].x, p[i].y, 10, 10);
         for (let j = i + 1; j < n; j++) {
-            divideNConquerCanvas.fill(255, 0, 0);
-            divideNConquerCanvas.ellipse(p[j].x, p[j].y, 10, 10);
             d = Point.distance(p[i], p[j]);
             divideNConquerCanvas.stroke(0);
             if (d < dmin) {
-                dmin = d;
                 indexi = i;
                 indexj = j;
+                dmin = d;
+                if (dmin < result) {
+                    result = dmin;
+                    p1 = p[i];
+                    p2 = p[j];
+                }
                 p1Cell = document.getElementById("p1");
                 p1Cell.innerHTML = p[i].toString();
                 p2Cell = document.getElementById("p2");
@@ -153,12 +171,7 @@ async function bruteForce(p, n) {
             }
             divideNConquerCanvas.line(p[i].x, p[i].y, p[j].x, p[j].y);
             await sleep(speed);
-            divideNConquerCanvas.fill(0);
-            divideNConquerCanvas.ellipse(p[j].x, p[j].y, 10, 10);
         }
-        await sleep(speed);
-        divideNConquerCanvas.fill(0);
-        divideNConquerCanvas.ellipse(p[i].x, p[i].y, 10, 10);
     }
     divideNConquerCanvas.stroke(rainbow[rainbowIndex1]);
     nextColor1();
@@ -167,9 +180,9 @@ async function bruteForce(p, n) {
     divideNConquerCanvas.strokeWeight(1);
     divideNConquerCanvas.fill(0);
     divideNConquerCanvas.text('subproblema ' + (++subCount), minX + (maxX - minX) / 2, ymax + 20);
-    divideNConquerCanvas.stroke(255, 0, 0);
+    divideNConquerCanvas.stroke(120, 0, 0);
     divideNConquerCanvas.line(p[indexi].x, p[indexi].y, p[indexj].x, p[indexj].y);
-    divideNConquerCanvas.fill(255, 0, 0);
+    divideNConquerCanvas.fill(120, 0, 0);
     divideNConquerCanvas.ellipse(p[indexi].x, p[indexi].y, 10, 10);
     divideNConquerCanvas.ellipse(p[indexj].x, p[indexj].y, 10, 10);
     divideNConquerCanvas.stroke(0);
@@ -185,7 +198,7 @@ async function closestPair(pointsX, pointsY, n) {
     if (n <= 3) return await bruteForce(pointsX, n);
     let mid = Math.floor(n / 2);
     let midPointX = pointsX[mid];
-    divideNConquerCanvas.stroke('rgba(20, 255, 100, 0.3)');
+    divideNConquerCanvas.stroke('rgba(50, 200, 100, 0.3)');
     divideNConquerCanvas.strokeWeight(5);
     divideNConquerCanvas.line(midPointX.x, ymin + 10, midPointX.x, ymax - 10);
     divideNConquerCanvas.strokeWeight(1);
@@ -212,6 +225,8 @@ async function closestPair(pointsX, pointsY, n) {
     divideNConquerCanvas.strokeWeight(5);
     divideNConquerCanvas.line(midPointX.x - distanceToMid, ymin, midPointX.x + distanceToMid, ymin);
     divideNConquerCanvas.strokeWeight(1);
+    divideNConquerCanvas.fill(0);
+    divideNConquerCanvas.text('strip ' + (++stripCount), midPointX.x - (distanceToMid) / 4, ymin - 20);
     await sleep(speed);
     return await closestPairInStrip(closestPointsToMidStrip, closestPointsToMidIndex, distanceToMid);
 }
@@ -221,12 +236,22 @@ async function closestPairInStrip(strip, m, distanceToMid) {
     let d = 0;
     let indexi = 0;
     let indexj = 1;
+    let changed = false;
     for (let i = 0; i < m; i++) {
         for (let j = i + 1; j < m &&
             (strip[j].y - strip[i].y) < dmin; j++) {
             d = Point.distance(strip[i], strip[j]);
+            divideNConquerCanvas.stroke(0);
             if (d < dmin) {
+                changed = true;
+                indexi = i;
+                indexj = j;
                 dmin = d;
+                if (dmin < result) {
+                    result = dmin;
+                    p1 = strip[i];
+                    p2 = strip[j];
+                }
                 p1Cell = document.getElementById("p1");
                 p1Cell.innerHTML = strip[i].toString();
                 p2Cell = document.getElementById("p2");
@@ -234,10 +259,23 @@ async function closestPairInStrip(strip, m, distanceToMid) {
                 dCell = document.getElementById("d");
                 dCell.innerHTML = dmin.toFixed(2);
             }
+            divideNConquerCanvas.line(strip[i].x, strip[i].y, strip[j].x, strip[j].y);
             await sleep(speed);
         }
-        await sleep(speed);
     }
+    if (changed) {
+        divideNConquerCanvas.stroke(180, 0, 0);
+        console.log(strip[indexi]);
+        console.log(p1);
+        console.log(strip[indexj]);
+        console.log(p2);
+        divideNConquerCanvas.line(strip[indexi].x, strip[indexi].y, strip[indexj].x, strip[indexj].y);
+        divideNConquerCanvas.fill(180, 0, 0);
+        divideNConquerCanvas.ellipse(strip[indexi].x, strip[indexi].y, 10, 10);
+        divideNConquerCanvas.ellipse(strip[indexj].x, strip[indexj].y, 10, 10);
+    }
+    divideNConquerCanvas.stroke(0);
+    divideNConquerCanvas.fill(0);
     return dmin;
 }
 
