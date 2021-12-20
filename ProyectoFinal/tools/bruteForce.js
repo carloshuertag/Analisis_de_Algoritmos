@@ -1,7 +1,7 @@
 let points = new Array();
 let bruteForceCanvas;
 let buttonY;
-let mouseYOffset = 5;
+const mouseYOffset = 5;
 let nCell, iCell, jCell, accCell, dCell, p1Cell, p2Cell;
 
 window.addEventListener("load", loadPage, false);
@@ -13,6 +13,10 @@ function loadPage() {
 }
 
 function setup() {} // p5.js setup
+
+function windowResized() {
+    bruteForceCanvas.resizeCanvas(windowWidth, windowHeight);
+}
 
 class Point {
     constructor(x, y) {

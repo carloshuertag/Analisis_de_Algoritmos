@@ -1,0 +1,33 @@
+:root {
+    --stratos: #1a202c;
+    --regalblue: #02457a;
+    --bandiblue: #018abe;
+    --morningglory: #97cadb;
+    --boticelli: #d6e8ee;
+}
+
+@font-face {
+    font-family: titles_font;
+    src: url(../font/static/Quicksand-Medium.ttf);
+}
+
+@font-face {
+    font-family: body_font;
+    src: url(../font/static/Quicksand-Regular.ttf);
+}
+
+body {
+    font-family: body_font;
+    color: var(--regalblue);
+    background-color: var(--boticelli);
+}
+
+header,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: titles_font;
+}

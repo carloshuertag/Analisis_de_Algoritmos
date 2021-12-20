@@ -34,6 +34,10 @@ function loadPage() {
 
 function setup() {} // p5.js setup
 
+function windowResized() {
+    divideNConquerCanvas.resizeCanvas(windowWidth, windowHeight);
+}
+
 class Point {
     constructor(x, y) {
         this.x = x;
