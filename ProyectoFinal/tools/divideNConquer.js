@@ -2,9 +2,9 @@ let points = new Array();
 let divideNConquerCanvas;
 let buttonY;
 const mouseYOffset = 5;
-let rec = -1,
-    subCount = 0,
+let subCount = 0,
     stripCount = 0,
+    acc = 0,
     result = Number.POSITIVE_INFINITY,
     speed;
 let nCell, iCell, jCell, accCell, dCell, p1Cell, p2Cell;
@@ -13,8 +13,14 @@ let ymin, ymax;
 const rainbow = ['rgba(255, 255, 50, 0.3)', 'rgba(20, 255, 150, 0.3)',
     'rgba(255, 50, 255, 0.3)', 'rgba(20, 200, 255, 0.3)'
 ];
+const codeId = "pscd";
+const ids = ["pscd-start", "pscd-ppx", "pscd-ppy", "pscd-bc",
+    "pscd-els", "pscd-mid", "pscd-div", "pscd-rc",
+    "pscd-cnv", "pscd-strp", "pscd-sbf", "pscd-rt"
+];
 let rainbowIndex1 = 0,
     rainbowIndex2 = 0;
+let dark = false;
 
 function nextColor1() {
     rainbowIndex1 = (rainbowIndex1 + 1) % rainbow.length;
@@ -27,9 +33,33 @@ function nextColor2() {
 window.addEventListener("load", loadPage, false);
 
 function loadPage() {
+    document.getElementById("dark").addEventListener("change", darkMode, false);
     let div = document.getElementById("divideNConquer");
     buttonY = div.getBoundingClientRect().top;
     divideNConquerCanvas = new p5(sketchDivideNConquer, div);
+}
+
+function darkMode() {
+    if (document.getElementById("dark").checked) {
+        dark = true;
+        clearSimulation();
+    } else {
+        dark = false;
+        clearSimulation();
+    }
+    document.body.style.color = dark ? "var(--boticelli)" : "var(--stratos)";
+    document.body.style.backgroundColor = dark ? "var(--stratos)" : "var(--boticelli)";
+    if (dark) {
+        document.getElementById("cap1").classList.remove("table-light");
+        document.getElementById("cap1").classList.add("table-dark");
+        document.getElementById("cap2").classList.remove("table-light");
+        document.getElementById("cap2").classList.add("table-dark");
+    } else {
+        document.getElementById("cap1").classList.add("table-light");
+        document.getElementById("cap1").classList.remove("table-dark");
+        document.getElementById("cap2").classList.add("table-light");
+        document.getElementById("cap2").classList.remove("table-dark");
+    }
 }
 
 function setup() {} // p5.js setup
@@ -65,17 +95,21 @@ function sketchDivideNConquer(p) {
                 alert('No se puede agregar puntos con coordenadas x iguales');
                 return;
             } else points.push(dot);
-            p.fill(0);
+            p.stroke(dark ? '#d6e8ee' : '#1a202c');
+            p.fill(dark ? '#d6e8ee' : '#1a202c');
             p.ellipse(p.mouseX, p.mouseY, 10, 10);
+            p.textSize(14);
             p.text(dot.toString(), p.mouseX + 10, p.mouseY + 10);
         }
     };
     let startButton = p.createButton('Comenzar');
-    startButton.position(windowWidth - 100, buttonY - 80);
+    startButton.position(windowWidth - 110, buttonY - 60);
     startButton.mousePressed(divideNConquerSimulation);
+    startButton.class("btn btn-primary");
     let clearButton = p.createButton('Limpiar');
-    clearButton.position(windowWidth - 175, buttonY - 80);
+    clearButton.position(windowWidth - 200, buttonY - 60);
     clearButton.mousePressed(clearSimulation);
+    clearButton.class("btn btn-primary");
 }
 
 function clearSimulation() {
@@ -90,55 +124,87 @@ function clearSimulation() {
     p1 = null;
     p2 = null;
     result = Number.POSITIVE_INFINITY;
-    rec = -1;
+    acc = 0;
+    subCount = 0;
+    stripCount = 0;
     nCell.innerHTML = points.length.toString();
-    iCell.innerHTML = "-";
-    jCell.innerHTML = "-";
+    resetCodeAnimations(codeId);
     accCell.innerHTML = "0";
     dCell.innerHTML = "Infinito";
-    p1Cell.innerHTML = "-";
-    p2Cell.innerHTML = "-";
-    divideNConquerCanvas.fill(0);
-    divideNConquerCanvas.stroke(0);
+    p1Cell.innerHTML = "P()";
+    p2Cell.innerHTML = "P()";
+    divideNConquerCanvas.stroke(dark ? '#d6e8ee' : '#1a202c');
+    divideNConquerCanvas.fill(dark ? '#d6e8ee' : '#1a202c');
     divideNConquerCanvas.clear();
-    divideNConquerCanvas.background(151, 202, 216);
+    divideNConquerCanvas.background(dark ? '#02457a' : '#97cadb');
+}
+
+function resetCodeAnimations(codeId) {
+    let lines = document.getElementById(codeId).children;
+    for (let i = 0; i < lines.length; i++)
+        lines[i].classList.remove("bg-danger");
+}
+
+function codeAnimation(spanId) {
+    console.log(document.getElementById(spanId));
+    let line = document.getElementById(spanId);
+    line.classList.add("bg-danger");
+    line.scrollIntoView();
 }
 
 async function divideNConquerSimulation() {
     nCell = document.getElementById("n");
     nCell.innerHTML = points.length.toString();
     if (points.length >= 2) {
-        if (points.length >= 20) alert("No se recomienda un número de puntos mayor a 20");
-        dCell = document.getElementById("d");
+        resetCodeAnimations(codeId);
         speed = (100 - document.getElementById("speed").value) * 10;
+        codeAnimation(ids[0]);
+        await sleep(speed);
+        resetCodeAnimations(codeId);
+        accCell = document.getElementById("acc");
+        divideNConquerCanvas.textSize(14);
+        if (points.length >= 15) alert("No se recomienda un número de puntos mayor a 15");
+        dCell = document.getElementById("d");
+        codeAnimation(ids[1]);
         let pointsX = [...points];
         let pointsY = [...points];
         pointsX.sort((a, b) => a.x - b.x); // sort points by x
         pointsY.sort((a, b) => b.y - a.y); // sort points by y (desc)
         ymin = pointsY[pointsY.length - 1].y;
         ymax = pointsY[0].y;
+        divideNConquerCanvas.fill(dark ? '#d6e8ee' : '#1a202c');
         divideNConquerCanvas.stroke('rgba(255, 0, 0, 0.3)');
         divideNConquerCanvas.strokeWeight(5);
         divideNConquerCanvas.line(pointsX[0].x - 10, 10, pointsX[pointsX.length - 1].x + 10, 10);
+        divideNConquerCanvas.strokeWeight(1);
+        divideNConquerCanvas.text('Xmín', pointsX[0].x - 20, 20);
+        divideNConquerCanvas.text('Xmáx', pointsX[pointsX.length - 1].x + 10, 20);
         await sleep(speed);
+        resetCodeAnimations(codeId);
+        codeAnimation(ids[2]);
         divideNConquerCanvas.stroke('rgba(0, 255, 0, 0.3)');
         divideNConquerCanvas.strokeWeight(5);
         divideNConquerCanvas.line(10, pointsY[0].y + 10, 10, pointsY[pointsY.length - 1].y - 10);
+        divideNConquerCanvas.text('Ymín', 10, ymax + 10);
+        divideNConquerCanvas.text('Ymáx', 10, ymin - 10);
         divideNConquerCanvas.strokeWeight(1);
         await sleep(speed);
+        resetCodeAnimations(codeId);
         let d = await closestPair(pointsX, pointsY, points.length);
+        codeAnimation(ids[11]);
         dCell.innerHTML = d.toFixed(2);
         p1Cell = document.getElementById("p1");
         p1Cell.innerHTML = p1.toString();
         p2Cell = document.getElementById("p2");
         p2Cell.innerHTML = p2.toString();
+        accCell.innerHTML = acc.toString();
         divideNConquerCanvas.stroke(255, 0, 0);
         divideNConquerCanvas.line(p1.x, p1.y, p2.x, p2.y);
         divideNConquerCanvas.fill(255, 0, 0);
         divideNConquerCanvas.ellipse(p1.x, p1.y, 10, 10);
         divideNConquerCanvas.ellipse(p2.x, p2.y, 10, 10);
-        divideNConquerCanvas.stroke(0);
-        divideNConquerCanvas.fill(0);
+        divideNConquerCanvas.stroke(dark ? '#d6e8ee' : '#1a202c');
+        divideNConquerCanvas.fill(dark ? '#d6e8ee' : '#1a202c');
     } else alert("Debe haber al menos dos puntos");
 }
 
@@ -156,7 +222,8 @@ async function bruteForce(p, n) {
         if (p[i].x > maxX) maxX = p[i].x;
         for (let j = i + 1; j < n; j++) {
             d = Point.distance(p[i], p[j]);
-            divideNConquerCanvas.stroke(0);
+            accCell.innerHTML = (++acc).toString();
+            divideNConquerCanvas.stroke(dark ? '#d6e8ee' : '#1a202c');
             if (d < dmin) {
                 indexi = i;
                 indexj = j;
@@ -182,15 +249,15 @@ async function bruteForce(p, n) {
     divideNConquerCanvas.strokeWeight(5);
     divideNConquerCanvas.line(minX, ymax, maxX, ymax);
     divideNConquerCanvas.strokeWeight(1);
-    divideNConquerCanvas.fill(0);
+    divideNConquerCanvas.fill(dark ? '#d6e8ee' : '#1a202c');
     divideNConquerCanvas.text('subproblema ' + (++subCount), minX + (maxX - minX) / 2, ymax + 20);
     divideNConquerCanvas.stroke(120, 0, 0);
     divideNConquerCanvas.line(p[indexi].x, p[indexi].y, p[indexj].x, p[indexj].y);
     divideNConquerCanvas.fill(120, 0, 0);
     divideNConquerCanvas.ellipse(p[indexi].x, p[indexi].y, 10, 10);
     divideNConquerCanvas.ellipse(p[indexj].x, p[indexj].y, 10, 10);
-    divideNConquerCanvas.stroke(0);
-    divideNConquerCanvas.fill(0);
+    divideNConquerCanvas.stroke(dark ? '#d6e8ee' : '#1a202c');
+    divideNConquerCanvas.fill(dark ? '#d6e8ee' : '#1a202c');
     p1Cell.innerHTML = p[indexi].toString();
     p2Cell.innerHTML = p[indexj].toString();
     await sleep(speed);
@@ -198,14 +265,23 @@ async function bruteForce(p, n) {
 }
 
 async function closestPair(pointsX, pointsY, n) {
-    rec++;
-    if (n <= 3) return await bruteForce(pointsX, n);
+    if (n <= 3) {
+        codeAnimation(ids[3]);
+        await sleep(speed);
+        resetCodeAnimations(codeId);
+        return await bruteForce(pointsX, n);
+    }
+    codeAnimation(ids[4]);
+    codeAnimation(ids[5]);
     let mid = Math.floor(n / 2);
     let midPointX = pointsX[mid];
     divideNConquerCanvas.stroke('rgba(50, 200, 100, 0.3)');
     divideNConquerCanvas.strokeWeight(5);
     divideNConquerCanvas.line(midPointX.x, ymin + 10, midPointX.x, ymax - 10);
     divideNConquerCanvas.strokeWeight(1);
+    await sleep(speed);
+    resetCodeAnimations(codeId);
+    codeAnimation(ids[6]);
     await sleep(speed);
     let pointsYLeft = new Array(mid);
     let pointsYRight = new Array(n - mid);
@@ -216,9 +292,17 @@ async function closestPair(pointsX, pointsY, n) {
                 pointsY[i].y < midPointX.y)) && leftIndex < mid)
             pointsYLeft[leftIndex++] = pointsY[i];
         else pointsYRight[rightIndex++] = pointsY[i];
+    resetCodeAnimations(codeId);
+    codeAnimation(ids[7]);
+    await sleep(speed);
+    resetCodeAnimations(codeId);
     let leftDistanceToMid = await closestPair(pointsX, pointsYLeft, mid);
     let rightDistanceToMid = await closestPair(pointsX.filter((_, k) => k >= mid), pointsYRight, n - mid);
+    codeAnimation(ids[8]);
+    await sleep(speed);
+    resetCodeAnimations(codeId);
     let distanceToMid = Math.min(leftDistanceToMid, rightDistanceToMid);
+    codeAnimation(ids[9]);
     let closestPointsToMidStrip = new Array(n);
     let closestPointsToMidIndex = 0;
     for (let i = 0; i < n; i++)
@@ -229,9 +313,11 @@ async function closestPair(pointsX, pointsY, n) {
     divideNConquerCanvas.strokeWeight(5);
     divideNConquerCanvas.line(midPointX.x - distanceToMid, ymin, midPointX.x + distanceToMid, ymin);
     divideNConquerCanvas.strokeWeight(1);
-    divideNConquerCanvas.fill(0);
+    divideNConquerCanvas.fill(dark ? '#d6e8ee' : '#1a202c');
     divideNConquerCanvas.text('strip ' + (++stripCount), midPointX.x - (distanceToMid) / 4, ymin - 20);
     await sleep(speed);
+    resetCodeAnimations(codeId);
+    codeAnimation(ids[10]);
     return await closestPairInStrip(closestPointsToMidStrip, closestPointsToMidIndex, distanceToMid);
 }
 
@@ -245,7 +331,8 @@ async function closestPairInStrip(strip, m, distanceToMid) {
         for (let j = i + 1; j < m &&
             (strip[j].y - strip[i].y) < dmin; j++) {
             d = Point.distance(strip[i], strip[j]);
-            divideNConquerCanvas.stroke(0);
+            accCell.innerHTML = (++acc).toString();
+            divideNConquerCanvas.stroke(dark ? '#d6e8ee' : '#1a202c');
             if (d < dmin) {
                 changed = true;
                 indexi = i;
@@ -267,6 +354,8 @@ async function closestPairInStrip(strip, m, distanceToMid) {
             await sleep(speed);
         }
     }
+    resetCodeAnimations(codeId);
+    codeAnimation(ids[11]);
     if (changed) {
         divideNConquerCanvas.stroke(180, 0, 0);
         console.log(strip[indexi]);
@@ -278,8 +367,10 @@ async function closestPairInStrip(strip, m, distanceToMid) {
         divideNConquerCanvas.ellipse(strip[indexi].x, strip[indexi].y, 10, 10);
         divideNConquerCanvas.ellipse(strip[indexj].x, strip[indexj].y, 10, 10);
     }
-    divideNConquerCanvas.stroke(0);
-    divideNConquerCanvas.fill(0);
+    divideNConquerCanvas.stroke(dark ? '#d6e8ee' : '#1a202c');
+    divideNConquerCanvas.fill(dark ? '#d6e8ee' : '#1a202c');
+    await sleep(speed);
+    resetCodeAnimations(codeId);
     return dmin;
 }
 

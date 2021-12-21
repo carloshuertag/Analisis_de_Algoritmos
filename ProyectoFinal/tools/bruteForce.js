@@ -67,6 +67,7 @@ function sketchBruteForce(p) {
             p.fill(dark ? '#d6e8ee' : '#1a202c');
             p.ellipse(p.mouseX, p.mouseY, 10, 10);
             let dot = new Point(p.mouseX, +p.mouseY.toFixed(0));
+            p.textSize(14);
             p.text(dot.toString(), p.mouseX + 10, p.mouseY + 10);
             points.push(dot);
         }
@@ -119,6 +120,8 @@ async function bruteForceSimulation() {
     let nCell = document.getElementById("n");
     nCell.innerHTML = points.length.toString();
     if (points.length >= 2) {
+        if (points.length >= 15) alert("No se recomienda un número de puntos mayor a 15");
+        bruteForceCanvas.textSize(14);
         resetCodeAnimations(codeId);
         let speed = (100 - document.getElementById("speed").value) * 10;
         codeAnimation(ids[0]);
