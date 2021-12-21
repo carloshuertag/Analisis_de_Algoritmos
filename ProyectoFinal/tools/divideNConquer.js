@@ -146,7 +146,6 @@ function resetCodeAnimations(codeId) {
 }
 
 function codeAnimation(spanId) {
-    console.log(document.getElementById(spanId));
     let line = document.getElementById(spanId);
     line.classList.add("bg-danger");
     line.scrollIntoView();
@@ -358,10 +357,6 @@ async function closestPairInStrip(strip, m, distanceToMid) {
     codeAnimation(ids[11]);
     if (changed) {
         divideNConquerCanvas.stroke(180, 0, 0);
-        console.log(strip[indexi]);
-        console.log(p1);
-        console.log(strip[indexj]);
-        console.log(p2);
         divideNConquerCanvas.line(strip[indexi].x, strip[indexi].y, strip[indexj].x, strip[indexj].y);
         divideNConquerCanvas.fill(180, 0, 0);
         divideNConquerCanvas.ellipse(strip[indexi].x, strip[indexi].y, 10, 10);

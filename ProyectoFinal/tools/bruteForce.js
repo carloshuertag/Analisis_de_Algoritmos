@@ -105,7 +105,6 @@ function resetCodeAnimations(codeId) {
 }
 
 function codeAnimation(spanId) {
-    console.log(document.getElementById(spanId));
     let line = document.getElementById(spanId);
     line.classList.add("bg-danger");
     line.scrollIntoView();
