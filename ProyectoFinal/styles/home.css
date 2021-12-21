@@ -60,3 +60,8 @@ h6 {
     -o-transition: background-color 1s ease, color 1s ease;
     transition: background-color 1s ease, color 1s ease;
 }
+
+.credits {
+    background-color: var(--regalblue);
+    color: var(--morningglory);
+}

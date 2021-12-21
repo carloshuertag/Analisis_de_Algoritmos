@@ -14,13 +14,36 @@
 <body>
     <header>
         <p class="display-1 text-center">Pares de puntos más cercanos</p>
-        <div class="row justify-content-end">
-            <div class="col-6 me-md-3 col-md-2 col-sm-3 form-check form-switch">
+        <div class="row justify-content-end align-middle">
+            <a role="button" class="col-5 me-md-3 btn btn-link text-start" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Créditos</a>
+            <div class="col-5 justify-content-end form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="dark">
                 <label class="form-check-label" for="dark">Modo oscuro</label>
             </div>
         </div>
     </header>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content credits">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Créditos</h5>
+                    <button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li>Hernández Domínguez Ángel Alan</li>
+                        <li>Huerta García Carlos</li>
+                        <li>Juárez Leonel Reina Beatriz</li>
+                        <li>Lavarrios González Marco Antonio</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Más</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <nav class="nav nav-tabs nav-fill mb-3" id="nav-tab" role="tablist">
         <button class="nav-link active" id="nav-context-tab" data-bs-toggle="tab" data-bs-target="#nav-context" type="button" role="tab" aria-controls="nav-context" aria-selected="true">Contexto</button>
         <button class="nav-link" id="nav-bruteForce-tab" data-bs-toggle="tab" data-bs-target="#nav-bruteForce" type="button" role="tab" aria-controls="nav-bruteForce" aria-selected="false">Fuerza Bruta</button>
