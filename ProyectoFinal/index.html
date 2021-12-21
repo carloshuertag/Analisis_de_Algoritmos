@@ -13,10 +13,10 @@
 
 <body>
     <header>
-        <p class="display-1">Pares de puntos más cercanos</p>
+        <p class="display-1 text-center">Pares de puntos más cercanos</p>
         <div class="row justify-content-end">
-            <div class="col-6 me-md-3 col-md-2 col-sm-9 form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="dark" disabled>
+            <div class="col-6 me-md-3 col-md-2 col-sm-3 form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="dark">
                 <label class="form-check-label" for="dark">Modo oscuro</label>
             </div>
         </div>
@@ -26,36 +26,133 @@
         <button class="nav-link" id="nav-bruteForce-tab" data-bs-toggle="tab" data-bs-target="#nav-bruteForce" type="button" role="tab" aria-controls="nav-bruteForce" aria-selected="false">Fuerza Bruta</button>
         <button class="nav-link" id="nav-divideNConquer-tab" data-bs-toggle="tab" data-bs-target="#nav-divideNConquer" type="button" role="tab" aria-controls="nav-divideNConquer" aria-selected="false">Divide y Vencerás</button>
     </nav>
-
     <main>
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade active show" id="nav-context" role="tabpanel" aria-labelledby="nav-context-tab">
                 <h3 class="me-md-3">Descripción del problema</h3>
-                <lead class="me-md-3 text-center">
+                <p class="me-md-3 text-center">
                     En geometría computacional, el problema del par de puntos más cercano es un problema clásico donde:
                     <strong>"Dados n puntos en un espacio métrico, se pide encontrar un par de puntos con la distancia más pequeña entre ellos".</strong>
-                </lead>
+                </p>
                 <br/><br/>
                 <h3 class="me-md-3">Aplicaciones del problema</h3>
-                <lead class="me-md-3 text-center">
+                <p class="me-md-3 text-center">
                     Las aplicaciones de este problema suelen ser más común de lo que parece, por ejemplo, para la
                     <strong>informática gráfica</strong> (creación de imágenes, gráficos, animaciones), en un
                     <strong>sistema de información geográfica</strong> o por ejemplo en el
                     <strong>estudio de las estrellas</strong> para ver la cercanía entre las mismas.
-                </lead>
+                </p>
                 <br/>
                 <h3 class="me-md-3">Animación didáctica</h3>
-                <p><strong>Haz click</strong> en el área que aparece después de la línea para observar una solución al problema de los puntos más cercanos como ejemplo.</p>
+                <p class="me-md-3 text-center"><strong>Haz click</strong> en el área que aparece después de la línea para observar una solución al problema de los puntos más cercanos como ejemplo.</p>
                 <hr/>
                 <div id="homeAnimation"></div>
             </div>
             <div class="tab-pane fade" id="nav-bruteForce" role="tabpanel" aria-labelledby="nav-bruteForce-tab">
-                <p><strong>This is some placeholder content the Brute Force tab's associated content.</strong> Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and
-                    styling. You can use it with tabs, pills, and any other <code>.nav</code>-powered navigation.</p>
+                <h3 class="me-md-3">Explicación de la solución</h3>
+                <p class="me-md-3 text-center">
+                    La solución por fuerza bruta consiste en utilizar ciclos anidado para <strong>comparar cada punto con el resto de puntos</strong> del conjunto dado. En esta solución se va guardando la distancia mínima obtenida y el par de puntos que
+                    están a la distancia mínima obtenida.
+                </p>
+                <h3 class="me-md-3">Descripción de la solución</h3>
+                <p class="me-md-3 text-center">
+                    <strong>Para cada par de puntos único</strong> que se puede formar con el conjunto dado, <strong>se calcula la distancia entre ellos y se compara con la distancia mínima</strong> (inicializada con un valor muy grande), si la distancia
+                    calculada es menor que la distancia mínima, se actualiza la distancia mínima y se guarda el par de puntos.
+                </p>
+                <h3 class="me-md-3">Pseudocódigo</h3>
+                <div class="container me-md-3">
+                    <div class="row justify-content-center">
+                        <code class="col align-self-center">
+                            <span>bruteForceClosestPoints(Points)</span><br/>
+                            <span>&nbsp;&nbsp;dmin = ∞</span><br/>
+                            <span>&nbsp;&nbsp;i1 = 0</span><br/>
+                            <span>&nbsp;&nbsp;i2 = 0</span><br/>
+                            <span>&nbsp;&nbsp;for (i = 0; i < n - 1; i++)</span><br/>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;for (int j = i + 1; j < n; j++)</span><br/>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d = sqrt((Points[i].x - Points[j].x)^2 + (Points[i].y - Points[j].y)^2)</span><br/>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (d < dmin)</span><br/>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dmin = d</span><br/>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i1 = i</span><br/>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i2 = j</span><br/>
+                            <span>&nbsp;&nbsp;return Points[i1], Points[i2], dmin</span><br/>
+                        </code>
+                    </div>
+                </div>
+                <br/>
+                <div class="d-grid gap-2">
+                    <h3 class="me-md-3">Animación de la solución por fuerza bruta</h3>
+                    <a href="bruteForce.html" role="button" tabindex="-1" class="btn btn-lg btn-outline-primary">Entrar a la animación</a>
+                </div>
             </div>
             <div class="tab-pane fade" id="nav-divideNConquer" role="tabpanel" aria-labelledby="nav-divideNConquer-tab">
-                <p><strong>This is some placeholder content the Divide N COnquer tab's associated content.</strong> Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility
-                    and styling. You can use it with tabs, pills, and any other <code>.nav</code>-powered navigation.</p>
+                <div id="list-example" class="fixed-bottom list-group list-group-horizontal-sm">
+                    <a id="scsp1" role="button" class="list-group-item list-group-item-action" href="#list-item-1">Explicación</a>
+                    <a id="scsp2" role="button" class="list-group-item list-group-item-action" href="#list-item-2">Descripción</a>
+                    <a id="scsp3" role="button" class="list-group-item list-group-item-action" href="#list-item-3">Algoritmo</a>
+                    <a id="scsp4" role="button" class="list-group-item list-group-item-action" href="#list-item-4">Animación</a>
+                </div>
+                <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+                    <h3 class="me-md-3" id="list-item-1">Explicación de la solución</h3>
+                    <p class="me-md-3 text-center">
+                        Divide y Vencerás es un paradigma de diseño de algoritmos que consiste en dividir el problema en subproblemas más simples y resolverlos recursivamente, para posteriormente combinar las soluciones obtenidas y dar solución al problema original.
+                    </p>
+                    <h3 class="me-md-3" id="list-item-2">Descripción de la solución</h3>
+                    <div class="me-md-3 text-center">
+                        <div class="row justify-content-center">
+                            <div class="col align-self-center">
+                                <p class="lead me-md-3 text-center">El algoritmo de solución por la estrategia de Divide y Vencerás consiste en:</p>
+                                <dl class="row">
+                                    <dt class="col-sm-3">Resolver un caso base</dt>
+                                    <dd class="col-sm-9">
+                                        Si el número de puntos es menor o igual a 3, se realiza la solución por fuerza bruta.
+                                    </dd>
+                                    <dt class="col-sm-3">Dividir el problema en subproblemas</dt>
+                                    <dd class="col-sm-9">
+                                        <ul class="ticks">
+                                            <li>Se busca un punto medio y se dividen los puntos en el arreglo, previamente ordenado por la coordenada y, en dos partes (derecha e izquierda), pero la división se hace ordenando los puntos por la coordenada x.</li>
+                                            <li>Se busca la distancia más pequeña considerando el punto medio del lado izquierdo y derecho, considerando al arreglo ordenado por coordenada x.</li>
+                                        </ul>
+                                    </dd>
+                                    <dt class="col-sm-3">Combinar las soluciones a los subproblemas</dt>
+                                    <dd class="col-sm-9">
+                                        <ul class="ticks">
+                                            <li>Escoger la mínima distancia entre ambos lados.</li>
+                                            <li>Crear un arreglo que contenga los puntos más cercanos al punto medio (considerando que exista una línea vertical en el mismo), a una distancia máxima del punto medio igual a la obtenida en el punto anterior.</li>
+                                            <li>Se realiza la búsqueda de los puntos más cercanos en este nuevo arreglo.</li>
+                                        </ul>
+                                    </dd>
+                                    <dt class="col-sm-3 text-truncate">Vencer o Conquistar</dt>
+                                    <dd class="col-sm-9">Se devuelve la distancia mínima entre dos puntos y estos son asignados en variables de mayor alcance</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="me-md-3" id="list-item-3">Algoritmo</h3>
+                    <ol class="me-md-3">
+                        <span class="ticks">Procesamiento previo del conjunto de puntos:</span>
+                        <li>Hacer una copia del arreglo de puntos y ordenar los puntos de acuerdo a las coordenadas x.</li>
+                        <li>Hacer una copia del arreglo de puntos y ordenar los puntos de acuerdo a las coordenadas y.</li>
+                    </ol>
+                    <ol>
+                        <span class="ticks">Procesamiento para la solución del problema:</span>
+                        <li>Si en el arreglo solo hay 3 o 2 puntos se realiza la solución por fuerza bruta</li>
+                        <li>Si no:</li>
+                        <ol>
+                            <li>Se encuentra un punto medio del arreglo ordenado en x.</li>
+                            <li>Se divide el arreglo de puntos ordenados en y en dos (izquierda y derecha, según su coordenada en x).</li>
+                            <li>Se calcula la distancia más pequeña de cada sub-arreglo recursivamente (izquierdo y derecho).</li>
+                            <li>Se escoge la distancia mas pequeña de entre ambos lados.</li>
+                            <li>Se crea un nuevo arreglo, el cual contendrá los puntos mas cercanos a la “línea del medio” (marcada por el punto medio, a la distancia de máximo la obtenida en el punto anterior).</li>
+                            <li>Se ejecuta un ciclo en donde se compara la distancia entre los puntos que hay en el arreglo creado en el paso 5.</li>
+                            <li>Se devuelve la distancia mínima obtenida.</li>
+                        </ol>
+                    </ol>
+                    <div class="d-grid gap-2">
+                        <h3 class="me-md-3" id="list-item-4">Animación de la solución divide y vencerás</h3>
+                        <a href="divideNConquer.html" role="button" tabindex="-1" class="btn btn-lg btn-outline-primary">Entrar a la animación</a>
+                    </div>
+                    <br/><br/><br/><br/>
+                </div>
             </div>
         </div>
     </main>

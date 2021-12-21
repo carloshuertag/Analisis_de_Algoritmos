@@ -20,6 +20,7 @@ body {
     font-family: body_font;
     color: var(--regalblue);
     background-color: var(--boticelli);
+    position: relative;
 }
 
 header,
@@ -30,4 +31,17 @@ h4,
 h5,
 h6 {
     font-family: titles_font;
+}
+
+.ticks {
+    list-style: none;
+}
+
+.ticks li:before {
+    content: '✓ ';
+}
+
+.scrollspy-example {
+    position: relative;
+    overflow: hidden;
 }

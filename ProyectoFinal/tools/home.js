@@ -28,6 +28,14 @@ function setup() {}
 
 function load() {
     document.getElementById("dark").addEventListener("change", darkMode, false);
+    document.getElementById("nav-context-tab").addEventListener("click", tabClear, false);
+    document.getElementById("nav-bruteForce-tab").addEventListener("click", tabClear, false);
+    document.getElementById("nav-divideNConquer-tab").addEventListener("click", tabClear, false);
+    document.getElementById("scsp1").addEventListener("click", function() { scsp(1) }, false);
+    document.getElementById("scsp2").addEventListener("click", function() { scsp(2) }, false);
+    document.getElementById("scsp3").addEventListener("click", function() { scsp(3) }, false);
+    document.getElementById("scsp4").addEventListener("click", function() { scsp(4) }, false);
+    scsp(1);
     div = document.getElementById("homeAnimation");
     canvas = new p5(sketchHome, div);
 }
@@ -35,20 +43,25 @@ function load() {
 function darkMode() {
     if (document.getElementById("dark").checked) {
         dark = true;
-        document.body.style.color = "var(--morningglory)";
-        document.body.style.backgroundColor = "var(--stratos)";
-        canvas.clear();
-        div = document.getElementById("homeAnimation");
-        dots = [];
-        canvas = new p5(sketchHome, div);
+        tabClear();
     } else {
         dark = false;
-        document.body.style.color = "var(--stratos)";
-        document.body.style.backgroundColor = "var(--morningglory)";
-        canvas.clear();
-        div = document.getElementById("homeAnimation");
-        dots = [];
-        canvas = new p5(sketchHome, div);
+        tabClear();
+    }
+    canvas.background(dark ? '#1a202c' : '#d6e8ee');
+}
+
+function tabClear() {
+    document.body.style.color = dark ? "var(--boticelli)" : "var(--stratos)";
+    document.body.style.backgroundColor = dark ? "var(--stratos)" : "var(--boticelli)";
+    canvas.clear();
+    dots = [];
+}
+
+function scsp(index) {
+    for (let i = 1; i < 5; i++) {
+        document.getElementById("scsp" + i).classList.remove("active");
+        if (i == index) document.getElementById("scsp" + i).classList.add("active");
     }
 }
 
@@ -59,6 +72,7 @@ function sketchHome(p) {
     };
     p.mouseClicked = function() {
         if (p.mouseY >= mouseYOffset) {
+            p.stroke(dark ? '#d6e8ee' : '#1a202c');
             p.fill(dark ? '#d6e8ee' : '#1a202c');
             p.ellipse(p.mouseX, p.mouseY, 10, 10);
             let dot = new Point(p.mouseX, +p.mouseY.toFixed(0), 0);
@@ -87,10 +101,10 @@ function lines() {
         canvas.stroke(255, 0, 0);
         canvas.line(dots[i1].x, dots[i1].y, dots[i2].x, dots[i2].y);
         canvas.stroke(dark ? '#d6e8ee' : '#1a202c');
-        canvas.fill(dark ? '#d6e8ee' : '#1a202c');
     } else if (dots.length == 2) {
         canvas.stroke(255, 0, 0);
         canvas.line(dots[0].x, dots[0].y, dots[1].x, dots[1].y);
         dmin = Point.distance(dots[0], dots[1]);
+        canvas.stroke(dark ? '#d6e8ee' : '#1a202c');
     } else return;
 }
