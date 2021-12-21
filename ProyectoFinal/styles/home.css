@@ -1,7 +1,9 @@
 :root {
     --stratos: #1a202c;
     --regalblue: #02457a;
+    /*rgba(2, 69, 122, 0.75);*/
     --bandiblue: #018abe;
+    /*rgba(1, 138, 190, 0.75);*/
     --morningglory: #97cadb;
     --boticelli: #d6e8ee;
 }
@@ -44,4 +46,17 @@ h6 {
 .scrollspy-example {
     position: relative;
     overflow: hidden;
+}
+
+.offcanvas-trbl {
+    background-color: rgba(2, 69, 122, 0.5);
+    color: var(--boticelli);
+}
+
+.offcanvas-trbl code {
+    color: rgb(255, 255, 50);
+    -webkit-transition: background-color 1s ease, color 1s ease;
+    -moz-transition: background-color 1s ease, color 1s ease;
+    -o-transition: background-color 1s ease, color 1s ease;
+    transition: background-color 1s ease, color 1s ease;
 }
